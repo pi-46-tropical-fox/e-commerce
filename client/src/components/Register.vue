@@ -1,0 +1,46 @@
+<template>
+  <form @submit.prevent ="register"
+        style="color:rgb(236 173 60);; font-weight: bold; font-size:1.2em;">
+        <div class="form-group row">
+            <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+            <input type="email" v-model="email" class="form-control loginColumn" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+            <input type="password" v-model="password" class="loginColumn form-control" id="inputPassword">
+            </div>
+        </div>
+        <div class="btn-group ml-5 mt-2">
+            <button type="submit" class="btn btn-secondary" id="loginbtn">Register</button>
+        </div>
+
+    </form>
+</template>
+
+<script>
+export default {
+  name: 'Register',
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    register () {
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
+      this.$store.dispatch('register', payload)
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

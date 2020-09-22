@@ -15,7 +15,7 @@ const authentication = async (req, res, next) => {
             }
         })
 
-        if (user && user.role == 'Admin') {
+        if (user) {
             req.userData = userData
             req.userData.role = user.role
             

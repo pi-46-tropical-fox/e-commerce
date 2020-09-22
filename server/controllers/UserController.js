@@ -4,14 +4,14 @@ const {generateToken} = require('../helpers/jwt.js')
 
 class UserController {
     static register(req,res,next) { 
-
+        
         var userObj = {
             email: req.body.email,
-            password: req.body.password,
-            role: req.body.role || null
+            password: req.body.password
         }
         User.create(userObj)
         .then(user => {
+            console.log(user);
             res.status(201).json({email: user.email, message: 'Successfully registered'})
         })
         .catch(err => {
@@ -22,7 +22,6 @@ class UserController {
     static async login(req,res,next) {
 
         const {email,password} = req.body
-        
         try {
             const user =  await User.findOne({where: {email}})
 
@@ -34,8 +33,7 @@ class UserController {
             
             if(isValid) {
                 const access_token = generateToken(user)
-                
-                return res.status(200).json({id:user.id, email:user.email,role:user.role, access_token})
+                return res.status(200).json({id:user.id, email:user.email, access_token})
             } else {
                 throw {statusCode: 400, msg: "Invalid username or password!"}
             }

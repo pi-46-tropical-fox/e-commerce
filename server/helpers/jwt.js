@@ -3,7 +3,6 @@ const secret = process.env.SECRET // "semogabagusdehkaliini" => for testing
 
 const generateToken = (user)=> {
     const access_token = jwt.sign({ 
-        username: user.name, 
         id: user.id,
         email: user.email},
         secret);
