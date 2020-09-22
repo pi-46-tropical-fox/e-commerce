@@ -17,7 +17,7 @@ app.use(routes)
 app.use(errorHandler)
 
 app.listen(port, () => {
-    console.log(`We are open now at ${port}`)
+    console.log(`Izinkan aku lulus`)
 })
 
 module.exports = app
