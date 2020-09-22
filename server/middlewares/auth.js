@@ -16,7 +16,7 @@ function authentication(req, res, next) {
                 req.userData = userData
                 next()
             }else {
-                throw {message: 'User not authenticated', statusCode: 401}
+                throw {message: 'User not authenticationed', statusCode: 401}
             }
         })
         .catch(err => {
@@ -34,7 +34,7 @@ function authorizationRole(req, res, next) {
             if(user && user.role == 'admin') {
                 next()
             }else {
-                throw {message: 'User not authenticated!', statusCode: 401}
+                throw {message: 'User not authenticatedz!', statusCode: 401}
             }
         })
         .catch(err => {
