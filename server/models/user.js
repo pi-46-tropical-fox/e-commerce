@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Product,{through:models.Cart})
       //super many to many
       User.hasMany(models.Cart)
+      User.hasOne(models.Profile)
+      User.hasMany(models.Transaction)
     }
     getFullName () {
       return `${this.firstName} ${this.lastName}`

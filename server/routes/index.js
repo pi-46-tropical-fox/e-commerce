@@ -3,7 +3,8 @@ const productRouter = require('./product')
 const categoryRouter = require('./category')
 const cartRouter = require('./cart')
 const checkoutRouter = require('./checkout')
-const paymentRouter = require('./payment')
+const profileRouter = require('./profile')
+const transactionRoute = require('./transaction')
 const UserController = require('../controllers/UserController')
 const {authentication, customerAuthorization} = require('../middlewares/auth')
 
@@ -21,8 +22,9 @@ router.use('/categories', categoryRouter)
 
 router.use(customerAuthorization)
 
-router.use('/carts', cartRouter)
+router.use('/cart', cartRouter)
 router.use('/checkout', checkoutRouter)
-router.use('/payment', paymentRouter)
+router.use('/profile', profileRouter)
+router.use('/transactions', transactionRoute)
 
 module.exports = router

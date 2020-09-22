@@ -1,4 +1,4 @@
-const {Cart, CartProduct, Category, Product, User, Whistlist} = require('../models')
+const {Cart, Product} = require('../models')
 
 class CartController {
     static async showMyCart(req, res, next){
@@ -11,7 +11,19 @@ class CartController {
                     UserId: req.user.id
                 }
             })
-            return res.status(200).json(carts)
+            let grandTotal = {
+                qty: 0,
+                price: 0
+            }
+            if(carts.length < 1){
+                throw {name: 'EmptyCart'}
+            }else{
+                for(const el of carts){
+                    grandTotal.qty += el.qty
+                    grandTotal.price += (el.qty * el.Product.price)
+                }
+                return res.status(200).json({carts, grandTotal})
+            }            
         } catch (err) {
             return next(err)
         }

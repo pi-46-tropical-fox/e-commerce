@@ -1,4 +1,4 @@
-const {Cart, CartProduct, Category, Product, User, Whistlist} = require('../models')
+const {Cart, Product, Profile, Transaction} = require('../models')
 
 class CheckoutController {
     static async checkoutProduct(req, res, next){
@@ -18,11 +18,34 @@ class CheckoutController {
             if(carts.length < 1){
                 throw {name: 'EmptyCart'}
             }else{
+                const profile = await Profile.findOne({
+                    where: {
+                        UserId: req.user.id
+                    }
+                })
+                let detailProduct = []
                 for(const el of carts){
                     grandTotal.qty += el.qty
                     grandTotal.price += (el.qty * el.Product.price)
+                    detailProduct.push(`${el.Product.name} ${el.Product.color} ${el.Product.capacity} Qty: ${el.qty}`)
+                    let product = await Product.findByPk(el.ProductId)
+                    let decrement = await product.decrement('stock', {by: el.qty})
+                    let cart = await Cart.destroy({
+                        where: {
+                            ProductId : el.ProductId
+                        }
+                    })
+                    console.log(product.name, product.stock, '<<<< updated stock')
                 }
-                return res.status(200).json({carts, grandTotal})
+                let obj = {
+                    description: detailProduct.join(', '),
+                    shippingAddress: profile.address,
+                    status: 'PAID',
+                    total: grandTotal.price,
+                    UserId: req.user.id
+                }
+                const transaction = await Transaction.create(obj)
+                return res.status(200).json({transaction, grandTotal, message: 'Payment success'})
             }
         } catch (err) {
             return next(err)
