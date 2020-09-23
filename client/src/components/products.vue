@@ -45,7 +45,11 @@ export default {
       return this.$store.dispatch('fetchProducts')
     },
     addCart (productId) {
-      return this.$store.dispatch('addCart', productId)
+      if(!localStorage.getItem('access_token')){
+        this.$router.push('/login')
+      }else{
+        return this.$store.dispatch('addCart', productId)
+      }
     }
   },
   created () {
