@@ -76,14 +76,15 @@ class CustomerController {
     static addToCart (req, res, next) {
         let params = {
             UserId: req.userData.id,
-            ProductId:req.params.productId,
+            ProductId:req.body.ProductId,
             quantity: Number(req.body.quantity),
             status: 'cart'
         }
         let isCreated = false
-        console.log(typeof params.ProductId, 'ini req.body.quantity')
+        console.log(params.UserId, 'ini UserId')
+        console.log(params.ProductId, 'ini ini ProductId')
         Cart.findOrCreate({
-            where: {ProductId: params.ProductId}, 
+            where: {ProductId: params.ProductId, UserId: params.UserId, status: 'cart'}, 
             defaults: {
                 UserId: params.UserId,
                 ProductId: params.ProductId,
@@ -115,6 +116,17 @@ class CustomerController {
         })
         .catch(err => {
             next(err)
+        })
+    }
+
+    static getCart (req, res, next) {
+        Cart.findAll({where:{UserId:req.userData.id, status: 'cart'},
+                      include: {model: Product}})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            return next(err)
         })
     }
 
