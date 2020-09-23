@@ -46,7 +46,7 @@ export default {
         return swal('Can not Proceed!', 'Please delete product!', 'error')
       }
       axios({
-        url: `${this.baseUrl}/carts/${id}/quantity`,
+         url: `${this.baseUrl}/carts/${id}/quantity`,
         method: 'PATCH',
         headers: {
           access_token: localStorage.access_token
