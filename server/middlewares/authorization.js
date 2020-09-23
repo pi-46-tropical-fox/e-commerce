@@ -5,10 +5,10 @@ const authorization = (req, res, next) => {
     User.findByPk(req.userData.id)
     .then(user=>{
         if(user.role === 'admin'){
-            console.log('masyuuukkk')
             next()
         }
         else{
+            console.log('masyuuukkk')
             return res.status(403).json({message: 'User Is Not Authorized'})
         }
     })

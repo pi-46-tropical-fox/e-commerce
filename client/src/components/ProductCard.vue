@@ -10,7 +10,7 @@
         class="mb-2 mx-1 bg-color card-title "
     >
         <b-card-text>
-          Price : Rp.{{ product.price.toLocaleString() }}
+          Price : Rp.{{ product.price }}
           <br>
           Stock : {{ product.stock }} pcs
         </b-card-text>

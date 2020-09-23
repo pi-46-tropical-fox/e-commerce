@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://desolate-bastion-39685.herokuapp.com',
     products: [],
     isLogin: false,
     carts: [],
@@ -55,10 +55,8 @@ export default new Vuex.Store({
           access_token: localStorage.access_token 
         }
       })
-        .then(res => {
-          console.log(res)
-          console.log(res.data.products)
-          commit('SET_PRODUCTS', res.data.products)
+        .then(({data}) => {
+          commit('SET_PRODUCTS', data)
         })
         .catch(err => {
           console.log(err)

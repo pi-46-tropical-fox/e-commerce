@@ -6,9 +6,9 @@
     <td> <img :src="cart.Product.image_url" alt=""> </td>
       <td>
         <div class="container">
-            <div v-html="plusIcon" id="icon" @click.prevent="plus(cart.id, cart.quantity, cart.Product.id)">  </div>
+            <div v-html="plusIcon" id="icon" @click.prevent="plus(cart.quantity, cart.Product.id)">  </div>
             {{cart.quantity}}
-            <div v-html="minusIcon" id="icon" @click.prevent="minus(cart.id, cart.quantity, cart.Product.id)">  </div>
+            <div v-html="minusIcon" id="icon" @click.prevent="minus(cart.quantity, cart.Product.id)">  </div>
         </div>
       </td>
       <td>
@@ -42,19 +42,18 @@ export default {
     ])
   },
   methods: {
-    minus (id, quantity, ProductId) {
+    minus (quantity, ProductId) {
       if (+quantity - 1 === 0) {
         return swal('Can not Proceed!', 'Please delete product!', 'error')
       }
       axios({
-        url: `${this.baseUrl}/carts/${id}/quantity`,
+        url: `${this.baseUrl}/carts/${ProductId}/quantity`,
         method: 'PATCH',
         headers: {
           access_token: localStorage.access_token
         },
         data: {
-          quantity: +quantity - 1,
-          ProductId: ProductId
+          quantity: +quantity - 1
         }
       })
         .then(() => {
@@ -64,19 +63,18 @@ export default {
           console.log(response)
         })
     },
-    plus (id, quantity, ProductId) {
+    plus (quantity, ProductId) {
       if (this.cart.Product.stock < +quantity + 1) {
         return swal('Can not Proceed!', 'Stock is not available!', 'error')
       }
       axios({
-        url: `${this.baseUrl}/carts/${id}/quantity`,
+        url: `${this.baseUrl}/carts/${ProductId}/quantity`,
         headers: {
           access_token: localStorage.access_token
         },
         method: 'PATCH',
         data: {
-          quantity: +quantity + 1,
-          ProductId
+          quantity: +quantity + 1
         }
       })
         .then(data => {

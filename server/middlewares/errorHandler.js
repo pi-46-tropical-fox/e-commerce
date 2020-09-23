@@ -27,5 +27,7 @@ module.exports = (err, req, res, next) => {
         statusCode = 401
         message = err.msg ? err.msg : ['Invalid password or email']
     }
+
+    console.log(err)
     res.status(statusCode).json({ message })
 } 

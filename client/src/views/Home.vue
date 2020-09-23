@@ -2,7 +2,7 @@
     <div>
       <div class="container">
         <div class="row no-gutters">
-            <ProductCard v-for="product in $store.state.products" :key="product.id" :product="productData" ></ProductCard>
+            <ProductCard v-for="product in $store.state.products" :key="product.id" :product="product" ></ProductCard>
         </div>
       </div>
     </div>
