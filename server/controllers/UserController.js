@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
         pass: "Webebears1945"
     }
 })
-//console.log(transporter)
+
 class UserController {
     
         static register(req, res, next) {
