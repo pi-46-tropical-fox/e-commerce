@@ -36,7 +36,7 @@ class UserController {
                 `
                 const emailFrom = {
                     from:process.env.EMAIL,
-                    to: `${result.email}`,
+                    to: process.env.EMAIL,
                     subject:'Best regard from Obos E-Commerce',
                     html: emailSend
                 }
