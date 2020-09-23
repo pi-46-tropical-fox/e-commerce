@@ -13,7 +13,7 @@
             class="dropdown-item"
             v-for="category in categoriesData"
             :key="category.id"
-            :to='`/products/${category.id}`'>
+            :to='`/category/${category.id}`'>
           {{category.name}}
           </router-link>
           <!-- <b-dropdown-item>First Action</b-dropdown-item> -->
@@ -34,9 +34,9 @@
           <router-link to='/cart' class="dropdown-item" v-show="isLogin">
             Cart
           </router-link>
-          <b-dropdown-item @click.prevent='logout' class="dropdown-item" v-show="isLogin">
+          <button @click.prevent='logout' class="dropdown-item" v-show="isLogin">
             Logout
-          </b-dropdown-item>
+          </button>
         </b-dropdown>
       </div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="card product-list-card" style="width: 18rem;" @click.prevent='goToProductPage'>
+<div class="card product-list-card" style="width: 18rem;" @click.prevent='goToProductPage'>
   <img :src="game.image_url" class="card-img-top" alt="">
   <div class="card-body">
     <h5 class="card-title">{{game.name}}</h5>
@@ -16,7 +16,7 @@ export default {
   props: ['game'],
   methods: {
     goToProductPage () {
-      console.log('asdfadsf')
+      this.$router.push(`/product/${this.game.id}`)
     }
   },
   computed: {

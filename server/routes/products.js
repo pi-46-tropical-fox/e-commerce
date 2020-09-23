@@ -4,6 +4,7 @@ const {authentication, adminAuthorization} = require("../middlewares/userAuth")
 const router = require("express").Router()
 
 router.get("/", ProductController.getAllProducts)
+router.use(authentication)
 router.post("/", adminAuthorization, ProductController.addProduct)  
 router.put("/:id", adminAuthorization, ProductController.editProduct)
 

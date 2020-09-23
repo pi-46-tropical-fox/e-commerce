@@ -14,6 +14,7 @@
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
+    "lodash.debounce": "^4.0.8",
     "sweetalert": "^2.1.2",
     "vue": "^2.6.12",
     "vue-float-label": "^1.6.1",
