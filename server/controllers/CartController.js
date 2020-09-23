@@ -1,5 +1,4 @@
 const {Cart, Product} = require(`../models`)
-const e = require("express")
 
 class CartController {
 
@@ -52,6 +51,7 @@ class CartController {
     }
 
     static delete(req, res, next) {
+        console.log(req.params);
         let id = req.params.id
         const error = {
             name: `otherError`,
@@ -89,6 +89,7 @@ class CartController {
             }
         })
         .catch((err) => {
+            console.log(err);
             next(err)
         })
     }

@@ -10,15 +10,31 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      // define association here
       Cart.belongsTo(models.User)
       Cart.belongsTo(models.Product)
     }
   };
   Cart.init({
-    quantity: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     UserId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        zeroValue(data) {
+          if(data < 0) {
+            throw new Error(`Quantity can't be less than zero!`)
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Cart',
