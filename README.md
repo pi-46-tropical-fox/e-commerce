@@ -5,4 +5,4 @@ Membuat Website e-commerce
 <h5>https://obos-commerce-final.web.app</h5>
 
 ## LINK-SERVER
-<h5>https://e-commerce-obos.herokuapp.com<h5>
+<h5>https://e-commercenya-obos.herokuapp.com/<h5>
