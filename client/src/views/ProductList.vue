@@ -4,12 +4,14 @@
       v-for="game in gamesData"
       :key="game.id"
       :game="game"/>
+    <LoadingAnimation
+      v-if="gamesData.length === 0"/>
   </div>
 </template>
 
 <script>
 import ItemCardList from '../components/ItemCardList'
-
+import LoadingAnimation from '../components/LoadingAnimation'
 export default {
   name: 'ProductList',
   data () {
@@ -18,7 +20,8 @@ export default {
     }
   },
   components: {
-    ItemCardList
+    ItemCardList,
+    LoadingAnimation
   },
   methods: {
     filterGamesData () {

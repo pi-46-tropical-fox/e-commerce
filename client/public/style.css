@@ -46,7 +46,7 @@ html{
     height: 80px;
   }
   .right-content {
-    margin-right: 10px;
+    /* margin-right: 10px; */
   }
   .btn-secondary{
     color: #EFEDEC;

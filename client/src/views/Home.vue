@@ -4,8 +4,8 @@
       <h1>Our's Recommend</h1>
       <div class="showcase-container">
       <ItemCard
-      v-for="game in recommendGameData"
-      :key='game.id'
+      v-for="(game, index) in recommendGameData"
+      :key='index'
       :game='game'
       />
      </div>
@@ -42,7 +42,8 @@ export default {
         })
       })
       for (let i = 0; i < 4; i++) {
-        const index = Math.floor(Math.random() * allGame.length - 1)
+        const index = Math.floor(Math.random() * (allGame.length - 1))
+        console.log(index);
         result.push(allGame[index])
       }
       // console.log(allGame);
