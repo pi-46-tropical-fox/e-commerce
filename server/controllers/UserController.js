@@ -6,13 +6,13 @@ const nodemailer = require('nodemailer')
 
 const transporter = nodemailer.createTransport({
     service:"gmail",
+    port: 452,
     auth:{
         user:process.env.EMAIL,
         pass: process.env.PASSWORD
     }
 })
-console.log(process.env.EMAIL, process.env.PASSWORD)
-console.log('<<<<<<<+++++++++++++>>>>>>>>>');
+
 class UserController {
     
         static register(req, res, next) {
@@ -21,7 +21,9 @@ class UserController {
                 email:req.body.email,
                 password:req.body.password,
                 role:'Costumer'
-            }                       
+            } 
+            console.log(process.env.EMAIL, process.env.PASSWORD)
+            console.log('<<<<<<<+++++++++++++>>>>>>>>>', transporter);                      
             User.create(objUser)
             .then(result => {
                 const emailSend = `
@@ -36,7 +38,7 @@ class UserController {
                 `
                 const emailFrom = {
                     from:process.env.EMAIL,
-                    to: process.env.EMAIL,
+                    to: result.email,
                     subject:'Best regard from Obos E-Commerce',
                     html: emailSend
                 }
