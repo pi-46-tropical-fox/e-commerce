@@ -14,10 +14,22 @@ const errHandler = (err, req, res, next) => {
         errors.push('Email or Password is incorrect')
     }else if(err.name === 'QtyIsLimit'){
         statusCode = 400
-        errors.push('Qty has reached the limit')
+        errors.push('This product has reached the limit in your cart')
     }else if(err.name === 'EmptyCart'){
         statusCode = 400
         errors.push('Your cart is empty, nothing to paid')
+    }else if(err.name === 'ExistingProduct'){
+        statusCode = 400
+        errors.push('This product already in your wishlist')
+    }else if(err.name === 'OutOfStockProduct'){
+        statusCode = 400
+        errors.push(err.message)
+    }else if(err.name === 'OutOfStock'){
+        statusCode = 400
+        errors.push('Sorry, this product is out of stock')
+    }else if(err.name === 'InvalidProfile'){
+        statusCode = 400
+        errors.push('Address and Phone is required')
     }else if(err.name === 'NotAuthenticated'){
         statusCode = 401
         errors.push(`User not authenticated`)

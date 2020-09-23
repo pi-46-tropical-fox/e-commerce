@@ -43,7 +43,7 @@ const cartAuthorization = async (req, res, next) => {
     try{
         const cart = await Cart.findOne({
             where: {
-                UserId: +req.user.id
+                ProductId: req.params.productId
             }
         })
         if(cart && req.user.id === cart.UserId){

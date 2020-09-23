@@ -27,15 +27,10 @@ class WishlistController {
                 }
             })
             if(data){
-                const wishlist = await Wishlist.destroy({
-                    where: {
-                        ProductId: req.params.productId
-                    }
-                })
-                return res.status(200).json({message: 'Product removed from my wishlist'})
+                throw {name: 'ExistingProduct'}
             }else{
                 const wishlist = await Wishlist.create(obj)
-                return res.status(201).json({wishlist, message: 'Product added to my wishlist successfully'})
+                return res.status(201).json({wishlist, message: 'Product added to your wishlist'})
             }
         } catch (err) {
             return next(err)
@@ -48,7 +43,7 @@ class WishlistController {
                     id: req.params.id
                 }
             })
-            return res.status(200).json({message: 'Wishlist deleted successfully'})
+            return res.status(200).json({message: 'Wishlist deleted'})
         } catch (err) {
             return next(err)
         }

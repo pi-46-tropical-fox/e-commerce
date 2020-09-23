@@ -13,7 +13,8 @@ class UserController {
             }
             const user = await User.create(obj)
             const access_token = generateToken(user)
-            return res.status(201).json({access_token})
+            const {firstName, lastName} = user
+            return res.status(201).json({firstName, lastName, access_token})
         } catch(err) {
             return next(err)
         }

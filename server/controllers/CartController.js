@@ -32,28 +32,34 @@ class CartController {
         try {
             let obj = {
                 qty: 1,
-                status: 'active',
+                status: 'UNPAID',
                 UserId: req.user.id,
                 ProductId: req.params.productId
             }
-            const product = await Cart.findOne({
+            const cart = await Cart.findOne({
                 include: [{
                     model: Product
                 }],
                 where: {
-                    ProductId: +req.params.productId
+                    ProductId: +req.params.productId,
+                    UserId: req.user.id
                 }
             })
-            if(product){
-                if(product.qty < product.Product.stock){
-                    const increment = await product.increment('qty', {by: 1})
-                    return res.status(200).json({product, message: 'Product successfully updated to my cart'})
+            if(cart){
+                if(cart.qty < cart.Product.stock){
+                    const increment = await cart.increment('qty', {by: 1})
+                    return res.status(200).json({cart, message: 'Product updated to your cart'})
                 }else{
                     throw {name: 'QtyIsLimit'}
                 }
             }else{
-                const cart = await Cart.create(obj)
-                return res.status(201).json({cart, message: 'Product successfully added to my cart'})
+                const product = await Product.findByPk(req.params.productId)
+                if(product.stock > 0){
+                    const cart = await Cart.create(obj)
+                    return res.status(201).json({cart, message: 'Product added to your cart'})
+                }else{
+                    throw {name: 'OutOfStock'}
+                }
             }
         } catch (err) {
             return next(err)
@@ -63,10 +69,11 @@ class CartController {
         try {
             const cart = await Cart.destroy({
                 where: {
-                    ProductId : +req.params.productId
+                    ProductId : +req.params.productId,
+                    UserId: req.user.id
                 }
             })
-            return res.status(200).json({message: 'Product has been deleted from cart'})
+            return res.status(200).json({message: 'Product deleted from your cart'})
         } catch (err) {
             return next(err)
         }
@@ -78,19 +85,21 @@ class CartController {
                     model: Product
                 }],
                 where: {
-                    ProductId: +req.params.productId
+                    ProductId: req.params.productId,
+                    UserId: req.user.id
                 }
             })
             if(product.qty >= 2){
                 const decrement = await product.decrement('qty', {by: 1})
-                return res.status(200).json({product, message: 'Product qty successfully updated from my cart'})
+                return res.status(200).json({product, message: 'Product updated from your cart'})
             }else{
                 const cart = await Cart.destroy({
                     where: {
-                        ProductId : +req.params.productId
+                        ProductId : req.params.productId,
+                        UserId: req.user.id
                     }
                 })
-                return res.status(200).json({message: 'Product has been deleted from my cart'})
+                return res.status(200).json({message: 'Product deleted from your cart'})
             }
         } catch (err) {
             return next(err)

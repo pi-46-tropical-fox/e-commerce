@@ -15,11 +15,10 @@ router.get('/', (req, res) => {
 
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
-
-router.use(authentication)
-
 router.use('/products', productRouter)
 router.use('/categories', categoryRouter)
+
+router.use(authentication)
 
 router.use(customerAuthorization)
 

@@ -1,4 +1,5 @@
 const {User, Profile} = require('../models')
+const {verifyToken} = require('../helpers/jwt')
 
 class ProfileController {
     static async getMyProfile (req, res, next) {
@@ -12,7 +13,16 @@ class ProfileController {
                     UserId: req.user.id
                 }
             })
-            return res.status(200).json(profile)
+            if(profile){
+                const {address, phone} = profile
+                const {firstName, lastName} = profile.User
+                return res.status(200).json({firstName, lastName, address, phone})
+            }else{
+                const {access_token} = req.headers
+                const user = verifyToken(access_token)
+                const {firstName, lastName} = user
+                return res.status(200).json({firstName, lastName})
+            }    
         } catch (err) {
             return next(err)
         }
@@ -36,7 +46,7 @@ class ProfileController {
                         UserId: req.user.id
                     }
                 })
-                return res.status(200).json({message: 'Profile updated successfully'})  
+                return res.status(200).json({message: 'Profile updated'})  
             }else{
                 const profile = await Profile.create(obj)
                 return res.status(201).json(profile)
