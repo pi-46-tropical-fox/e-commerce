@@ -10,6 +10,7 @@ route.get('/', (req,res) => {
 
 route.post('/register', UserController.register)
 route.post('/login', UserController.login)
+route.post('/googleLogin', UserController.googleLogin)
 
 route.use(authentication)
 

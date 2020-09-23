@@ -10,6 +10,7 @@ E-Commerce CMS is an application to help you to organize your e-commerce. This a
 ```
 - POST /register
 - POST /login
+- POST /googleLogin
 - POST /product
 - GET /product
 - GET /product/:id
@@ -100,6 +101,31 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "message": "internal server error"
+}
+```
+
+### POST /googleLogin
+
+> Login user by google account
+
+_Request Header_
+```json
+{
+  "google_access_token": "<google_access_token>"
+}
+```
+
+_Request Body_
+```json
+not needed
+```
+
+_Response (200)_
+```json
+{
+    "id": 1,
+    "email": "user@mail.com",
+    "access_token": "<access_token>"
 }
 ```
 
