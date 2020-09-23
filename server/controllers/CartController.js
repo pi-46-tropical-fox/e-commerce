@@ -36,6 +36,7 @@ class CartController {
 				const cart = await Cart.findOrCreate({
 					where: {
 						ProductId: req.params.productId,
+						UserId: req.userData.id,
 					},
 					// create if not exist
 					defaults: {
