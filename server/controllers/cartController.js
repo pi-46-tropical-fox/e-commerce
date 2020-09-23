@@ -12,6 +12,7 @@ class CartController {
             ProductId: data.id,
             //TO BE UPDATED BY REQ USER DATA
             UserId: req.userData.id,
+            status: 'active'
           },
         });
       })
@@ -88,7 +89,8 @@ class CartController {
     Cart.findAll({
       where: {
         //TO BE UPDATED
-        UserId: req.userData.id
+        UserId: req.userData.id,
+        status: 'active'
       }
     })
       .then(data => {
@@ -105,7 +107,7 @@ class CartController {
               }
             })
 
-            Cart.destroy({
+            Cart.update({status: 'inactive'},{
               where: {
                 Id: element.Id
               }

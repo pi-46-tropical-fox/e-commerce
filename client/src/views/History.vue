@@ -7,10 +7,10 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="breadcrumb__text">
-              <h4>Shopping Cart</h4>
+              <h4>Transaction History</h4>
               <div class="breadcrumb__links">
                 <a @click.prevent="$router.push('/')" href="">Home</a>
-                <span>Shopping Cart</span>
+                <span>Transaction History</span>
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
     <section class="shopping-cart spad">
       <div class="container">
         <div class="row">
-          <div class="col-lg-10">
+          <div class="col-lg-12">
             <div class="shopping__cart__table">
               <table>
                 <thead>
@@ -33,10 +33,11 @@
                     <th>Quantity</th>
                     <th>Total</th>
                     <th></th>
+                    <th>Transaction Date</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <CardCart v-for="cart in filteredCarts" :key="cart.id" :cart="cart"></CardCart>
+                  <CardHistory v-for="cart in filteredCarts" :key="cart.id" :cart="cart"></CardHistory>
                 </tbody>
               </table>
             </div>
@@ -45,13 +46,6 @@
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="continue__btn">
                   <a @click.prevent="$router.push('/')" href="">Continue Shopping</a>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <div class="continue__btn update__btn">
-                  <a @click.prevent="checkout" href="">
-                    Checkout
-                  </a>
                 </div>
               </div>
             </div>
@@ -68,13 +62,13 @@
 <script>
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import CardCart from '../components/CardCart'
+import CardHistory from '../components/CardHistory'
 export default {
-  name: 'Cart',
+  name: 'History',
   components: {
     Header,
     Footer,
-    CardCart
+    CardHistory
   },
   methods: {
     checkout () {
@@ -92,10 +86,10 @@ export default {
       return this.$store.state.carts
     },
     filteredCarts () {
-      // FILTERING CARTS OWNED BY USERID AND ACTIVE
+      // FILTERING CARTS OWNED BY USERID AND INACTIVE
       const result = []
       this.carts.forEach(element => {
-        if (element.UserId == localStorage.getItem('UserId') && element.status == 'active') {
+        if (element.UserId == localStorage.getItem('UserId') && element.status == 'inactive') {
           result.push(element)
         }
       })

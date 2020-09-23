@@ -15,30 +15,20 @@
     </td>
     <td class="cart__price">Rp {{total}}</td>
     <td class="cart__close">
-      <a @click.prevent="deleteCart" href="">
-        <i class="fa fa-close"></i>
-      </a>
+    </td>
+    <td class="quantity__item">
+      <h5>{{cart.updatedAt}}</h5>
     </td>
   </tr>
 </template>
 
 <script>
 export default {
-  name: 'CardCart',
+  name: 'CardHistory',
   props: ['cart'],
   computed: {
     total () {
       return this.cart.Product.price * this.cart.quantity
-    }
-  },
-  methods: {
-    deleteCart () {
-      // console.log(this.cart.Id)
-      this.$store.dispatch('deleteCart', this.cart.Id)
-        .then(() => {
-          this.$store.dispatch('fetchCarts')
-          // return this.$router.push('/cart')
-        })
     }
   }
 }

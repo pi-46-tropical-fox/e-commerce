@@ -5,6 +5,7 @@ import Cart from '../views/Cart.vue'
 import Wishlist from '../views/Wishlist.vue'
 import Signup from '../views/Signup.vue'
 import Signin from '../views/Signin.vue'
+import History from '../views/History.vue'
 
 Vue.use(VueRouter)
 
@@ -30,6 +31,18 @@ const routes = [
     path: '/wishlist',
     name: 'Wishlist',
     component: Wishlist,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/signin')
+      }
+    }
+  },
+  {
+    path: '/history',
+    name: 'History',
+    component: History,
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('access_token')) {
         next()

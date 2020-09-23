@@ -37,6 +37,11 @@
               <span>0</span>
             </a>
             <div class="price">Cart</div>
+            <a></a>
+            <a @click.prevent="$router.push('/history')" href="">
+              <img src="img/icon/search.png" alt />
+            </a>
+            <div class="price">History</div>
           </div>
         </div>
       </div>
