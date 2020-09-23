@@ -3,7 +3,6 @@
     <b-navbar toggleable="lg" id="bg-color">
       <b-navbar-brand>
         <div class="container ">
-          <div v-html="icon" class="mr-2 icon"></div>
           <div id="cms">Schmetterling Shop</div>
         </div>
       </b-navbar-brand>

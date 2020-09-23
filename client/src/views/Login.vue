@@ -67,6 +67,7 @@ export default {
             console.log(res.data, '<<<< data')
             console.log(res.data.access_token, '<<<< access token')
             localStorage.setItem('access_token', res.data.access_token)
+            this.$store.dispatch('changeLoginState', true)
             this.$router.push({ path: '/' })
         })
         .catch(({ response }) => {

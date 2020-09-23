@@ -47,6 +47,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    changeLoginState(context, boolean){
+      context.commit('SET_ISLOGIN', boolean)
+    },
     fetchProducts ({ commit, state }) {
       axios({
         method: 'GET',

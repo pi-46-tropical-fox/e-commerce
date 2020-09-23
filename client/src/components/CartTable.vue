@@ -85,9 +85,9 @@ export default {
         })
     },
     deleteItem () {
-      const id = this.cart.id
+      const ProductId = this.cart.ProductId
       axios({
-        url: `${this.baseUrl}/carts/${id}`,
+        url: `${this.baseUrl}/carts/${ProductId}`,
         headers: {
           access_token: localStorage.access_token
         },

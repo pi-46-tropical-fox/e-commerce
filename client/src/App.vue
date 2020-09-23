@@ -4,10 +4,10 @@
       <img src="https://media.giphy.com/media/WmWY4wQGVvgL0XUPcg/giphy.gif" alt="">
     </div>
     <div v-else>
-      <div v-if="$store.state.isLogin">
+      <div v-if="isLoggedIn">
         <NavBarLogin></NavBarLogin>
       </div>
-      <div v-else-if="!$store.state.isLogin">
+      <div v-else>
         <NavBarBfrLogin></NavBarBfrLogin>
       </div>
         <router-view/>
@@ -40,6 +40,12 @@ export default {
     setTimeout(_ => {
       this.isLoading = false
     }, 500)
+  },
+  computed: {
+    isLoggedIn(){
+      return this.$store.state.isLogin
+    }
+
   }
 }
 </script>

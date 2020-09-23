@@ -47,7 +47,7 @@ export default {
   methods: {
     signOut () {
       localStorage.clear()
-      this.$store.commit('SET_ISLOGIN', false)
+      this.$store.dispatch('changeLoginState', false)
       this.$store.commit('SET_USER', '')
       if (this.$route.path !== '/') this.$router.push({ path: '/' })
     }
