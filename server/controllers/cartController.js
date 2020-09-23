@@ -21,7 +21,7 @@ class Controller {
             ProductId: req.params.productId,
           };
           return Cart.create(params);
-        } else if (data.Product.stock >= data.quantity || data.Product.stock == 1) {
+        } else if ((data.Product.stock >= data.quantity || data.Product.stock == 1)) {
           let params = {
             quantity: data.quantity + 1,
           };
@@ -31,21 +31,6 @@ class Controller {
         } else {
           throw { message: `out of stock` };
         }
-      })
-      .then(cart => {
-        return Product.findOne({
-          where: {id: req.params.productId}
-        });
-      })
-      .then(data => {
-        let params = {
-          stock: data.stock - 1
-        };
-        return Product.update(params, {
-          where: {
-            id: req.params.productId,
-          },
-        });
       })
       .then(data => {
         return res.status(200).json({ data, message: "success add to cart" });
@@ -77,17 +62,7 @@ class Controller {
       });
   }
   static delete(req, res, next) {
-    Cart.findOne({where:{ProductId:req.params.id},include:Product})
-    .then(data=>{
-      console.log(data)
-      let params = {
-        stock:data.Product.stock + data.quantity
-      }
-      return Product.update(params,{where:{id:req.params.id}})
-    })
-    .then(data=>{
-      return Cart.destroy({where:{ProductId:req.params.id}})
-    })
+     Cart.destroy({where:{ProductId:req.params.id}})
     .then(data=>{
       return res.status(200).json({ message: `success deleting` })
     })

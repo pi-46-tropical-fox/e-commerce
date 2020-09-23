@@ -19,19 +19,28 @@ class Controller {
                 ProductId:req.params.productId,
                 quantity:data.quantity
             }
+            qty = data.quantity
+            console.log(qty)
             return Purchase.create(params)
         })
         .then(data=>{
-            qty = data.quantity
+            console.log(data.quantity,'iniii qty')
+            console.log(data.ProductId,'productID')
             return Product.findOne({where:{id:req.params.productId}})
         })
         .then(data=>{
+            console.log(data,'ini dia')
+            console.log(data.stock,'ini stock')
+            console.log(qty,'ini qtyy')
             let params = {
                 stock:data.stock - qty
             }
+            console.log(params,'ini params')
+            console.log(data.id,'dataID')
             return Product.update(params,{where:{id:req.params.productId}})
         })
         .then(data=>{
+            qty = 0
             res.status(200).json(data)
         })
         .catch(err=>{
