@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 import router from '../router';
 
 Vue.use(Vuex);
-const baseURL = 'https://e-commerce-obos.herokuapp.com';
+const baseURL = 'http://localhost:3000';
 
 export default new Vuex.Store({
   state: {
