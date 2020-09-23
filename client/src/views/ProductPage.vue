@@ -28,33 +28,34 @@ export default {
   components: {
     LoadingAnimation
   },
-  data (){
+  data () {
     return {
       // game: {}
       quantity: 1
     }
   },
-  methods:{
-    addToCart(){
-      let payload={
+  methods: {
+    addToCart () {
+      const payload = {
         ProductId: this.game.id,
         quantity: this.quantity
       }
       this.$store.dispatch('addToCart', payload)
-        .then((data)=> {
+        .then((data) => {
           swal(data)
-        } )
+        })
     }
   },
-  computed:{
-    gamesData(){
+  computed: {
+    gamesData () {
       return this.$store.state.gamesData
     },
-    game(){
-      if(this.gamesData.length> 0){
-        console.log(this.$route.params.id);
-        let game = this.gamesData.filter(game => {
-          return +game.id === +this.$route.params.id})
+    game () {
+      if (this.gamesData.length > 0) {
+        console.log(this.$route.params.id)
+        const game = this.gamesData.filter(game => {
+          return +game.id === +this.$route.params.id
+        })
         return game[0]
       }
     },
@@ -75,7 +76,7 @@ export default {
   watch: {
 
   },
-  created(){
+  created () {
     this.$store.dispatch('fetchGamesData')
   }
 }

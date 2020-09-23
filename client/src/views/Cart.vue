@@ -34,16 +34,16 @@ export default {
   components: {
     CartItemCard
   },
-  computed:{
-    cartsData: function(){
+  computed: {
+    cartsData: function () {
       return this.$store.state.cartsData
     },
-    totalAmount(){
-      if(this.cartsData.length > 0){
+    totalAmount () {
+      if (this.cartsData.length > 0) {
         let totalAmount = 0
-        this.cartsData.forEach(category=> {
+        this.cartsData.forEach(category => {
           totalAmount += (category.quantity * category.Product.price)
-        });
+        })
         const price = String(totalAmount).split('')
         const result = []
         let j = price.length
@@ -54,10 +54,11 @@ export default {
             result.unshift('.')
           }
         }
-        return totalAmount = result.join('')
+        totalAmount = result.join('')
+        return totalAmount
       }
-    },
-    
+    }
+
   },
   created () {
     this.$store.dispatch('fetchCartsData')

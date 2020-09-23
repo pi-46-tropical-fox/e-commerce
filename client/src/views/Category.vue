@@ -40,15 +40,15 @@ export default {
     },
     gamesData () {
       // console.log(this.categoriesData[this.$route.params.id].Products)
-      let categoryId = this.$route.params.id
+      const categoryId = this.$route.params.id
       // console.log(categoryId);
-      if(this.categoriesData.length > 0){
-        let category = this.categoriesData.filter(element => {
+      if (this.categoriesData.length > 0) {
+        const category = this.categoriesData.filter(element => {
           // console.log(element);
 
           return element.id == categoryId
         })
-         
+
         return category[0].Products
       } else {
         return []
@@ -57,10 +57,9 @@ export default {
   },
   created () {
     this.$store.dispatch('fetchCategories')
-      // .then(() => {
-      //   this.filterGamesData()
-      // })
-    console.log("etest")
+    // .then(() => {
+    //   this.filterGamesData()
+    // })
   }
 }
 </script>

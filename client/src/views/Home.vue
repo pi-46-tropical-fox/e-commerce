@@ -43,7 +43,7 @@ export default {
       })
       for (let i = 0; i < 4; i++) {
         const index = Math.floor(Math.random() * (allGame.length - 1))
-        console.log(index);
+        console.log(index)
         result.push(allGame[index])
       }
       // console.log(allGame);

@@ -29,38 +29,38 @@ import swal from 'sweetalert'
 
 export default {
   name: 'CartItemCard',
-  data(){
-    return{
+  data () {
+    return {
       quantity: this.cart.quantity
     }
   },
-  props: [ 'cart', 'index' ],
+  props: ['cart', 'index'],
   methods: {
-    updateQuantity(){
-      let payload = {
+    updateQuantity () {
+      const payload = {
         id: this.cart.id
       }
       this.$store.dispatch('updateCart', payload)
-        .then((data)=> {
+        .then((data) => {
           swal(data)
         })
     },
-    deleteCart(){
-      let payload = {
+    deleteCart () {
+      const payload = {
         id: this.cart.id
       }
-      swal("Are you sure want to remove this item?", {
+      swal('Are you sure want to remove this item?', {
         buttons: {
-          cancel: "No",
-          yes: "Yeah"
+          cancel: 'No',
+          yes: 'Yeah'
         }
       })
-        .then((data)=> {
+        .then((data) => {
           // console.log(data);
-          if (data === "yes"){
+          if (data === 'yes') {
             this.$store.dispatch('deleteCart', payload)
             this.$store.dispatch('fetchCartsData')
-              .then((data)=> {
+              .then((data) => {
                 swal('data')
               })
           }
@@ -68,33 +68,33 @@ export default {
     }
   },
   computed: {
-    categoryName(){
-      let categoryName;
-      if(this.categoriesData.length > 0){
+    categoryName () {
+      let categoryName
+      if (this.categoriesData.length > 0) {
         this.categoriesData.forEach(category => {
           category.Products.forEach(game => {
-            if (game.id === this.cart.ProductId){
+            if (game.id === this.cart.ProductId) {
               categoryName = category.name
             }
-          });
-        });
+          })
+        })
         return categoryName
       }
     },
-    categoriesData(){
+    categoriesData () {
       return this.$store.state.categoriesData
     },
-    gameStock(){
+    gameStock () {
       return this.cart.Product.stock
-    },
+    }
 
   },
-  watch:{
-    quantity(){
+  watch: {
+    quantity () {
       this.debouncedUpdateQuantity()
     }
   },
-  created(){
+  created () {
     this.$store.dispatch('fetchCategories')
     this.debouncedUpdateQuantity = _.debounce(this.updateQuantity, 1000)
   }

@@ -30,10 +30,10 @@ export default new Vuex.Store({
       state.categoriesData = payload
     },
 
-    SET_CARTS_DATA (state, payload){
+    SET_CARTS_DATA (state, payload) {
       state.cartsData = payload
     },
-    SET_GAMES_DATA (state, payload){
+    SET_GAMES_DATA (state, payload) {
       state.gamesData = payload
     }
   },
@@ -96,7 +96,7 @@ export default new Vuex.Store({
       }
     },
 
-    fetchGamesData(context){
+    fetchGamesData (context) {
       return axios({
         method: 'get',
         url: './products',
@@ -131,7 +131,7 @@ export default new Vuex.Store({
         })
     },
 
-    fetchCartsData (context){
+    fetchCartsData (context) {
       axios({
         method: 'get',
         url: './carts',
@@ -139,16 +139,16 @@ export default new Vuex.Store({
           access_token: localStorage.access_token
         }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           // console.log(data.cartsData);
           context.commit('SET_CARTS_DATA', data.cartsData)
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
         })
     },
 
-    addToCart(context, payload){
+    addToCart (context, payload) {
       return axios({
         method: 'post',
         url: './carts',
@@ -161,17 +161,17 @@ export default new Vuex.Store({
           status: 'pending'
         }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           // console.log(data);
           return data.message
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
           return err.response.data.errors[0]
         })
     },
 
-    updateCart(context, payload){
+    updateCart (context, payload) {
       return axios({
         method: 'patch',
         url: `./carts/${payload.id}`,
@@ -179,33 +179,33 @@ export default new Vuex.Store({
           access_token: localStorage.access_token
         },
         data: {
-          quantity: payload.quantity,
+          quantity: payload.quantity
         }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           // console.log(data);
           return data.message
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
           return err.response.data.errors[0]
         })
     },
 
-    deleteCart(context, payload){
+    deleteCart (context, payload) {
       return axios({
         method: 'delete',
         url: `./carts/${payload.id}`,
         headers: {
           access_token: localStorage.access_token
-        },
+        }
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           // console.log(data);
           return data.message
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
           return err.response.data.errors[0]
         })
     }
