@@ -29,7 +29,7 @@
                     <td class="align-middle font-weight-bold" colspan="2">Sub Total</td>
                     <td class="align-middle font-weight-bold">{{ myCart.grandTotal.qty }}</td>
                     <td class="align-middle font-weight-bold" colspan="2">Rp. {{ myCart.grandTotal.price.toLocaleString() }}</td>
-                    <td class="align-middle" ><button class="btn btn-primary" >Checkout</button></td>
+                    <td class="align-middle" ><button @click.prevent="previewOrder" class="btn btn-primary" >Checkout</button></td>
                 </tr>
             </tbody>
         </table>
@@ -41,6 +41,7 @@
             <button class="btn btn-dark" @click.prevent="showListProduct">Add more product</button>
       </div>
     </div>
+    <router-view/>
   </div>
 </template>
 
@@ -56,6 +57,7 @@ export default {
       this.$store.dispatch('addToCart', productId)
     },
     decrementQty (productId, qty) {
+      console.log(productId)
       if (qty === 1) {
         Swal.fire({
           title: 'Are you sure?',
@@ -91,6 +93,13 @@ export default {
     },
     showListProduct () {
       this.$router.push({ name: 'Products' })
+    },
+    previewOrder () {
+      if (this.$store.state.currentProfile.address && this.$store.state.currentProfile.phone) {
+        this.$router.push({ path: '/carts/checkout' })
+      } else {
+        this.$router.push({ name: 'Home' })
+      }
     }
   },
   created () {

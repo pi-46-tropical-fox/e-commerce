@@ -44,12 +44,13 @@ class ProfileController {
                 const profile = await Profile.update(obj, {
                     where: {
                         UserId: req.user.id
-                    }
+                    },
+                    returning : true
                 })
-                return res.status(200).json({message: 'Profile updated'})  
+                return res.status(200).json({profile: profile[1][0], message: 'Profile updated'})  
             }else{
                 const profile = await Profile.create(obj)
-                return res.status(201).json(profile)
+                return res.status(201).json({profile, message: 'Profile updated'})
             }
         } catch (err) {
             return next(err)

@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Products from '../views/Products.vue'
 import Cart from '../views/Cart.vue'
+import Bill from '../components/Bill.vue'
 
 Vue.use(VueRouter)
 
@@ -53,7 +54,13 @@ const routes = [
   {
     path: '/carts',
     name: 'Cart',
-    component: Cart
+    component: Cart,
+    children: [
+      {
+        path: 'checkout',
+        component: Bill
+      }
+    ]
     // beforeEnter: (to, from, next) => {
     //   if (localStorage.getItem('access_token')) {
     //     next()

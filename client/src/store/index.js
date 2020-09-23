@@ -12,7 +12,12 @@ export default new Vuex.Store({
     products: [],
     isLogin: false,
     currentUser: '',
-    currentProfile: {},
+    currentProfile: {
+      firstName: '',
+      lastName: '',
+      address: '',
+      phone: ''
+    },
     myCart: {
       carts: [],
       grandTotal: {
@@ -46,6 +51,12 @@ export default new Vuex.Store({
           qty: 0,
           price: 0
         }
+      }
+      state.currentProfile = {
+        firstName: '',
+        lastName: '',
+        address: '',
+        phone: ''
       }
       router.push({ name: 'Home' })
     },
@@ -89,6 +100,16 @@ export default new Vuex.Store({
         }
       }
       state.myCart.carts = state.myCart.carts.filter(cart => cart.ProductId !== productId)
+    },
+    clearMyCart (state, data) {
+      state.myCart = {
+        carts: [],
+        grandTotal: {
+          qty: 0,
+          price: 0
+        }
+      }
+      router.push({ name: 'Products' })
     }
   },
   actions: {
@@ -293,6 +314,31 @@ export default new Vuex.Store({
             'success'
           )
           commit('updateMyCart', productId)
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
+        })
+    },
+    payNow ({ commit }) {
+      axios({
+        method: 'POST',
+        url: '/checkout',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          Swal.fire(
+            `${data.message}`,
+            '',
+            'success'
+          )
+          commit('clearMyCart')
         })
         .catch(err => {
           Swal.fire({

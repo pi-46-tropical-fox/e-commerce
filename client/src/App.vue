@@ -13,6 +13,8 @@ export default {
     if (localStorage.getItem('access_token')) {
       this.$store.state.isLogin = true
       this.$store.dispatch('fetchProfile')
+      this.$store.dispatch('fetchCart')
+      this.$store.dispatch('fetchProduct')
     } else {
       this.$store.state.isLogin = false
     }
