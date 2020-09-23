@@ -66,7 +66,8 @@ export default new Vuex.Store({
         })
     },
     AddToCart ({ dispatch, state }, id) {
-      console.log(id)
+      //console.log(id)
+      console.log(localStorage.access_token)
       if (!localStorage.access_token) {
         return swal('Error!', 'Please login first', 'error')
       }
@@ -82,7 +83,7 @@ export default new Vuex.Store({
           swal('Added', 'Successfully added to cart!', 'success')
         })
         .catch(({ response }) => {
-          swal('Error!', response.data.message, 'error')
+          swal('Error!', 'failed to added', 'error')
         })
     },
     fetchCarts ({ commit, state }) {

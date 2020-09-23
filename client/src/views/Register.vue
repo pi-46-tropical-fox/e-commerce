@@ -68,7 +68,7 @@ export default {
             console.log(res.data.access_token, '<<<< access token')
           localStorage.setItem('access_token', res.data.access_token)
           this.$store.commit('SET_ISLOGIN', true)
-          //this.$router.push({ path: '/' })
+          this.$router.push({ path: '/' })
         })
         .catch(({ response }) => {
           swal('Tet Tot!', response.data.message, 'error')
