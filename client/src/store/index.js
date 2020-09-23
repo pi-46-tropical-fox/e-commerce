@@ -37,7 +37,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
           localStorage.setItem('user_email', data.email)
-          router.push({ name: 'Products' })
+          router.push({ name: 'Electronics' })
         })
         .catch((err) => {
           console.log(err.response)
@@ -330,6 +330,87 @@ export default new Vuex.Store({
             })
         }
       })
+    },
+    addToWishlist ({ commit }, payload) {
+      axios({
+        method: 'POST',
+        url: `/wishlists/${payload}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          Toast.fire({
+            icon: 'success',
+            title: 'Added to Wishlist'
+          })
+          this.dispatch('getWishlists')
+        })
+        .catch((err) => {
+          console.log(err.response)
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err.response.data.errors[0]
+          })
+        })
+    },
+    checkoutAll ({ commit }, payload) {
+      Swal.mixin({
+        input: 'text',
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        progressSteps: ['1', '2']
+      }).queue([
+        {
+          title: 'Credit Card',
+          text: 'Please insert your CC number'
+        },
+        {
+          title: 'Shipping Address',
+          text: 'Please insert a valid address'
+        }
+      ]).then((result) => {
+        if (result.value) {
+          axios({
+            method: 'POST',
+            url: 'carts/checkoutall',
+            headers: {
+              access_token: localStorage.access_token
+            },
+            data: this.getters.activeCarts
+          })
+            .then(({ data }) => {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Checkout success!',
+                showConfirmButton: false,
+                timer: 3000
+              })
+              this.dispatch('getCarts')
+            })
+            .catch((err) => {
+              console.log(err.response)
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: err.response.data.errors[0]
+              })
+            })
+        }
+      })
     }
   },
   modules: {
@@ -337,6 +418,39 @@ export default new Vuex.Store({
   getters: {
     activeBanners: (state) => {
       return state.banners.filter((banner) => banner.status === true)
+    },
+    totalPrice: (state) => {
+      let totalPrice = 0
+      state.carts.forEach((cart) => {
+        if (cart.status === false) {
+          totalPrice += cart.Product.price * cart.quantity
+        }
+      })
+      return totalPrice
+    },
+    activeCarts: (state) => {
+      return state.carts.filter((cart) => cart.status === false)
+    },
+    histories: (state) => {
+      return state.carts.filter((cart) => cart.status === true).sort((a, b) => {
+        if (a.updatedAt > b.updatedAt) {
+          return 1
+        } else {
+          return -1
+        }
+      })
+    },
+    electronics: (state) => {
+      return state.products.filter((product) => product.category === 'Electronics')
+    },
+    books: (state) => {
+      return state.products.filter((product) => product.category === 'Books')
+    },
+    clothes: (state) => {
+      return state.products.filter((product) => product.category === 'Clothes')
+    },
+    shoes: (state) => {
+      return state.products.filter((product) => product.category === 'Shoes')
     }
   }
 })

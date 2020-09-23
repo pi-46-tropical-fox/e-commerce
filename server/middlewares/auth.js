@@ -54,10 +54,10 @@ const authorizeCart = async (req, res, next) => {
 
 const authorizeWishlist = async (req, res, next) => {
   try {
-    const cart = await Cart.findByPk(+req.params.id);
-    if (cart === null) {
+    const wishlist = await Wishlist.findByPk(+req.params.id);
+    if (wishlist === null) {
       throw { message: "Not Found", statusCode: 404 };
-    } else if (cart && cart.UserId === +req.userData.id) {
+    } else if (wishlist && wishlist.UserId === +req.userData.id) {
       next();
     } else {
       throw { message: "Unauthorized Access", statusCode: 403 };

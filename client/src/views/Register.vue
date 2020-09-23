@@ -15,6 +15,7 @@
             </div>
             <div class="form-group">
               <input type="password" class="form-control" placeholder="Password" v-model="password" required>
+              <small class="form-text text-muted">Password must be consisted of 8 to 15 characters!</small>
             </div>
             <button type="submit" class="btn btn-dark">Register</button>
           </form>

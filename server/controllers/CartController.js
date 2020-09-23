@@ -1,4 +1,5 @@
 const { Cart, Product } = require("../models");
+const { Op } = require("sequelize");
 
 class CartController {
 
@@ -45,7 +46,6 @@ class CartController {
       const cart = await Cart.findAll({
         where: {
           UserId: +req.userData.id,
-          status: false
         },
         include: [ Product ],
       });
@@ -139,6 +139,50 @@ class CartController {
       return res.status(200).json({ message: "Checkout Success!" });
     } catch (err) {
       console.log(err, "<<<< error in checkout CartController");
+      return next(err);
+    }
+  }
+
+  static async checkoutAll (req, res, next) {
+    // console.log(req.body, "<<<< ini req.body")
+    try {
+      const cartIds = [];
+      const errMessages = [];
+      // const productIds = [];
+      req.body.forEach((datum) => {
+        if (datum.quantity <= datum.Product.stock) {
+          cartIds.push(datum.id)
+          // productIds.push(datum.Product.id);
+        } else {
+          errMessages.push(`Only ${datum.Product.stock} of ${datum.Product.name} left!`);
+        }
+      });
+      console.log(cartIds, 'ini ya')
+      if (cartIds.length === req.body.length) {
+        await Cart.update({
+          status: true
+        }, {
+          where: {
+            id: {
+              [Op.in]: cartIds
+            }
+          }
+        });
+        req.body.forEach(async(datum) => {
+          await Product.update({
+            stock: datum.Product.stock - datum.quantity
+          }, {
+            where: {
+              id: datum.Product.id
+            }
+          });
+        });
+        return res.status(200).json({ message: 'Checkout Success' });
+      } else {
+        throw({ message: errMessages[0], statusCode: 400 });
+      }
+    } catch (err) {
+      console.log(err, "<<<< error in checkoutAll CartController");
       return next(err);
     }
   }

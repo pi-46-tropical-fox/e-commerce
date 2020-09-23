@@ -4,9 +4,9 @@ const BannerController = require("../controllers/BannerController");
 
 bannerRouter.post("/", authentication, authorization, BannerController.addBanner);
 
-bannerRouter.get("/", authentication, authorization, BannerController.showAllBanner);
+bannerRouter.get("/", authentication, BannerController.showAllBanner);
 
-bannerRouter.get("/:id", authentication, authorization, BannerController.getBannerById);
+bannerRouter.get("/:id", authentication, BannerController.getBannerById);
 
 bannerRouter.put("/:id", authentication, authorization, BannerController.updateBanner);
 

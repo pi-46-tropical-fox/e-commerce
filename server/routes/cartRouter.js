@@ -2,6 +2,8 @@ const CartController = require("../controllers/CartController");
 const cartRouter = require("express").Router();
 const { authentication, authorizeCart } = require("../middlewares/auth.js");
 
+cartRouter.post("/checkoutall", authentication, CartController.checkoutAll)
+
 cartRouter.post("/checkout/:id", authentication, authorizeCart, CartController.checkout);
 
 cartRouter.get("/", authentication, CartController.showAllCarts);

@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
-      <a class="navbar-brand text-light" href="#">AmaJohn</a>
+      <a class="navbar-brand text-light" href="#" @click.prevent="$router.push({ name: 'Electronics' })">AmaJohn</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -11,9 +11,10 @@
           <router-link class="nav-link active text-light" :to="{ name: 'Register' }">Register</router-link>
         </div>
         <div class="navbar-nav" v-else>
-          <router-link class="nav-link active text-light" :to="{ name: 'Products' }">Products</router-link>
+          <router-link class="nav-link active text-light" :to="{ name: 'Electronics' }">Products</router-link>
           <router-link class="nav-link active text-light" :to="{ name: 'Carts' }">Cart</router-link>
           <router-link class="nav-link active text-light" :to="{ name: 'Wishlists' }">Wishlists</router-link>
+          <router-link class="nav-link active text-light" :to="{ name: 'History' }">History</router-link>
           <a class="nav-link active text-light" href="#" @click.prevent="logout">Logout</a>
         </div>
         <div class="d-flex align-items-center" v-if="getEmail">

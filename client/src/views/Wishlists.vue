@@ -10,7 +10,7 @@
               <h5 class="card-title">{{ wishlist.Product.name }}</h5>
               <p class="card-text">Rp.{{ Number(wishlist.Product.price).toLocaleString('de-DE') }}</p>
               <p class="card-text"><span class="badge badge-warning">{{ wishlist.Product.stock }}</span> left in stock</p>
-              <a href="#" class="btn btn-sm btn-dark mr-2" @click.prevent="addToCart(wishlist.Product.id)">+ Cart</a>
+              <a href="#" class="btn btn-sm btn-dark mr-2" @click.prevent="addToCart(wishlist.Product.id)" :class="!wishlist.Product.stock ? 'disabled':''">+ Cart</a>
               <a href="#" class="btn btn-sm btn-dark" @click.prevent="removeFromWishlist(wishlist.id)">Remove</a>
             </div>
           </div>
