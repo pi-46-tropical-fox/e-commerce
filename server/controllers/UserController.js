@@ -2,6 +2,7 @@ const { User } = require("../models");
 const { generateToken } = require("../helpers/jwt");
 const { checkPassword } = require("../helpers/bcrypt");
 const { OAuth2Client } = require("google-auth-library");
+const nodemailer = require('nodemailer');
 
 class UserController {
 
@@ -24,6 +25,38 @@ class UserController {
         role
       });
       const access_token = generateToken(user);
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        auth: {
+          user: process.env.email,
+          pass: process.env.password
+        }
+      });
+      
+      const mailOptions = {
+        from: 'PT. AmaJohn Tbk.',
+        to: user.email,
+        subject: 'Welcome to AmaJohn',
+        html: `
+          <h3>Welcome to AmaJohn</h3>
+          <p>Dear Our Valued Customers, </p>
+          <p>Welcome to AmaJohn. A one-stop all solution for your daily needs. With our 24/7 customer service, we all ready to give you the best shopping experience while staying at home.</p>
+          <p>Please enjoy your shopping experience with us.</p>
+          <p>#AlwaysAmaJohn #EnjoyShopping #StayAtHome #StayPositive</p>
+          <br><br>
+          <p>Best regards, </p>
+          <p>AmaJohn Team</p>
+        `
+      };
+      
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
       return res.status(201).json({
         access_token: access_token,
         email: user.email,

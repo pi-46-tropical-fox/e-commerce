@@ -1,5 +1,6 @@
 const { Cart, Product } = require("../models");
 const { Op } = require("sequelize");
+const nodemailer = require('nodemailer');
 
 class CartController {
 
@@ -117,6 +118,7 @@ class CartController {
 
   static async checkout (req, res, next) {
     try {
+      const { totalPrice } = req.body;
       const cart = await Cart.findByPk(+req.params.id, {
         include: [ Product ]
       });
@@ -136,6 +138,37 @@ class CartController {
         },
         returning: true
       });
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        auth: {
+          user: process.env.email,
+          pass: process.env.password
+        }
+      });
+      
+      const mailOptions = {
+        from: 'PT. AmaJohn Tbk.',
+        to: req.userData.email,
+        subject: 'AmaJohn Transaction Summary',
+        html: `
+          <h3>AmaJohn Transaction Summary</h3>
+          <p>Dear Our Valued Customers, </p>
+          <p>A transaction Rp.${Number(totalPrice).toLocaleString("de-DE")} has occurred. Please wait for your orders at home.</p>
+          <p>#StayAtHome #StayPositive</p>
+          <br><br>
+          <p>Best regards, </p>
+          <p>AmaJohn Team</p>
+        `
+      };
+      
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
       return res.status(200).json({ message: "Checkout Success!" });
     } catch (err) {
       console.log(err, "<<<< error in checkout CartController");
@@ -146,10 +179,11 @@ class CartController {
   static async checkoutAll (req, res, next) {
     // console.log(req.body, "<<<< ini req.body")
     try {
+      const { activeCarts, totalPrice } = req.body;
       const cartIds = [];
       const errMessages = [];
       // const productIds = [];
-      req.body.forEach((datum) => {
+      activeCarts.forEach((datum) => {
         if (datum.quantity <= datum.Product.stock) {
           cartIds.push(datum.id)
           // productIds.push(datum.Product.id);
@@ -158,7 +192,7 @@ class CartController {
         }
       });
       console.log(cartIds, 'ini ya')
-      if (cartIds.length === req.body.length) {
+      if (cartIds.length === activeCarts.length) {
         await Cart.update({
           status: true
         }, {
@@ -168,7 +202,7 @@ class CartController {
             }
           }
         });
-        req.body.forEach(async(datum) => {
+        activeCarts.forEach(async(datum) => {
           await Product.update({
             stock: datum.Product.stock - datum.quantity
           }, {
@@ -176,6 +210,37 @@ class CartController {
               id: datum.Product.id
             }
           });
+        });
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          host: 'smtp.gmail.com',
+          auth: {
+            user: process.env.email,
+            pass: process.env.password
+          }
+        });
+        
+        const mailOptions = {
+          from: 'PT. AmaJohn Tbk.',
+          to: req.userData.email,
+          subject: 'AmaJohn Transaction Summary',
+          html: `
+            <h3>AmaJohn Transaction Summary</h3>
+            <p>Dear Our Valued Customers, </p>
+            <p>A transaction Rp.${Number(totalPrice).toLocaleString("de-DE")} has occurred. Please wait for your orders at home.</p>
+            <p>#StayAtHome #StayPositive</p>
+            <br><br>
+            <p>Best regards, </p>
+            <p>AmaJohn Team</p>
+          `
+        };
+        
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
         });
         return res.status(200).json({ message: 'Checkout Success' });
       } else {

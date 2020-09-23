@@ -57,7 +57,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
           localStorage.setItem('user_email', data.email)
-          router.push({ name: 'Products' })
+          router.push({ name: 'Electronics' })
         })
         .catch((err) => {
           console.log(err.response)
@@ -212,6 +212,9 @@ export default new Vuex.Store({
             url: `/carts/checkout/${payload}`,
             headers: {
               access_token: localStorage.access_token
+            },
+            data: {
+              totalPrice: this.getters.totalPrice
             }
           })
             .then(({ data }) => {
@@ -389,7 +392,10 @@ export default new Vuex.Store({
             headers: {
               access_token: localStorage.access_token
             },
-            data: this.getters.activeCarts
+            data: {
+              activeCarts: this.getters.activeCarts,
+              totalPrice: this.getters.totalPrice
+            }
           })
             .then(({ data }) => {
               Swal.fire({
