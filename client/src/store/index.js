@@ -12,7 +12,8 @@ export default new Vuex.Store({
     loadingStatus: false,
     products: [],
     selectedProduct: {},
-    carts: []
+    carts: [],
+    banners: []
   },
   mutations: {
     setLoadingStatus (state, payload) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     setCarts (state, payload) {
       state.carts = payload
+    },
+    setBanners (state, payload) {
+      state.banners = payload
     }
 
   },
@@ -95,7 +99,7 @@ export default new Vuex.Store({
           commit('setLoadingStatus', false)
         })
     },
-    addToCart ({commit},  payload) {
+    addToCart ({ commit }, payload) {
       axios({
         url: `/products/${payload}/cart`,
         method: 'POST',
@@ -116,7 +120,7 @@ export default new Vuex.Store({
           commit('setLoadingStatus', false)
         })
     },
-    fetchCarts ({commit}, payload) {
+    fetchCarts ({ commit }, payload) {
       commit('setLoadingStatus', true)
       axios({
         url: '/carts',
@@ -159,6 +163,18 @@ export default new Vuex.Store({
         }
       })
     },
+    fetchBanners ({ commit }, payload) {
+      axios({
+        url: '/banners',
+        method: 'GET',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          commit('setBanners', data)
+        })
+    }
   },
   modules: {
   }

@@ -1,15 +1,17 @@
 <template>
+<section class="projects-section bg-light min-vh-100">
   <div class="container">
       <Loading v-if="$store.state.loadingStatus"/>
       <div class="card">
         <table class="table">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">No</th>
                     <th scope="col">Product</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Total Price</th>
+                    <th></th>
                 </tr>
             </thead>
                 <tbody>
@@ -19,38 +21,41 @@
         </table>
       </div>
   </div>
+    <Checkout> </Checkout>
+</section>
 </template>
 
 <script>
 import Loading from '../components/Loading.vue'
 import CartCard from '../components/CartCard.vue'
+import Checkout from '../components/Checkout.vue'
 export default {
-    name: 'Cart',
-    components: {
-        CartCard,
-        Loading
-    },
-    computed: {
-        data () {
-            return this.$store.state.carts
-        }
-    },
-    methods: {
-        fetchCarts () {
-        this.$store.dispatch('fetchCarts')
-        },
-        removeItem (id) {
-            console.log(this.data);
-            this.data = this.data.filter(e => e.id !== id)
-        },
-        // filterCategories () {
-        //   this.data.products = this.data.products.filter(item => item.category === this.category)
-        // },
-    },
-    created () {
-        this.fetchCarts()
+  name: 'Cart',
+  components: {
+    CartCard,
+    Loading,
+    Checkout
+  },
+  computed: {
+    data () {
+      return this.$store.state.carts
     }
-
+  },
+  methods: {
+    fetchCarts () {
+      this.$store.dispatch('fetchCarts')
+    },
+    removeItem (id) {
+      console.log(this.data)
+      this.data = this.data.filter(e => e.id !== id)
+    }
+    // filterCategories () {
+    //   this.data.products = this.data.products.filter(item => item.category === this.category)
+    // },
+  },
+  created () {
+    this.fetchCarts()
+  }
 
 }
 </script>

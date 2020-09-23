@@ -7,6 +7,7 @@ import Register from '../components/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
 import DetailProduct from '../components/DetailProduct.vue'
 import Cart from '../views/Cart.vue'
+import Headerboard from '../views/Headerboard.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -17,6 +18,10 @@ const routes = [
     children: [
       {
         path: '',
+        component: Headerboard
+      },
+      {
+        path: 'products',
         component: Dashboard
       },
       {

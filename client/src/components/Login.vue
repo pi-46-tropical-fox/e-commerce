@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Loading v-if="$store.state.loadingStatus"/>
    <form @submit.prevent ="login"
         style="color:rgb(236 173 60);; font-weight: bold; font-size:1.2em;">
         <div class="form-group row">
@@ -18,11 +20,17 @@
         </div>
 
     </form>
+
+</div>
 </template>
 
 <script>
+import Loading from '../components/Loading.vue'
 export default {
   name: 'Login',
+  components: {
+    Loading
+  },
   data () {
     return {
       email: '',

@@ -1,22 +1,33 @@
 <template>
-  <div class="container">
-      <Loading v-if="$store.state.loadingStatus"/>
-    <div class="row row-cols-1 row-cols-md-3">
+  <section class="projects-section bg-light" id="projects">
 
-      <ProductCard v-for="(product,index) in products" :key="index"
-        :product="product" :number="index"> </ProductCard>
-      </div>
-  </div>
+        <Loading v-if="$store.state.loadingStatus"/>
+
+        <BannerCard> </BannerCard>
+
+        <div class="container">
+          <div  v-for="(product,index) in products" :key="index">
+          <ProductCardLeft v-if="index%2 == 0"
+             :product="product" :number="index"> </ProductCardLeft>
+          <ProductCardRight v-if="index%2 != 0"
+             :product="product" :number="index"> </ProductCardRight>
+          </div>
+            </div>
+        </section>
 </template>
 
 <script>
-import ProductCard from '../components/ProductCard.vue'
+import ProductCardLeft from '../components/ProductCardLeft.vue'
+import ProductCardRight from '../components/ProductCardRight.vue'
 import Loading from '../components/Loading.vue'
+import BannerCard from '../components/BannerCard.vue'
 export default {
   name: 'Dashboard',
   components: {
-    ProductCard,
-    Loading
+    ProductCardLeft,
+    ProductCardRight,
+    Loading,
+    BannerCard
   },
   computed: {
     products () {

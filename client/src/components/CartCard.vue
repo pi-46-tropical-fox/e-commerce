@@ -20,15 +20,15 @@
       <td class="align-middle">{{cart.Product.price}}</td>
       <td class="align-middle">
         <div class="align-middle row row-cols-3">
-          <button type="button" @click="removeMore(cart.id)" class="btn btn-danger">-</button>
-        
+          <button type="button" @click="removeMore(cart.id)" class="btn btn-primary">-</button>
+
           <div class="card my-auto" >{{cart.quantity}}</div>
-          <button type="button" @click="addMore(cart.id)" class="btn btn-success">+</button>
+          <button type="button" @click="addMore(cart.id)" class="btn btn-primary">+</button>
         </div>
         </td>
       <td class="align-middle">Totalnya</td>
       <td class="align-middle">
-        <a href="#" class="btn btn-product btn-danger" @click="deleteItem(cart.id)">Delete</a>
+        <a href="#" class="btn btn-product btn-primary" @click="deleteItem(cart.id)">Delete</a>
       </td>
     </tr>
 </template>
@@ -68,7 +68,7 @@ export default {
     confirmDelete (id) {
       this.$store.dispatch('deleteCart', id)
       this.$emit('removeData', id)
-    },
+    }
   }
 }
 </script>
