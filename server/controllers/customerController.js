@@ -109,8 +109,10 @@ class CustomerController {
         })
         .then(created => {
             if(isCreated) {
+                // console.log(created, 'ini created')
                 res.status(201).json(created[0])
             } else {
+                // console.log(created, 'ini created')
                 res.status(200).json(created[1][0])
             }
         })
@@ -121,6 +123,7 @@ class CustomerController {
 
     static getCart (req, res, next) {
         Cart.findAll({where:{UserId:req.userData.id, status: 'cart'},
+                      attributes: ['id', 'UserId', 'ProductId', 'quantity'],
                       include: {model: Product}})
         .then(data => {
             res.status(200).json(data)
@@ -142,7 +145,7 @@ class CustomerController {
 
     static updateCart (req, res, next) {
         let params = {quantity: req.body.quantity}
-        Cart.update(params, {where: {ProductId: req.params.productId}})
+        Cart.update(params, {where: {id: req.body.CartId}})
         .then(data => {
             res.status(200).json(data)
         })

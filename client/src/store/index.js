@@ -90,6 +90,37 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err, 'ini error addtocart')
         })
+    },
+
+    removeCart (context, id) {
+      axios({
+        method: 'DELETE',
+        url: `customers/deletecart/${id}`,
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
+    editQuantity (context, payload) {
+      console.log(payload, 'ini  payload di vuex editQuantity')
+      axios({
+        method: 'PUT',
+        url: '/customers/updatecart',
+        data: payload,
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+        .then(({ data }) => {
+          console.log(data, 'sukses menambah cart')
+          context.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err, 'ini error addtocart')
+        })
     }
   },
   getters: {

@@ -29,6 +29,8 @@
                   </div>
                 </div>
             </div>
+        <button class="btn btn-sm btn-dark text-white mr-2" @click="editQuantity(cartsData.id)" type="submit">Edit Quantity</button>
+        <button class="btn btn-sm btn-dark text-white mr-2" @click="removeCart(cartsData.id)" type="submit">Remove from Cart</button>
           </div>
         </div>
       </div>
@@ -38,6 +40,31 @@
 export default {
   name: 'CartCard',
   props: ['cartsData'],
+  methods: {
+    async editQuantity (id) {
+      const { value: quantity } = await this.$swal.fire({
+        title: `How many ${this.cartsData.Product.name} do you want?`,
+        icon: 'question',
+        input: 'range',
+        inputAttributes: {
+          min: 1,
+          max: this.cartsData.Product.stock,
+          step: 1
+        },
+        inputValue: this.cartsData.quantity
+      })
+      const payload = {
+        CartId: id,
+        quantity
+      }
+      console.log(payload, 'ini payload editQuantity yang dilempar dari cartcard ke vuex')
+      this.$store.dispatch('editQuantity', payload)
+    },
+
+    removeCart (id) {
+      this.$store.dispatch('removeCart', id)
+    }
+  },
   computed: {
     priceLocale () {
       return this.cartsData.Product.price.toLocaleString('id-ID')
