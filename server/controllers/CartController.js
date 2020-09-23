@@ -6,7 +6,7 @@ class CartController {
         try{
             const carts = await Cart.findAll({
                 where: {
-                    UserId: req.userLogin.id
+                    UserId: req.userData.id
                 },
                 include: [{
                     model: Product,
@@ -31,10 +31,10 @@ class CartController {
     }
 
     static async addToCart(req,res,next){
-        console.log('addToCart');
+        console.log(req.userData);
         try{
             const ProductId = req.params.id
-            const UserId = req.userLogin.id
+            const UserId = req.userData.id
             const checkCart = await Cart.findOne({
                 where: {
                     ProductId,
@@ -45,7 +45,7 @@ class CartController {
             })
             if (!checkCart) {
                 const added = await Cart.create({
-                    UserId,
+                    UserId: req.userData.id,
                     ProductId,
                     status: false,
                     quantity: 1
@@ -75,8 +75,7 @@ class CartController {
     static async updateCart (req,res,next) {
         console.log('updatecart');
         try {
-            const cartId = req.params.id
-            console.log(cartId);
+            const ProductId = req.params.ProductId
             const { quantity, status } = req.body
             console.log(quantity, status, 'SINIIIIIIIIIIIIIIIIII');
             const update = await Cart.update({
@@ -84,7 +83,8 @@ class CartController {
                 status
             }, {
                 where: {
-                id:cartId
+                    UserId: req.userData.id,
+                    ProductId
                 }
             })
             console.log(update);
@@ -102,7 +102,7 @@ class CartController {
         try {
             const findCart = await Cart.findAll({
                 where: {
-                    UserId: req.userLogin.id,
+                    UserId: req.userData.id,
                     status: false
                 },
                 attributes: [
@@ -165,10 +165,11 @@ class CartController {
     static async deleteFromCart(req,res,next) {
         console.log('delete');
         try{
-            const id = req.params.id
+            const ProductId = req.params.ProductId
             const del = Cart.destroy({
                 where: {
-                    id,
+                    UserId: req.userData.id,
+                    ProductId,
                     status: false
                 }
             })

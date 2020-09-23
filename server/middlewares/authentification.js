@@ -11,7 +11,7 @@ const authentication = async (req, res, next) => {
                 email: userData.email,
             }
         })
-        //console.log(user)
+        console.log(user)
         if (user) {
             req.userData = userData;
             next();
