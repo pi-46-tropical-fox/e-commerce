@@ -8,7 +8,7 @@
                 <table
                 class="table table-borderless align-self-center text-center"
                 style="width: 80rem;">
-                    <thead>
+                    <thead class="thead-primary">
                         <tr>
                           <th scope="col">Image</th>
                           <th scope="col">Product</th>
@@ -24,9 +24,9 @@
                     </tbody>
                 </table>
                 <div class="text-center">
-                  <h4 class="text-center"><b>Total</b></h4>
+                  <h4 class="text-center"><b>Total Payment</b></h4>
                   <h3>{{formatTotal}}</h3>
-                </div>
+                  </div>
                 <button @click="checkout" class="btnCheckOut btn">Checkout</button>
             </div>
         </div>

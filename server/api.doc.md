@@ -2,6 +2,23 @@
 
 E-Store is here to help you choose what you need (and perhaps, want). We use RESTful API with JSON formatted responses.
 
+## USERS 
+- Register (POST)
+- Login (POST)
+- Add to Cart (POST)
+- Delete Products From Cart (DELETE)
+- Edit Quantity From Chart (PUT)
+- Show Product All and By Category (GET)
+- SHow Banner (GET)
+
+## ADMIN 
+- POST PRODUCT
+- GET PRODUCT
+- DELETE PRODUCT
+- PUT PRODUCT
+- POST BANNER
+- DELETE BANNER
+- PUT BANNER
 ## Global Response
 ```json
     _Response 500: Internal server error_
@@ -33,7 +50,7 @@ E-Store is here to help you choose what you need (and perhaps, want). We use RES
     
     _Response 201: Created_
         {   
-            "id": "<created id by system>"
+            "id": "<created id by system>",
             "name": "<posted user's name>",
             "email": "<posted user's email>",
             "password": "<posted user's password>",
@@ -41,7 +58,7 @@ E-Store is here to help you choose what you need (and perhaps, want). We use RES
             "createdAt": "<date given by system>",
             "updatedAt": "<date given by system>"
         }
-   
+
     _Response 400: Bad Request_
         {
             "message": [...] "<list of validation errors>"

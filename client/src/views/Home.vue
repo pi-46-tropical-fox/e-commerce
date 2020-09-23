@@ -1,16 +1,16 @@
 <template>
   <div>
     <section>
-      <nav class="d-flex justify-content-between py-2 px-3">
-        <div>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-blue ftco-navbar-dark" id="ftco-navbar">
+        <div class="container">
           <router-link :to="{name: 'Home'}" id="logo">
-          <i class="fa fa-cubes" aria-hidden="true"></i>
-          <span style="font-family: 'Bungee', cursive;"> E-COMMERCE</span>
+          <i class="fa fa-bolt" aria-hidden="true"></i>
+          <span style="font-family: 'Bungee', cursive;"> E-COMMERCE Obos</span>
           </router-link>
         </div>
         <div v-if="$store.state.statusLogin">
           <router-link :to="{name: 'Cart'}">
-            <i id="cart" class="fa fa-shopping-cart mr-3" aria-hidden="true"></i>
+            <i id="cart" class="fa fa-shopping-basket mr-3" aria-hidden="true"></i>
           </router-link>
           <div style="font-family: 'Bungee', cursive;" class="dropdown mt-1">
               <button class="dropbtn">

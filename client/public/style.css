@@ -5,8 +5,8 @@
 }
 
 nav {
-    background: #2B303A;
-    color: white;
+    background: #d3f31b;
+    color:rgb(236, 4, 4);
 }
 
 #loginPage, #registerPage {
@@ -26,7 +26,7 @@ nav {
 }
 
 body{
-    background-color: gray;
+background: url('https://i.pinimg.com/originals/35/36/8d/35368df10425f4d22e43b95b7e743b5b.jpg');
 }
 
 #loginForm, #registerForm {
@@ -34,6 +34,7 @@ body{
     width: 30%;
     padding: 20px;
     border-radius: 20px;
+    background-color:rgba(247, 247, 7, 0.781);
 }
 
 #loginForm i {
@@ -61,7 +62,7 @@ body{
 }
 
 #logo:hover {
-    color: #1D7874;
+    color: #24ada7;
 }
 
 #cart {
@@ -76,8 +77,8 @@ body{
 }
 
 .contentCategory {
-    background: #1D7874;
-    color: white;
+    background: #9cd80e;
+    color: rgb(26, 10, 10);
     border-radius: 10px;
     width: 300px;
     height: 70px;

@@ -1,21 +1,21 @@
 <template>
     <div>
         <div class="col-3 my-2 ml-1">
-            <div class="card" style="width: 12rem; height: 20rem;">
-                <img height="170"
-                :src="product.image_url"
-                class="card-img-top"
-                alt="image">
-                <div
-                class="card-body d-flex flex-column justify-content-around">
-                    <a @click="detailProduct(product.id)"
+            <div class="card" style="width: 15rem; height: 25rem;">
+                <a @click="detailProduct(product.id)"
                     class="detailProduct"
                     role="button">
+                <img height="200"
+                :src="product.image_url"
+                class="card-img-top"
+                alt="image"></a>
+                <div
+                class="card-body d-flex flex-column justify-content-around">
                     <span
                     class="card-text text-truncate font-weight-bold">
-                    {{product.name}}</span></a>
-                    <span class="card-text text-wrap">{{price}}</span>
-                    <span class="card-text text-wrap">{{product.stock}}</span>
+                    {{product.name}}</span>
+                    <span class="card-text text-wrap">Price: {{price}}</span>
+                    <span class="card-text text-wrap">Stock : {{product.stock}}</span>
                     <span class="card-text text-truncate">{{product.category}}</span>
                 </div>
             </div>

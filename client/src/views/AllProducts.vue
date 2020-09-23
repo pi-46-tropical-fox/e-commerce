@@ -31,18 +31,21 @@ export default {
       if (this.$route.params.name === 'Game') {
         return this.$store.getters.gameProducts
       } 
-      if (this.$route.params.name === 'Electronic&Gadget') {
+      if (this.$route.params.name === 'Electronic & Gadget') {
         return this.$store.getters.electronicProducts
+      } 
+      if (this.$route.params.name === 'Book') {
+        return this.$store.getters.bookProducts
+      }
+      if (this.$route.params.name === 'Voucher') {
+        return this.$store.getters.voucherProducts
+      }  
+      if (this.$route.params.name === 'Food & Drink') {
+        return this.$store.getters.foodProducts
       } 
       if (!isNaN(this.$route.params.name)) {
         return this.$store.state.filteredProducts
       }
-      if (this.$route.params.name === 'Book') {
-        return this.$store.getters.bookProducts
-      } 
-      if (this.$route.params.name === 'Food') {
-        return this.$store.getters.foodProducts
-      } 
       return this.$store.state.products
     }
   },

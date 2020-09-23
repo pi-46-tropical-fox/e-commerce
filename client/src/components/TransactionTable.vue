@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <h5 class="card-header text-light"
-        style="background: #1D7874; font-family: 'Bungee', cursive;">7th June 2020</h5>
+        style="background: #1D7874; font-family: 'Bungee', cursive;">28 Sept 2020</h5>
         <div class="card-body">
             <table class="table table-borderless text-center" style="width: 60rem;">
                 <thead>

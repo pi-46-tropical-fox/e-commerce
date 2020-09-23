@@ -5,7 +5,7 @@ import swal from 'sweetalert';
 import router from '../router';
 
 Vue.use(Vuex);
-const baseURL = 'http://localhost:3000';
+const baseURL = 'https://e-commerce-obos.herokuapp.com';
 
 export default new Vuex.Store({
   state: {
@@ -17,46 +17,47 @@ export default new Vuex.Store({
     carts: [],
   },
   getters: {
-    filteredProducts: (state) => state.products.slice(0, 11),
+    filteredProducts: (state) => state.products.slice(0, 8),
     fashionProducts: (state) => state.products.filter((item) => item.category === 'Fashion'),
     bookProducts: (state) => state.products.filter((item) => item.category === 'Book'),
     gameProducts: (state) => state.products.filter((item) => item.category === 'Game'),
-    foodProducts: (state) => state.products.filter((item)=> item.category === 'Food'),
-    electronicProducts: (state) => state.products.filter((item) => item.category === 'Electronic&Gadget'),
+    foodProducts: (state) => state.products.filter((item)=> item.category === 'Food & Drink'),
+    electronicProducts: (state) => state.products.filter((item) => item.category === 'Gadget & Electronic'),
+    voucherProducts: (state) => state.products.filter((item) => item.category === 'Voucher')
   },
   mutations: {
     SET_STATUS_LOGIN(state) {
       if (localStorage.access_token) {
-        state.statusLogin = true;
+        state.statusLogin = true
       } else {
-        state.statusLogin = false;
+        state.statusLogin = false
       }
     },
     SET_STATUS_LOGOUT(state, status) {
-      state.statusLogin = status;
+      state.statusLogin = status
     },
     SET_PRODUCTS(state, products) {
-      state.products = products.filter((item) => item.stock > 0);
+      state.products = products.filter((item) => item.stock > 0)
     },
     SET_BANNERS(state, banners) {
-      state.banners = banners;
+      state.banners = banners
     },
     FIND_PRODUCT(state, product) {
-      state.product = product;
+      state.product = product
     },
     FILTER_PRODUCT(state, params) {
-      state.filteredProducts = state.products.filter((item) => item.BannerId === +params);
-      router.push({ name: 'AllProducts', params: { name: +params } });
+      state.filteredProducts = state.products.filter((item) => item.BannerId === +params)
+      router.push({ name: 'AllProducts', params: { name: +params } })
     },
     SET_CARTS(state, carts) {
-      state.carts = carts;
+      state.carts = carts
     },
     DELETE_CART(state, id) {
-      state.carts = state.carts.filter((cart) => cart.id !== id);
+      state.carts = state.carts.filter((cart) => cart.id !== id)
     },
     RESET_CART(state) {
-      state.carts = [];
-    },
+      state.carts = []
+    }
   },
   actions: {
     processLogin(context, data) {
@@ -66,19 +67,19 @@ export default new Vuex.Store({
         data: {
           email: data.email,
           password: data.password,
-        },
+        }
       })
         .then((result) => {
-          localStorage.setItem('access_token', result.data.access_token);
-          localStorage.setItem('name', result.data.name);
-          context.commit('SET_STATUS_LOGIN');
-          router.push({ name: 'Home' });
+          localStorage.setItem('access_token', result.data.access_token)
+          localStorage.setItem('name', result.data.name)
+          context.commit('SET_STATUS_LOGIN')
+          router.push({ name: 'Home' })
         })
         .catch((err) => {
           const error = err.response.data.message;
           // console.log(error);
-          swal('Error', `${error}`, 'error');
-        });
+          swal('Error', `${error}`, 'error')
+        })
     },
     registerProcess(context, user) {
       axios({
@@ -88,41 +89,41 @@ export default new Vuex.Store({
           name: user.name,
           email: user.email,
           password: user.password,
-          role: user.role,
-        },
+          role: user.role
+        }
       })
         .then(() => {
-          swal('Success!', 'We\'ll direct you to our login page.', 'success');
-          router.push({ name: 'Login' });
+          swal('Success!', 'We\'ll direct you to our login page.', 'success')
+          router.push({ name: 'Login' })
         })
         .catch((err) => {
-          const errors = err.response.data;
-          let message;
+          const errors = err.response.data
+          let message
           if (Array.isArray(errors.message)) {
-            message = errors.message.join(', ');
+            message = errors.message.join(', ')
             // console.log(message, `ini message`)
           } else {
-            message = errors.message;
+            message = errors.message
           }
-          swal('Error!', `${message}`, 'error');
-        });
+          swal('Error!', `${message}`, 'error')
+        })
     },
     showProducts(context) {
       axios({
         method: 'GET',
         url: `${baseURL}/products`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
       })
         .then((result) => {
           // console.log(result.data);
-          context.commit('SET_PRODUCTS', result.data);
+          context.commit('SET_PRODUCTS', result.data)
         })
         .catch(() => {
           // const error = err.response.data.message;
           // console.log(error);
-          swal('Error!', 'Something went wrong.', 'error');
+          swal('Error!', 'Something went wrong.', 'error')
         });
     },
     showBanners(context) {
@@ -130,17 +131,17 @@ export default new Vuex.Store({
         method: 'GET',
         url: `${baseURL}/banners`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
       })
         .then((result) => {
           // console.log(result.data);
-          context.commit('SET_BANNERS', result.data);
+          context.commit('SET_BANNERS', result.data)
         })
         .catch(() => {
           // const error = err.response.data.message;
           // console.log(error);
-          swal('Error!', 'Something went wrong.', 'error');
+          swal('Error!', 'Something went wrong.', 'error')
         });
     },
     findProduct(context, id) {
@@ -148,23 +149,23 @@ export default new Vuex.Store({
         method: 'GET',
         url: `${baseURL}/products/${id}`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
       })
         .then((result) => {
           context.commit('FIND_PRODUCT', result.data);
-          router.push({ name: 'DetailProduct', params: { id } });
+          router.push({ name: 'DetailProduct', params: { id } })
         })
         .catch(() => {
-          swal('Error!', 'Something went wrong.', 'error');
-        });
+          swal('Error!', 'Something went wrong.', 'error')
+        })
     },
     addCart(context, data) {
       axios({
         method: 'POST',
         url: `${baseURL}/carts/${data.ProductId}`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
         data: {
           quantity: data.quantity,
@@ -172,11 +173,11 @@ export default new Vuex.Store({
       })
         .then(() => {
           // console.log(result.data, 'ini hasilnya gaes');
-          swal('Success!', 'Success adding product to cart!', 'success');
+          swal('Success!', 'Success adding product to cart!', 'success')
         })
         .catch((err) => {
           // console.log(err.response);
-          swal('Error!', `${err.response.message}`, 'error');
+          swal('Error!', `${err.response.message}`, 'error')
         });
     },
     showCarts(context) {
@@ -184,70 +185,71 @@ export default new Vuex.Store({
         method: 'GET',
         url: `${baseURL}/carts`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
       })
         .then((result) => {
           // console.log(result.data)
-          context.commit('SET_CARTS', result.data);
+          context.commit('SET_CARTS', result.data)
         })
         .catch(() => {
-          swal('Error!', 'Something went wrong.', 'error');
-        });
+          swal('Error!', 'Something went wrong.', 'error')
+        })
     },
     deleteCart(context, id) {
       axios({
         method: 'DELETE',
         url: `${baseURL}/carts/${id}`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
       })
         .then((result) => {
           // console.log(result.data)
-          swal('Success!', `${result.data.message}`, 'success');
-          context.commit('DELETE_CART', id);
+          swal('Success!', `${result.data.message}`, 'success')
+          context.commit('DELETE_CART', id)
         })
         .catch(() => {
-          swal('Error!', 'Something went wrong.', 'error');
-        });
+          swal('Error!', 'Something went wrong.', 'error')
+        })
     },
+    //harus diganti dengan update ya
     deleteAllCarts(context) {
       axios({
         method: 'DELETE',
         url: `${baseURL}/carts`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
       })
         .then(() => {
           // console.log(result.data)
           context.commit('RESET_CART');
-          swal('Success!', 'Thank you for purchasing at our store!', 'success');
+          swal('Success!', 'Thank you for purchasing at our store!', 'success')
           // router.push({name: 'Home'})
         })
         .catch(() => {
-          swal('Error!', 'Something went wrong.', 'error');
-        });
+          swal('Error!', 'Something went wrong.', 'error')
+        })
     },
     editProductStock(context, data) {
       axios({
         method: 'PUT',
         url: `${baseURL}/carts`,
         headers: {
-          access_token: localStorage.access_token,
+          access_token: localStorage.access_token
         },
         data: {
           ProductId: data.ProductId,
-          quantity: data.quantity,
+          quantity: data.quantity
         },
       })
         .then(() => {})
         .catch(() => {
-          swal('Error!', 'Something went wrong.', 'error');
-        });
-    },
+          swal('Error!', 'Something went wrong.', 'error')
+        })
+    }
   },
   modules: {
   },
-});
+})

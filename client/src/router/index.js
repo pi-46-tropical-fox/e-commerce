@@ -43,13 +43,13 @@ const routes = [
         component: Register
       },
       {
-        path: 'p/detail/:id',
+        path: 'category/detail/:id',
         name: 'DetailProduct',
         component: DetailProduct,
         props: true
       },
       {
-        path: 'p/:name',
+        path: 'category/:name',
         name: 'AllProducts',
         component: AllProducts,
         props: true

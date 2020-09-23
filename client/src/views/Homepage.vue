@@ -8,7 +8,7 @@
                     <div class="carousel-item active">
                         <a>
                             <img style="height: 500px; width: 500px;"
-                            src="https://scontent.fcgk8-2.fna.fbcdn.net/v/t1.0-9/15665519_1273126016067693_222518957897419821_n.jpg?_nc_cat=109&_nc_sid=174925&_nc_eui2=AeEPRw0tYIMEKyEssTJKY32vS7Y1d9uVlwdLtjV325WXB2sspQTpeD5X6MKZEhdkSFdWLXPlVddpax4r4swlXZ9-&_nc_ohc=LEWOB-0JI1sAX-iCJ1Y&_nc_ht=scontent.fcgk8-2.fna&oh=744a0a9b0b23d8ac3b5a9ad96477b9cc&oe=5F900C1D"
+                            src="https://cdn1.vectorstock.com/i/1000x1000/51/65/welcome-banner-with-colorful-confetti-vector-17355165.jpg"
                             class="d-block w-100" alt="...">
                         </a>
                     </div>
@@ -35,7 +35,7 @@
                     <router-link :to="{name:'AllProducts', params: {name: 'Fashion'}}">
                         <button style="font-family: 'Bungee', cursive;"
                         class="contentCategory btn" href="" type="button">
-                        <i class="fa fa-book" aria-hidden="true"></i>&nbsp;Fashion
+                        <i class="fa fa-female" aria-hidden="true"></i>&nbsp;Fashion
                         </button>
                     </router-link>
                 </div>
@@ -57,15 +57,24 @@
                     </router-link>
                 </div>
                     <div class="col-4">
-                    <router-link :to="{name:'AllProducts', params: {name: 'Food'}}">
+                    <router-link :to="{name:'AllProducts', params: {name: 'Food & Drink'}}">
                         <button style="font-family: 'Bungee', cursive;"
                         class="contentCategory btn" href="" type="button">
-                            <i class="fa fa-book" aria-hidden="true"></i>&nbsp;Food & Drink
+                            <i class="fa fa-cutlery" aria-hidden="true"></i>&nbsp;Food & Drink
                         </button>
                     </router-link>
                 </div>
-                <div class="col-4">
-                    <router-link :to="{name:'AllProducts', params: {name: 'Electronic&Gadget'}}">
+                <div class="col-5">
+                    <router-link :to="{name:'AllProducts', params: {name: 'Voucher'}}">
+                    <button style="font-family: 'Bungee', cursive;"
+                    class="contentCategory btn" href="" role="button">
+                        <i class="fa fa-laptop" aria-hidden="true">
+                        </i>&nbsp;Voucher
+                    </button>
+                    </router-link>
+                    </div>
+                <div class="col-5">
+                    <router-link :to="{name:'AllProducts', params: {name: 'Electronic & Gadget'}}">
                     <button style="font-family: 'Bungee', cursive;"
                     class="contentCategory btn" href="" role="button">
                         <i class="fa fa-laptop" aria-hidden="true">
@@ -78,6 +87,7 @@
         </section>
         <section class="d-flex flex-column my-3 mb-5">
             <div class="text-center my-5">
+            <img src="https://www.gambaranimasi.org/data/media/1633/animasi-bergerak-kereta-belanja-0016.gif" border="0" alt="animasi-bergerak-kereta-belanja-0016" />
                 <h1 style="font-family: 'Bungee', cursive;">Our Products</h1>
             </div>
             <div>
