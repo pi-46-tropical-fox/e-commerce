@@ -21,9 +21,9 @@ app.use(routes)
 //Error Handler Middleware
 app.use(errorHandler)
 
-// app.listen(port, () => {
-//     console.log(`Listen on http://localhost:${port}`)
-// })
+app.listen(port, () => {
+    console.log(`Listen on http://localhost:${port}`)
+})
 
 
 module.exports = app
