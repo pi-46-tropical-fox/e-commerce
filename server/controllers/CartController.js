@@ -16,7 +16,7 @@ class CartController {
                 price: 0
             }
             if(carts.length < 1){
-                throw {name: 'EmptyCart'}
+                return res.status(200).json({carts, grandTotal})
             }else{
                 for(const el of carts){
                     grandTotal.qty += el.qty

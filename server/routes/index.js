@@ -5,6 +5,7 @@ const cartRouter = require('./cart')
 const checkoutRouter = require('./checkout')
 const profileRouter = require('./profile')
 const transactionRoute = require('./transaction')
+const wishlistRouter = require('./wishlist')
 const UserController = require('../controllers/UserController')
 const {authentication, customerAuthorization} = require('../middlewares/auth')
 
@@ -22,9 +23,10 @@ router.use('/categories', categoryRouter)
 
 router.use(customerAuthorization)
 
-router.use('/cart', cartRouter)
+router.use('/carts', cartRouter)
 router.use('/checkout', checkoutRouter)
 router.use('/profile', profileRouter)
 router.use('/transactions', transactionRoute)
+router.use('/wishlists', wishlistRouter)
 
 module.exports = router

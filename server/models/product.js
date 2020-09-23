@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Product.belongsToMany(models.User,{through:models.Cart})
       //super many to many
       Product.hasMany(models.Cart)
+      Product.hasMany(models.Wishlist)
     }
   };
   Product.init({
