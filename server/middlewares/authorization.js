@@ -1,6 +1,7 @@
 const { User } = require('../models')
 
 const authorization = (req, res, next) => {
+    console.log(req.userData)
     console.log(req.userData.id, '<<< user data id')
     User.findByPk(req.userData.id)
     .then(user=>{
