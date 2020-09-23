@@ -1,15 +1,15 @@
 <template>
   <div id="carouselExampleInterval" class="carousel slide pt-5" data-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active" data-interval="5000">
+      <!-- <div class="carousel-item active" data-interval="10000">
         <img src="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_45M_v2_1x._CB432458380_.jpg" class="d-block w-100" alt="banner">
+      </div> -->
+      <div class="carousel-item" data-interval="8000" v-for="(banner, index) in banners" :key="banner.id" :class="index === 0 ? 'active' : ''">
+        <img :src="banner.image_url" class="d-block w-100" alt="banner">
       </div>
-      <div class="carousel-item" data-interval="2000">
-        <img src="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_Sports_en_US_1x._CB431860448_.jpg" class="d-block w-100" alt="banner">
-      </div>
-      <div class="carousel-item">
+      <!-- <div class="carousel-item">
         <img src="https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2020/May/Hero/Fuji_TallHero_Computers_1x._CB432469755_.jpg" class="d-block w-100" alt="banner">
-      </div>
+      </div> -->
     </div>
     <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -24,7 +24,15 @@
 
 <script>
 export default {
-  name: 'Banner'
+  name: 'Banner',
+  created () {
+    this.$store.dispatch('getBanners')
+  },
+  computed: {
+    banners () {
+      return this.$store.getters.activeBanners
+    }
+  }
 }
 </script>
 

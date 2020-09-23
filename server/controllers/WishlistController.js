@@ -11,7 +11,8 @@ class WishlistController {
         }
       });
       if (wishlist) {
-        return res.status(400).json({ message: "Product has already existed in the wishlist" });
+        // return res.status(400).json({ message: "Product has already existed in the wishlist" });
+        throw { message: "Product has already existed in the wishlist", statusCode: 400 };
       }
       const addWishlist = await Wishlist.create({
         UserId: +req.userData.id,

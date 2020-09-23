@@ -19,11 +19,7 @@ class BannerController {
 
   static async showAllBanner (req, res, next) {
     try {
-      const banners = await Banner.findAll({
-        where: {
-          status: true
-        }
-      });
+      const banners = await Banner.findAll();
       return res.status(200).json(banners);
     } catch (err) {
       console.log(err, "<<<< error in showAllBanner BannerController");

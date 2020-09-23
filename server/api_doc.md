@@ -906,8 +906,10 @@ _Response (201 - Created)_
 
 _Response (400 - Bad request)_
 ```
-{ 
-  message: "Quantity exceeds stock!" 
+{
+  "errors": [
+    "<Quantity exceeds stock!"
+  ]
 }
 
 OR
@@ -1147,8 +1149,10 @@ _Response (200 - OK)_
 
 _Response (400 - Bad request)_
 ```
-{ 
-  message: "Quantity exceeds stock!" 
+{
+  "errors": [
+    "<Quantity exceeds stock!>"
+  ]
 }
 
 OR
@@ -1285,7 +1289,9 @@ _Response (201 - Created)_
 _Response (400 - Bad request)_
 ```
 {
-  message: "Product has already existed in the wishlist"
+  "errors": [
+    "<Product has already existed in the wishlist>"
+  ]
 }
 
 OR

@@ -7,13 +7,15 @@ class CartController {
       const cart = await Cart.findOne({
         where: {
           UserId: +req.userData.id,
-          ProductId: +req.params.productId
+          ProductId: +req.params.productId,
+          status: false
         },
         include: [ Product ]
       });
       if (cart) {
         if (cart.quantity >= cart.Product.stock) {
-          return res.status(400).json({ message: "Quantity exceeds stock!" });
+          // return res.status(400).json({ message: "Quantity exceeds stock!" });
+          throw { message: "Quantity exceeds stock!", statusCode: 400 };
         }
         const updateCart = await Cart.update({
           quantity: cart.quantity + 1
@@ -71,20 +73,28 @@ class CartController {
       const checkQuantity = await Cart.findByPk(+req.params.id, {
         include: [ Product ]
       });
-      const { quantity, status } = req.body;
-      if (quantity > checkQuantity.Product.stock) {
-        return res.status(400).json({ message: "Quantity exceeds stock!" });
+      // const { quantity, status } = req.body;
+      if (checkQuantity.quantity > checkQuantity.Product.stock) {
+        // return res.status(400).json({ message: "Quantity exceeds stock!" });
+        throw { message: "Quantity exceeds stock!", statusCode: 400 };
+      } else if (checkQuantity.quantity <= 1) {
+        await Cart.destroy({
+          where: {
+            id: +req.params.id
+          }
+        });
+        return res.status(200).json({ message: "A product has been removed from cart" });
+      } else {
+        const cart = await Cart.update({
+          quantity: checkQuantity.quantity - 1
+        }, {
+          where: {
+            id: +req.params.id
+          },
+          returning: true
+        });
+        return res.status(200).json(cart[1][0]);
       }
-      const cart = await Cart.update({
-        quantity,
-        status
-      }, {
-        where: {
-          id: +req.params.id
-        },
-        returning: true
-      });
-      return res.status(200).json(cart[1][0]);
     } catch (err) {
       console.log(err, "<<<< error in updateCart CartController");
       return next(err);
