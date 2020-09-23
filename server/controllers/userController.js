@@ -38,7 +38,7 @@ class UserController{
                 console.log(flag)
                 if(flag) {
                     const access_token = generateToken(data)
-                    return res.status(200).json({access_token, role: data.role, message: 'Success to login!'})
+                    return res.status(200).json({access_token, id:data.id, role:data.role, message: 'Success to login!'})
                 }else {
                     throw {message: 'Invalid name or password', statusCode: 400}
                 }

@@ -9,6 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       Id: {
+        autoIncrement: true,
         type: Sequelize.INTEGER
       },
       quantity: {

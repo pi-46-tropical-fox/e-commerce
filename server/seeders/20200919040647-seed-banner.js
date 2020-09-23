@@ -14,14 +14,14 @@ module.exports = {
    await queryInterface.bulkInsert('Banners', [
     {
      title: "https://static.vecteezy.com/system/resources/previews/000/662/992/original/abstract-fashion-banner-design-vector.jpg",
-     status: 'inactive',
+     status: 'active',
      category: 'fashion',
      createdAt: new Date(),
      updatedAt: new Date()
     },
     {
       title: "https://img.freepik.com/free-vector/promotion-fashion-banner_1188-223.jpg?size=626&ext=jpg",
-      status: 'inactive',
+      status: 'active',
       category: 'fashion',
       createdAt: new Date(),
       updatedAt: new Date()

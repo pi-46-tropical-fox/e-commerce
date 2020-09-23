@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Preloader></Preloader>
     <Header></Header>
-
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-option">
       <div class="container">
@@ -11,8 +9,7 @@
             <div class="breadcrumb__text">
               <h4>Shopping Cart</h4>
               <div class="breadcrumb__links">
-                <a href="./index.html">Home</a>
-                <a href="./shop.html">Shop</a>
+                <a @click.prevent="$router.push('/')" href="">Home</a>
                 <span>Shopping Cart</span>
               </div>
             </div>
@@ -39,8 +36,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <CardCart></CardCart>
-                  <CardCart></CardCart>
+                  <CardCart v-for="cart in filteredCarts" :key="cart.id" :cart="cart"></CardCart>
                 </tbody>
               </table>
             </div>
@@ -48,12 +44,12 @@
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="continue__btn">
-                  <a href="#">Continue Shopping</a>
+                  <a @click.prevent="$router.push('/')" href="">Continue Shopping</a>
                 </div>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="continue__btn update__btn">
-                  <a href="#">
+                  <a @click.prevent="checkout" href="">
                     Checkout
                   </a>
                 </div>
@@ -70,17 +66,47 @@
 </template>
 
 <script>
-import Preloader from '../components/Preloader'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CardCart from '../components/CardCart'
 export default {
   name: 'Cart',
   components: {
-    Preloader,
     Header,
     Footer,
     CardCart
+  },
+  methods: {
+    checkout () {
+      this.$store.dispatch('checkout')
+        .then(() => {
+          this.$store.dispatch('fetchCarts')
+          // this.$store.dispatch('fetchProducts')
+          return this.$router.push('/cart')
+        })
+        // .then(() => {
+        //   return this.$router.push('/')
+        // })
+    }
+  },
+  computed: {
+    carts () {
+      return this.$store.state.carts
+    },
+    filteredCarts () {
+      // FILTERING CARTS OWNED BY USERID
+      const result = []
+      this.carts.forEach(element => {
+        if (element.UserId == localStorage.getItem('UserId')) {
+          result.push(element)
+        }
+      })
+
+      return result
+    }
+  },
+  created () {
+    this.$store.dispatch('fetchCarts')
   }
 }
 </script>

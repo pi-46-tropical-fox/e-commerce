@@ -6,12 +6,12 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="footer__about">
             <div class="footer__logo">
-              <a href="#">
+              <a @click.prevent="$router.push('/')" href="">
                 <img src="img/footer-logo.png" alt />
               </a>
             </div>
             <p>The customer is at the heart of our unique business model, which includes design.</p>
-            <a href="#">
+            <a>
               <img src="img/payment.png" alt />
             </a>
           </div>
@@ -21,16 +21,16 @@
             <h6>Shopping</h6>
             <ul>
               <li>
-                <a href="#">Clothing Store</a>
+                <a>Clothing Store</a>
               </li>
               <li>
-                <a href="#">Trending Shoes</a>
+                <a>Trending Shoes</a>
               </li>
               <li>
-                <a href="#">Accessories</a>
+                <a>Accessories</a>
               </li>
               <li>
-                <a href="#">Sale</a>
+                <a>Sale</a>
               </li>
             </ul>
           </div>
@@ -40,16 +40,16 @@
             <h6>Shopping</h6>
             <ul>
               <li>
-                <a href="#">Contact Us</a>
+                <a>Contact Us</a>
               </li>
               <li>
-                <a href="#">Payment Methods</a>
+                <a>Payment Methods</a>
               </li>
               <li>
-                <a href="#">Delivary</a>
+                <a>Delivary</a>
               </li>
               <li>
-                <a href="#">Return & Exchanges</a>
+                <a>Return & Exchanges</a>
               </li>
             </ul>
           </div>

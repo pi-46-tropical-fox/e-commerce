@@ -4,7 +4,7 @@
       <div class="product__item__pic set-bg" :style="image">
         <ul class="product__hover">
           <li>
-            <a href="#">
+            <a @click.prevent="addWishlist" href="#">
               <img src="img/icon/heart.png" alt />
               <span>Add to wishlist</span>
             </a>
@@ -13,7 +13,7 @@
       </div>
       <div class="product__item__text">
         <h6>{{product.name}}</h6>
-        <a href="#" class="add-cart">+ Add To Cart</a>
+        <a @click.prevent="addCart" href="" class="add-cart">+ Add To Cart</a>
         <h5>Rp{{product.price}}</h5> <h6>stock: {{product.stock}}</h6>
         <div class="product__color__select">
           <h6>{{product.category}}</h6>
@@ -33,9 +33,22 @@ export default {
       image: ''
     }
   },
+  methods: {
+    addCart () {
+      this.$store.dispatch('addCart', this.id)
+        .then(() => {
+          return this.$router.push('/cart')
+        })
+    },
+    addWishlist () {
+      this.$store.dispatch('addWishlist', this.id)
+        .then(() => {
+          return this.$router.push('/wishlist')
+        })
+    }
+  },
   created () {
     return (this.image = `background-image: url(${this.source})`)
-    
   }
 }
 </script>

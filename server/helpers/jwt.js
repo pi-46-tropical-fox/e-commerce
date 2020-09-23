@@ -1,5 +1,5 @@
+require ('dotenv').config
 const jwt = require('jsonwebtoken')
-// const secret = process.env.SECRET
 const secret = 'tidaaakh'
 
 function generateToken(user) {

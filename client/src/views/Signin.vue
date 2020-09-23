@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header></Header>
     <div class="container2">
       <div class="overlay" id="overlay">
         <div class="sign-in" id="sign-in" style="padding-left: 10px">
@@ -19,26 +20,33 @@
         </div>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 export default {
   name: 'Signin',
-  data() {
+  components: {
+    Header,
+    Footer
+  },
+  data () {
     return {
       email: '',
       password: ''
     }
   },
   methods: {
-    login() {
-      let payload = {
+    login () {
+      const payload = {
         email: this.email,
         password: this.password
       }
       this.$store.dispatch('login', payload)
-        .then( () => {
+        .then(() => {
           return this.$router.push('/')
         })
         .catch(err => {
@@ -77,6 +85,7 @@ html {
   box-shadow: 2px 10px 40px rgba(22, 20, 19, 0.4);
   border-radius: 10px;
   margin-top: 50px;
+  margin-bottom: 100px;
   padding-left: 0px;
 }
 /*

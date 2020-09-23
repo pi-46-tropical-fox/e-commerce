@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Preloader></Preloader>
     <Header></Header>
 
     <!-- Breadcrumb Section Begin -->
@@ -9,9 +8,9 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="breadcrumb__text">
-              <h4>Shop</h4>
+              <h4>Wishlist</h4>
               <div class="breadcrumb__links">
-                <a href="./index.html">Home</a>
+                <a @click.prevent="$router.push('/')" href="">Home</a>
                 <span>Wishlist</span>
               </div>
             </div>
@@ -20,7 +19,7 @@
       </div>
     </section>
     <!-- Breadcrumb Section End -->
-
+ 
     <!-- Shop Section Begin -->
     <section class="shop spad">
       <div class="container">
@@ -31,7 +30,7 @@
                 <div class="accordion" id="accordionExample">
                   <div class="card">
                     <div class="card-heading">
-                      <a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+                      <a data-toggle="collapse" data-target="#collapseOne">Wishlist</a>
                     </div>
                   </div>
                 </div>
@@ -49,8 +48,7 @@
               </div>
             </div>
             <div class="row">
-              <CardWishlist></CardWishlist>
-              <CardWishlist></CardWishlist>
+              <CardWishlist v-for="wishlist in filteredWishlists" :key="wishlist.id" :wishlist="wishlist"></CardWishlist>
             </div>
           </div>
         </div>
@@ -63,17 +61,34 @@
 </template>
 
 <script>
-import Preloader from '../components/Preloader'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CardWishlist from '../components/CardWishlist'
 export default {
   name: 'Wishlist',
   components: {
-    Preloader,
     Header,
     Footer,
     CardWishlist
+  },
+  computed: {
+    wishlists() {
+      return this.$store.state.wishlists
+    },
+    filteredWishlists() {
+      // FILTERING WISHLIST OWNED BY USERID
+      const result = [];
+      this.wishlists.forEach((element) => {
+        if (element.UserId == localStorage.getItem('UserId')) {
+          result.push(element);
+        }
+      });
+
+      return result;
+    },
+  },
+  created() {
+    this.$store.dispatch("fetchWishlists");
   }
 }
 </script>
