@@ -13,7 +13,6 @@
             class="dropdown-item"
             v-for="category in categoriesData"
             :key="category.id"
-            :category='category'
             :to='`/products/${category.id}`'>
           {{category.name}}
           </router-link>
