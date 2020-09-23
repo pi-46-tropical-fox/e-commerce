@@ -128,19 +128,10 @@ class Controller {
     static deleteCartItem(req, res) {
         let productID = req.params.productID
         let quantity = req.params.qty
-        Product.increment(
-            { 'stock': quantity },
-            {
-                where:
-                {
-                    id: productID,
-                    UserId: req.UserData.id
-                }
-            }
-        )
+        Product.increment({ 'stock': quantity },{where:{id: productID}})
             .then(result => {
                 console.log(result, 'reset stock of product from cart');
-                return Cart.destroy({ where: { id: req.params.id } })
+                return Cart.destroy({ where: { id: req.params.id, UserId: req.UserData.id } })
             })
             .then(result => {
                 console.log(result, 'deleted item from cart');
@@ -152,7 +143,7 @@ class Controller {
             })
     }
     static getCart(req, res) {
-        Cart.findAll({ where: { UserId: req.UserData.id } })
+        Cart.findAll({ where: { UserId: req.UserData.id }, include: {model: Product} })
             .then(result => {
                 res.status(200).json(result)
             })
