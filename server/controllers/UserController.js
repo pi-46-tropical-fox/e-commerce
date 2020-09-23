@@ -34,7 +34,7 @@ class UserController {
                 <p>Hacktiv8 Student Phase2<p>
                 `
                 const emailFrom = {
-                    from:"praktikum.sig12019@gmail.com",
+                    from:process.env.EMAIL,
                     to: `${result.email}`,
                     subject:'Best regard from Obos E-Commerce',
                     html: emailSend
