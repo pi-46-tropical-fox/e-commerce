@@ -9,6 +9,7 @@ This E-Commerce CMS server has:
 
 ## RESTful API endpoints overview
 
+- POST /register
 - POST /login
 - POST /products
 - GET /products
@@ -24,6 +25,96 @@ This E-Commerce CMS server has:
 - DELETE /carts/:id
 
 ## RESTful API endpoints detail
+
+### POST /register
+
+> Register a new user
+
+_Request Body_
+
+```json
+{
+	"email": "<user email>",
+	"password": "<user password>"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+	"id": "<user id>",
+	"email": "<user email>",
+	"role": "<user role (default: customer)>",
+	"access_token": "<access_token>"
+}
+```
+
+_Response (400 - Bad request)_
+
+```json
+{
+	"errors": [
+		{
+			"name": "is_null",
+			"message": "Email cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Username cannot null"
+		},
+		{
+			"name": "is_null",
+			"message": "Password cannot null"
+		},
+		{
+			"name": "minLength",
+			"message": "Password must be minimal 6 characters"
+		},
+		{
+			"name": "isEmail",
+			"message": "Email format is invalid"
+		},
+		{
+			"name": "is",
+			"message": "Username can only contain alphanumeric character and special . _"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Email cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Username cannot empty"
+		},
+		{
+			"name": "notEmpty",
+			"message": "Password cannot empty"
+		},
+		{
+			"name": "not_unique",
+			"message": "Email already registered"
+		}
+		{
+			"name": "not_unique",
+			"message": "Username already registered"
+		}
+	]
+}
+```
+
+_Response (500 - Internal server error)_
+
+```json
+{
+	"errors": [
+		{
+			"name": "InternalServerError",
+			"message": "Internal server error"
+		}
+	]
+}
+```
 
 ### POST /login
 
