@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
         pass: process.env.PASSWORD
     }
 })
-console(process.env.EMAIL, process.env.PASSWORD)
+console.log(process.env.EMAIL, process.env.PASSWORD)
 console.log('<<<<<<<+++++++++++++>>>>>>>>>');
 class UserController {
     
