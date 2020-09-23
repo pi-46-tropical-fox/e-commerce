@@ -9,7 +9,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    carts: []
+    carts: [],
+    history: []
   },
   mutations: {
     SET_PRODUCT (state, data) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     SET_CART (state, data) {
       state.carts = data
+    },
+    SET_HISTORY (state, data) {
+      state.history = data
     }
   },
   actions: {
@@ -91,6 +95,7 @@ export default new Vuex.Store({
         })
     },
     removeCart ({ commit }, id) {
+      console.log(`remove`)
       axios({
         method: 'DELETE',
         url: `/carts/${id}`,
@@ -105,20 +110,53 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    buy ({ commit }, id) {
+    buy ({ commit }, payload) {
       axios({
-        method: 'put',
+        method: 'POST',
+        url: `/purchase/${payload.ProductId}`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        data: payload
+      })
+        .then(({ data }) => {
+          console.log(data,'buy')
+        })
+        .then(err => {
+          console.log(err)
+        })
+    },
+    changeQuantity ({ commit }, id) {
+      console.log('change',id)
+      axios({
+
+        method: 'PUT',
         url: `/carts/${id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
         .then(({ data }) => {
-          router.push({ name: 'purchased' })
+          console.log('success')
         })
-        .then(err => {
+        .catch(err => {
           console.log(err)
         })
+    },
+    fetchHistory({commit}){
+      axios({
+        method:'GET',
+        url:'/purchase',
+        headers:{
+          access_token:localStorage.getItem('access_token')
+        }
+      })
+      .then(({data})=>{
+        commit('SET_HISTORY',data)
+      })
+      .catch(err=>{
+        console.log(err)
+      })
     }
   },
   modules: {

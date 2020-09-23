@@ -35,14 +35,11 @@ export default {
   },
   computed: {
     carts () {
-      const carts = this.$store.state.carts
-      const data = carts.filter(cart => cart.status == true)
-      this.product = data
-      return data
+      return this.$store.state.history
     }
   },
   created () {
-    this.$store.dispatch('fetchCarts')
+    this.$store.dispatch('fetchHistory')
   }
 }
 </script>

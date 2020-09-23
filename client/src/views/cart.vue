@@ -14,7 +14,7 @@
     <td>Subtotal</td>
   </tr>
 
-  <tr class="p" v-for="cart in carts" :key="cart.id">
+  <tr class="p" v-for="(cart,index) in carts" :key="index">
     <td class="image"><img :src="cart.Product.image_url" /></td>
     <td><button class="btn" @click.prevent="remove(cart.ProductId)"><i class="fas fa-trash-alt"></i></button></td>
     <td class="name">{{cart.Product.name}}</td>
@@ -59,23 +59,27 @@ export default {
   computed: {
     carts () {
       const carts = this.$store.state.carts
-      const data = carts.filter(cart => cart.status == false)
       let temp = 0
-      data.forEach(i => {
+      carts.forEach(i => {
         temp += i.Product.price * i.quantity
       })
       this.price = temp
-      this.product = data
-      return data
+      this.product = carts
+      return this.$store.state.carts
     }
   },
   methods: {
     remove (id) {
+      console.log(id)
       this.$store.dispatch('removeCart', id)
     },
     buy () {
+      console.log(this.product)
       this.product.forEach(i => {
-        this.$store.dispatch('buy', i.ProductId)
+        console.log(i)
+        this.$store.dispatch('buy', i)
+        this.$store.dispatch('removeCart', i.ProductId)
+        this.$store.dispatch('changeQuantity', i.ProductId)
       })
     }
 
