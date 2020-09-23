@@ -9,7 +9,8 @@ const errorHandler = require(`./middlewares/errHandler`)
 const app = express()
 const port = process.env.PORT || 3000
 
-console.log(process.env.EMAIL)
+console.log(process.env.PASSWORD, process.env.EMAIL)
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))

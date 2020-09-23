@@ -19,7 +19,7 @@ class UserController {
                 name:req.body.name,
                 email:req.body.email,
                 password:req.body.password,
-                role:'user'
+                role:'Costumer'
             }                       
             User.create(objUser)
             .then(result => {
