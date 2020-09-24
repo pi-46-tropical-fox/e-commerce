@@ -60,14 +60,14 @@ export default {
         })
     },
     checkout (cartsId) {
-      this.$store.dispatch('checkout', cartsId)
-        .then(({ data }) => {
-          console.log(data.message)
-          this.$router.push({ name: 'Home' })
-        })
-        .catch(err => {
-          console.log({ err })
-        })
+    //   this.$store.dispatch('checkout', cartsId)
+        // .then(({ data }) => {
+        //   console.log(data.message)
+        //   this.$router.push({ name: 'Home' })
+        // })
+        // .catch(err => {
+        //   console.log({ err })
+        // })
     }
   },
   computed: {
