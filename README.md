@@ -11,10 +11,12 @@ Membuat Website e-commerce
 - PUT /products/:id
 - DELETE /products/:id
 - GET /carts
-- POST /carts/:id
-- GET /carts/:id
+- POST /carts/:productId
+- GET /carts/:productId
 - PUT /carts/:id
 - DELETE /carts/:id
+- GET /purchase
+- POST /purchase/:productId
 ````
 
 ### RESTful endpoints
@@ -528,5 +530,88 @@ _Response (500 - Internal Server Error)_
 ```json
 {
   "message": "Internal Server Error"
+}
+```
+### GET /purchase
+
+> Show all foxShop user carts
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+{
+    "UserId": "<UserId whos logged in>",
+    "ProductId": "<ProductId from the product user add>",
+    "quantity": "<cart_quantity>",
+    "Product": "<object_Product>"
+    "createdAt": "2020-09-09T14:55:06.648Z",
+    "updatedAt": "2020-09-09T15:30:58.690Z", 
+}
+```
+
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize user.."
+}
+```
+
+_Response (500 - Internal server error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+### POST /purchase/:productId
+
+> Create new products
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (201 - Created)_
+```json
+{
+    "UserId": "<UserId whos logged in>",
+    "ProductId": "<ProductId from the product user add>",
+    "quantity": "<cart_quantity>",
+    "Product": "<object_Product>"
+    "createdAt": "2020-09-09T14:55:06.648Z",
+    "updatedAt": "2020-09-09T15:30:58.690Z", 
+}
+```
+
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize user.."
+}
+```
+
+_Response (400 - Bad Request)_
+```json
+
+{
+  "message": "Please fill the field!, Do not input value under 1!"
 }
 ```

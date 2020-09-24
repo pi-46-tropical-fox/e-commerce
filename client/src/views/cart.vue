@@ -73,13 +73,13 @@ export default {
       console.log(id)
       this.$store.dispatch('removeCart', id)
     },
-    buy () {
+     buy () {
       console.log(this.product)
-      this.product.forEach(i => {
+      this.product.forEach(async i => {
         console.log(i)
-        this.$store.dispatch('buy', i)
-        this.$store.dispatch('removeCart', i.ProductId)
-        this.$store.dispatch('changeQuantity', i.ProductId)
+        await this.$store.dispatch('buy', i)
+        await this.$store.dispatch('removeCart', i.ProductId)
+        await this.$store.dispatch('changeQuantity', i.ProductId)
       })
     }
 

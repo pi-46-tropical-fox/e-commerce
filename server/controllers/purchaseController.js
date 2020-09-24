@@ -12,6 +12,7 @@ class Controller {
     }
     static add (req,res,next){
         let qty = 0
+        console.log(req.params.productId)
         Cart.findOne({where:{ProductId:req.params.productId},include:Product})
         .then(data=>{
             console.log(data,'<<ini data')

@@ -101,7 +101,7 @@ export default new Vuex.Store({
     },
     removeCart ({ commit }, id) {
       console.log(`remove`)
-      axios({
+      return axios({
         method: 'DELETE',
         url: `/carts/${id}`,
         headers: {
@@ -116,7 +116,7 @@ export default new Vuex.Store({
         })
     },
     buy ({ commit }, payload) {
-      axios({
+      return axios({
         method: 'POST',
         url: `/purchase/${payload.ProductId}`,
         headers: {
@@ -133,7 +133,7 @@ export default new Vuex.Store({
     },
     changeQuantity ({ commit }, id) {
       console.log('change',id)
-      axios({
+      return axios({
 
         method: 'PUT',
         url: `/carts/${id}`,
