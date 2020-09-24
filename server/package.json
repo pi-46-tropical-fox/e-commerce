@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles --forceExit --runInBand --verbose",
     "dev": "NODE_ENV=development nodemon app.js",
-    "start": "node app.js"
+    "start": "node app.js && npm install -g sequelize-cli"
   },
   "keywords": [],
   "author": "",
