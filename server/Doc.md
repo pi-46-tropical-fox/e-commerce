@@ -23,7 +23,7 @@ Membuat Website e-commerce
 
 ### POST /register
 
-> Register to foxShop
+> Register to HypeShop
 
 _Request Header_
 ```
@@ -63,7 +63,7 @@ _Response (500 - Internal Server Error)_
 
 ### POST /login
 
-> Login to foxShop
+> Login to HypeShop
 
 _Request Header_
 ```
@@ -100,7 +100,7 @@ _Response (500 - Internal Server Error)_
 
 ### GET /products
 
-> Show all foxShop products
+> Show all HypeShop products
 
 
 _Request Body_
@@ -321,7 +321,7 @@ _Response (500 - Internal Server Error)_
 
 ### GET /carts
 
-> Show all foxShop user carts
+> Show all HypeShop user carts
 
 _Request Header_
 ```json
