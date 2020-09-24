@@ -1,14 +1,8 @@
 # e-commerce
-Membuat Website e-commerce
+An E-commerce App made with vue and express(nodejs)
 
-# Register (email, password, role bisa via hooks beforeCreate role: customer)
-# Login
-# Add to cart (pastikan quantity tidak melebihi stock ). Jika add barang yang sama, tidak boleh dobel, tapi quantity nya yang nambah.
-# Show cart
-# Remove cart
-# Update cart
-# Deploy
-# Updated API DOC, endpoint baru tinggal ditambah di doc (server)
+# Demo Link
+https://e-commerce-ardy.web.app/
 
-### Deadline Kamis 13.00
-
+# API Documentation
+https://documenter.getpostman.com/view/8059699/TVKBYJ5o

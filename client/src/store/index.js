@@ -40,7 +40,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
-          url: 'http://localhost:3000/auth/register',
+          url: 'https://e-commerce-ardy.herokuapp.com/auth/register',
           data: payload
         })
           .then(res => {
@@ -55,7 +55,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
-          url: 'http://localhost:3000/auth/login',
+          url: 'https://e-commerce-ardy.herokuapp.com/auth/login',
           data: payload
         })
           .then(res => {
@@ -74,7 +74,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           method: 'get',
-          url: 'http://localhost:3000/product',
+          url: 'https://e-commerce-ardy.herokuapp.com/product',
         })
           .then(res => {
             console.log(res)
@@ -89,7 +89,7 @@ export default new Vuex.Store({
     fetchCart(context) {
       axios({
         method: 'get',
-        url: 'http://localhost:3000/cart',
+        url: 'https://e-commerce-ardy.herokuapp.com/cart',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -108,7 +108,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
-          url: `http://localhost:3000/cart/${id}`,
+          url: `https://e-commerce-ardy.herokuapp.com/cart/${id}`,
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -126,7 +126,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           method: 'delete',
-          url: `http://localhost:3000/cart/${id}`,
+          url: `https://e-commerce-ardy.herokuapp.com/cart/${id}`,
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -143,7 +143,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           method: 'post',
-          url: `http://localhost:3000/cart/checkout`,
+          url: `https://e-commerce-ardy.herokuapp.com/cart/checkout`,
           headers: {
             access_token: localStorage.getItem('access_token')
           }
@@ -160,7 +160,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios({
           method: 'put',
-          url: `http://localhost:3000/cart/${payload.id}`,
+          url: `https://e-commerce-ardy.herokuapp.com/cart/${payload.id}`,
           headers: {
             access_token: localStorage.getItem('access_token')
           },
