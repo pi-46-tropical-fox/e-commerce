@@ -1,27 +1,11 @@
-const route = require('express').Router()
-const UserController = require('../controllers/UserController');
-const ProductController = require('../controllers/ProductController');
-const {authentication,authorization} = require('../middleware/auth');
-const cartRoute = require('./cartRoute');
+const router = require('express').Router()
 
-route.get('/', (req,res) => {
-    res.send('CMS E-Comerce')
-})
+const routeUser = require('./user')
+const routeProduct = require('./product')
+const routeCart = require('./cart')
 
-// User
-route.post('/register',UserController.register)
-route.post('/login',UserController.login)
+router.use('/', routeUser)
+router.use('/products', routeProduct)
+router.use('/carts', routeCart)
 
-// Cart
-route.use('/cart', cartRoute)
-
-//Product
-route.use(authentication)
-route.get('/products',  authorization,ProductController.showAllProduct)
-route.post('/products', authorization, ProductController.createProduct)
-route.get('/products/:id', authorization, ProductController.showIdProduct)
-route.put('/products/:id', authorization, ProductController.updateProduct)
-route.delete('/products/:id', authorization, ProductController.deleteProduct)
-
-
-module.exports = route
+module.exports = router;

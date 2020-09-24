@@ -1,81 +1,145 @@
-const {Product, Cart} = require('../models');
+const { Cart, User, Product } = require('../models')  
 
 class CartController {
-
-    static async getPaid(req,res,next) {
-        try {
-            let data = await Cart.findAll({
-                where: {status:'paid', UserId: req.userData.id},
-                include: [{
-                    model: Product
-                }]
-            })
-            res.status(200).json(data)
-        } catch (err) {
-            next(err)
-        }
-    }
-
-    static async getUnPaid(req,res,next) {
+    static addCart(req,res,next){
         
-        try {
-            let data = await Cart.findAll({
-                where: {status: 'unpaid', UserId: req.userData.id},
-                attributes: ['id','UserId', 'ProductId', 'quantity', 'status'],
-                include: [{
-                    model:Product
-                }]
-            })
-            res.status(200).json(data)
-        } catch (err) {
-            next(err)
-        }
-    }
-
-    static async addCart(req,res,next) {
-        const {ProductId, status, quantity} = req.body
-        const UserId = req.userData.id
-
-        try {
-            const data = await Cart.create({
-                UserId,ProductId,status,quantity
-            })
-            res.status(200).json(data)
-        } catch (err) {
-            next(err)
-        }
-    }
-
-    static async updateCart(req,res,next) {
-        const {ProductId, status, quantity} = req.body
-        const UserId = req.userData
-
-        if(typeof UserId == 'undefined' || typeof ProductId == 'undefined' || typeof status == 'undefined' || typeof quantity == 'undefined') {
-            next({name: 'Data Invalid'})
-        }
-
-        try {
-            let data = await Cart.update ({UserId,ProductId,status, quantitiy}, {where: {id: req.params.id}})
-            if(data[0]) {
-                res.status(200).json({data})
+        const { id, quantity } = req.body;
+        let finalQty;
+        Product.findOne({ where: { id } })
+        .then((product) => {
+            if (!product) {
+                res.status(404).json({ message: 'DATA NOT FOUND' })
+            } else if (quantity > product.stock) {
+                res.status(400).json({ message: 'OUT OF STOCK' })
             } else {
-                next({name: 'SequelizeValidationError'})
+                let barang = product
+                let totalPrice = product.price * quantity;
+                Cart.findOne({
+                    where: {
+                        UserId: req.userData.id,
+                        ProductId: product.id,
+                    },
+                })
+                .then((data) => {
+                    if (data) {
+                        finalQty = data.quantity + quantity;
+                        if (finalQty > barang.stock) {
+                            res.status(400).json({ message: 'INSUFFICIENT STOCK' })
+                        } else {
+                            Cart.update({
+                                totalPrice: totalPrice,
+                                quantity: finalQty,
+                            },
+                            {
+                                where: {
+                                    UserId: req.userData.id,
+                                    ProductId: product.id,
+                                },
+                            })
+                            .then((data) => {
+                                res.status(200).json({
+                                    cart: data,
+                                    product: product,
+                                });
+                            });
+                        }
+                    } else {
+                        return Cart.create({
+                            UserId: req.userData.id,
+                            ProductId: product.id,
+                            quantity: quantity,
+                            totalPrice: totalPrice,
+                        })
+                        .then((data) => {
+                            res.status(201).json({
+                                cart: data,
+                                product: product,
+                            });
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).json({ message: 'Internal Server Error' })
+                });
             }
-        } catch (err) {
+        })
+        .catch((err) => {
             next(err)
-        }
+        })
+
     }
 
-    static async deleteCart(req,res,next) {
-        try {
-            const data = await Cart.destroy({
-                where: {id: req.params.id}
-            })
-            res.status(200).json({data})
-        } catch (err) {
+    static myCart(req, res,next){
+        
+        Cart.findAll({
+            where: {
+                UserId: req.userData.id,
+            },
+            include: [ Product, User ],
+            order: [['id', 'ASC']]
+        })
+        .then(data => {
+            res.status(200).json({ cart: data })
+        })
+        .catch( err => {
             next(err)
-        }
+        })
     }
+
+    static updateCart(req,res,next){
+        let { productId, quantity } = req.body;
+
+        Product.findOne({
+          where: {
+            id: productId,
+          },
+        })
+        .then((product) => {
+            let totalPrice = product.price * quantity;
+            Cart.update({
+                quantity: quantity,
+                totalPrice: totalPrice
+            },
+            {
+                where: {
+                    UserId: req.userData.id,
+                    ProductId: productId,
+                }
+            })
+            .then((response) => {
+                if (response[0] > 0) {
+                    res.status(200).json({ 
+                        message: 'Succesfully update cart for selected product' 
+                    });
+                }
+            })
+        })
+        .catch((err) => {
+            next(err)
+        })
+
+    }
+
+    static deleteCart(req, res,next){
+        const { productId } = req.body
+        Cart.destroy({
+            where: {
+                UserId: req.userData.id,
+                ProductId: productId,
+            }
+        })
+        .then( response => {
+            if (response > 0){
+                res.status(200).json({ message: 'Sucessfully delete cart for selected product' })
+            }
+        })
+        .catch( (err) => {
+            next(err)
+        })
+
+    }
+
 }
 
 module.exports = CartController

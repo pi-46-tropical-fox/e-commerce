@@ -11,66 +11,68 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsToMany(models.User,{through:models.Cart})
+    Product.belongsTo(models.User)
+    Product.belongsToMany(models.User, { through: models.Cart })
     }
   };
   Product.init({
     name: {
       type: DataTypes.STRING,
-      allowNull:false,
+      allowNull: false,
       validate: {
-        notNull: {
-          args: true,
-          msg: 'name is required'
-        },
-        len: {
-          args: 1,
-          msg: 'Name cannot be empty'
-        }
+        notEmpty: { msg: 'Please do not leave empty name' },
+        notNull: { msg: 'Please do not leave name null' }
       }
     },
-    image_url: {
+    img_url: {
       type: DataTypes.STRING,
-      allowNull:false,
+      allowNull: false,
       validate: {
+        notEmpty: {
+          msg: 'Please do not leave empty img_url' 
+        },
         notNull: {
-          args: true,
-          msg: 'image is required'
+          msg: 'Please do not leave img_url null' 
         }
       }
     },
+    // price: DataTypes.INTEGER,
     price: {
       type: DataTypes.INTEGER,
-      allowNull:false,
+      allowNull: false,
       validate: {
-        notNull: {
-          args: true,
-          msg: 'price is required'
-        },
-        min: {
-          args: [0],
-          msg: 'Price tidak boleh minus'
-        },
-        isNumeric: {
-          args: true,
-          msg: 'Price harus number'
+        notMinus(price){
+          let num = Number(price)
+          if(num < 0 ){
+            throw new Error('Invalid price value (-)')
+          }
         }
       }
     },
+    // stock: DataTypes.INTEGER,
     stock: {
       type: DataTypes.INTEGER,
-      allowNull:false,
+      allowNull: false,
       validate: {
-        notNull: {
-          args: true,
-          msg: 'stock is required'
-        },
-        min: {
-          args: [0],
-          msg: 'Stock tidak boleh minus'
+        notMinus(price){
+          let num = Number(price)
+          if(num < 0 ){
+            throw new Error('Invalid stock value (-)')
+          }
         }
       }
-    }
+    },
+    UserId: DataTypes.INTEGER,
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: "Please do not leave empty category" },
+        notNull: { msg: "Please do not leave category null" },
+      },
+    },
+    description: DataTypes.STRING,
+
   }, {
     sequelize,
     modelName: 'Product',

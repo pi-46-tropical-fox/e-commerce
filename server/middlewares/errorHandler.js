@@ -1,4 +1,6 @@
-function errHandler(err,req,res,next) {
+'use strict'
+
+function errorHandler(err,req,res,next) {
     let errors = []
     let statusCode = 500
 
@@ -21,4 +23,4 @@ function errHandler(err,req,res,next) {
     res.status(statusCode).json({errors})
 }
 
-module.exports = errHandler
+module.exports = errorHandler

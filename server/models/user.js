@@ -1,8 +1,9 @@
 'use strict';
+const bcrypt = require('bcrypt')
+const saltRounds = 2
 const {
   Model
 } = require('sequelize');
-const {hashPassword} = require('../helpers/bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,16 +13,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsToMany(models.Product, {through:models.Cart})
+    User.hasMany(models.Product)
+    User.belongsToMany(models.Product, { through: models.Cart })
     }
   };
   User.init({
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        isEmail: {
-          args: true,
-          msg: 'Invalid email format'
+        notEmpty: {
+          msg: 'Please do not leave empty email' 
+        },
+        notNull: {
+          msg: 'Please do not leave email null' 
+        },
+        duplicate(input){
+          return User.findAll({
+            where: { email: input }
+          })
+          .then(data =>{
+            if(data.length > 0){
+              throw new Error('Similar email has been used.')
+            }
+          })
         }
       }
     },
@@ -29,21 +44,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
+        notEmpty: {
+          msg: 'Please do not leave empty password' 
+        },
         notNull: {
-          args: true,
-          msg: 'Password is required'
+          msg: 'Please do not leave password null' 
         }
-
       }
     },
-    role: DataTypes.STRING
+    status: DataTypes.STRING
+
   }, {
     sequelize,
     modelName: 'User',
   });
-  User.beforeCreate((init,opt) => {
-    init.role = 'customer'
-    init.password = hashPassword(init.password)
+  User.addHook('beforeCreate', (user,options) => {
+    user.password = bcrypt.hashSync(user.password, saltRounds)
+    if(user.status == "Admin"){
+      user.status = "Admin"
+    } else if (!user.status || user.status == 'Customer'){
+      user.status = "Customer"
+    }
   })
   return User;
 };

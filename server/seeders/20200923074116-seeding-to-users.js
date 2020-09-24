@@ -1,15 +1,15 @@
 'use strict';
-const {hashPassword} = require('../helpers/bcrypt');
-const password = '1234'
+const bcrypt = require('bcrypt')
+const saltRounds = 2
+const password = "12345"
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users', [
-      {
-        email: 'admin@mail.com',
-        password: hashPassword(password),
-        role: 'admin',
-        createdAt: new Date(),
-        updatedAt: new Date()
+    await queryInterface.bulkInsert('Users', [{
+         email: 'admin@mail.com',
+         password: bcrypt.hashSync(password, saltRounds),
+         status: 'Admin',
+         createdAt: new Date(),
+         updatedAt: new Date()
        }], {});
     /**
      * Add seed commands here.
@@ -23,12 +23,12 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkDelete('Users', null, {});
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete('Users', null, {});
   }
 };
