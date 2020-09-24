@@ -1,6 +1,9 @@
-# e-commerce-cms
+# e-commerce
+Firebase:
+Admin : https://e-commerce-hacktiv8-2020.web.app
+Customer : https://wewearblack-hacktiv8.web.app
+
 E-Commerce on We Wear Black. This app has:
-https://wewearblack-hacktiv8.web.app/
 
 &nbsp;
 

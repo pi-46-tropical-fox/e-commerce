@@ -10,7 +10,6 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><router-link class="nav-link" to="/products">Product</router-link></li>
                         <li class="nav-item"><router-link class="nav-link" to="/cart">My Carts</router-link></li>
-                        <li class="nav-item"><a class="nav-link" href="#signup">Contact</a></li>
                     </ul>
                     <div class="dropdown">
                       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

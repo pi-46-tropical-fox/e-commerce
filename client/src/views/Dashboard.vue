@@ -19,7 +19,7 @@
         <button type="submit" class="btn btn-primary">Filter</button>
       </form>
     </div>
-    
+
         <div class="container">
           <div  v-for="(product,index) in products" :key="index">
           <ProductCardLeft v-if="index%2 == 0"
@@ -60,7 +60,7 @@ export default {
     },
     filterCategories () {
       this.products = this.products.filter(item => item.category === this.category)
-    },
+    }
   },
   created () {
     this.fetchProducts()

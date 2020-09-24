@@ -1,5 +1,12 @@
 <template>
-  <div class="container">
+
+<section class="signup-section" style="height:92vh" id="signup">
+              <NavbarLogin/>
+            <div class="container">
+                 <router-view/>
+            </div>
+        </section>
+  <!-- <div class="container">
 
       <div class="row mt-5">
           <div class="col-6">
@@ -10,10 +17,10 @@
 
             <router-view/>
             </div>
-            <!-- <img src="../assets/logowebsite.png" class="card-img-top" alt="Login Image" style="width: 40%; height:auto;"> -->
+            <img src="../assets/logowebsite.png" class="card-img-top" alt="Login Image" style="width: 40%; height:auto;">
 
           </div>
-      </div>
+      </div> -->
 </template>
 
 <script>
@@ -38,4 +45,5 @@ export default {
 .loginColumn {
   width: 200px;
 }
+
 </style>

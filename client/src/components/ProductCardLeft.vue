@@ -3,7 +3,7 @@
     <div class="row justify-content-center no-gutters">
     <div class="col-lg-6" style="background-image: url(https://image.shutterstock.com/z/stock-vector-tropical-palm-leaves-jungle-leaves-seamless-vector-floral-pattern-background-326113889.jpg)">
 
-        <img class="card-img-top shadow my-5" :src="product.image_url" alt="product image" 
+        <img class="card-img-top shadow my-5" :src="product.image_url" alt="product image"
          style="width: auto; height:80vh;"/>
         </div>
       <div class="col-lg-6 card">

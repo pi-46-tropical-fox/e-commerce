@@ -36,11 +36,11 @@ export default {
     }
   },
   methods: {
-    totalCarts() {
-      let tempTotal = 0 
+    totalCarts () {
+      const tempTotal = 0
     },
-    checkout() {
-      console.log('masuk');
+    checkout () {
+      console.log('masuk')
     }
   },
   created () {

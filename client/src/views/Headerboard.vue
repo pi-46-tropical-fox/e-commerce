@@ -12,9 +12,9 @@
 
 <script>
 export default {
-    name: 'HeaderBoard',
-     created () {
-        this.$store.commit('setUserEmail')
+  name: 'HeaderBoard',
+  created () {
+    this.$store.commit('setUserEmail')
   }
 }
 </script>

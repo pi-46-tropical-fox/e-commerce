@@ -10,13 +10,13 @@
             <div class="mt-5">
                <carousel :perPage=1 :autoplay="true">
                     <slide>
-                       <img class="img-fluid" :src="selectedProduct.image_url" alt="detail product" id="detailProduct"/> 
+                       <img class="img-fluid" :src="selectedProduct.image_url" alt="detail product" id="detailProduct"/>
                     </slide>
                      <slide>
-                       <img class="img-fluid" :src="selectedProduct.image_url" alt="detail product" id="detailProduct"/> 
+                       <img class="img-fluid" :src="selectedProduct.image_url" alt="detail product" id="detailProduct"/>
                     </slide>
                      <slide>
-                       <img class="img-fluid" :src="selectedProduct.image_url" alt="detail product" id="detailProduct"/> 
+                       <img class="img-fluid" :src="selectedProduct.image_url" alt="detail product" id="detailProduct"/>
                     </slide>
                 </carousel>
                 </div>
@@ -42,7 +42,6 @@
           </div>
         </section>
 
-        
 </template>
 
 <script>
@@ -52,7 +51,7 @@ export default {
   name: 'DetailProduct',
   components: {
     Loading,
-        Carousel,
+    Carousel,
     Slide
   },
   computed: {
@@ -86,8 +85,8 @@ export default {
 }
 
 #detailProduct {
-width: auto; 
-height:80vh; 
+width: auto;
+height:80vh;
 -webkit-box-shadow: 0px 0px 66px -8px rgba(255,255,255,0.8);
 -moz-box-shadow: 0px 0px 66px -8px rgba(255,255,255,0.8);
 box-shadow: 0px 0px 66px -8px rgba(255,255,255,0.8);

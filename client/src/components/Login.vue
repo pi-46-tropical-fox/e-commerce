@@ -1,7 +1,19 @@
 <template>
 <div>
   <Loading v-if="$store.state.loadingStatus"/>
-   <form @submit.prevent ="login"
+
+   <div class="row">
+      <div class="col-md-10 col-lg-8 mx-auto text-center">
+          <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+          <h2 class="text-white mb-5">Login!</h2>
+          <form class="form-inline d-flex" @submit.prevent ="login">
+              <input  v-model="email"  class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" type="email" placeholder="Enter email address..." />
+              <input   v-model="password"  class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail" type="password" placeholder="Enter password..." />
+              <button class="btn btn-primary mx-auto" type="submit">Submit</button>
+          </form>
+      </div>
+  </div>
+   <!-- <form @submit.prevent ="login"
         style="color:rgb(236 173 60);; font-weight: bold; font-size:1.2em;">
         <div class="form-group row">
             <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Email</label>
@@ -19,7 +31,7 @@
             <button type="submit" class="btn btn-secondary" id="loginbtn">Login</button>
         </div>
 
-    </form>
+    </form> -->
 
 </div>
 </template>

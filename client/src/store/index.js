@@ -35,7 +35,7 @@ export default new Vuex.Store({
     setBanners (state, payload) {
       state.banners = payload
     },
-    setTotal (state,payload) {
+    setTotal (state, payload) {
       state.total += payload
     }
 
