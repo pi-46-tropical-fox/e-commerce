@@ -6,7 +6,7 @@
 
 `link deploy:`
 > - heroku : 'https://server-ecommerce-syukur.herokuapp.com'
-> - firebase : 
+> - firebase : 'https://bakulkaos-syukur.web.app' & https://cms-bakul-kaos.web.app/
 
 &nbsp;
 ## RESTful endpoints
