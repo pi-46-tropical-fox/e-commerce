@@ -102,6 +102,7 @@ export default new Vuex.Store({
           }
         })
         .then(({ data }) => {
+          
           console.log(data);
           context.commit('SET_ONE_PRODUCT', data.name)
           console.log(this.state.product);

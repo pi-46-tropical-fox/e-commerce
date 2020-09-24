@@ -116,7 +116,7 @@ class CartController {
       if (showCart[0]) {
       return res.status(200).json(showCart)
       } else {
-        return res.status(404).json([{ message : `Sorry, your shopping cart is not exist` }])
+        return res.status(404).json({ message : `Sorry, your shopping cart is not exist` })
       }
 
     } catch (err) {
