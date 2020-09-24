@@ -7,7 +7,6 @@
         <lottie-player class=" my-auto" src="https://assets8.lottiefiles.com/packages/lf20_0ny14efc.json" mode="bounce" background="transparent"  speed="1"  style="width: 800px; height: 800px;"  loop  autoplay></lottie-player>
       </div>
       <div class="login mx-aut0">
-
           <h1 class="mx-auto d-inline login-register" :class="{'is-active': status }" @click="toggle">LOGIN</h1><h1 class="login-register mx-auto d-inline"  :class="{'is-active': !status }" @click="toggle"> REGISTER</h1>
           <LoginForm
           :status="status"
@@ -54,7 +53,7 @@ export default {
     'login login'
     'footer footer';
     grid-template-columns: 7fr 3fr;
-    grid-template-rows: 1fr 10fr 1fr;
+    grid-template-rows: 1fr 10fr;
     height: 100%;
     width: 100vw;
     gap: 10px;

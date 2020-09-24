@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <div class="home-grid">
+    <div class="home-grid mx-auto">
       <div class="product-list">
           <Card
           v-for="product in products"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 import Card from '../components/Card'
 import Navbar from '../components/Navbar'
 export default {
@@ -45,10 +46,10 @@ export default {
     'navbar'
     'product-list';
   grid-template-rows: 100px min-content;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr;
   height: 100vh;
   width: 100vw;
-  gap: 5px;
+  gap: 15px;
 
 }
 .navbar {
