@@ -82,10 +82,9 @@ export default {
       this.$store.dispatch('checkout')
         .then(() => {
           this.$store.dispatch('fetchCarts')
- 
+
           return this.$router.push('/cart')
         })
-
     }
   },
   computed: {

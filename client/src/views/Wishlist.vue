@@ -19,7 +19,7 @@
       </div>
     </section>
     <!-- Breadcrumb Section End -->
- 
+
     <!-- Shop Section Begin -->
     <section class="shop spad">
       <div class="container">
@@ -72,23 +72,23 @@ export default {
     CardWishlist
   },
   computed: {
-    wishlists() {
+    wishlists () {
       return this.$store.state.wishlists
     },
-    filteredWishlists() {
+    filteredWishlists () {
       // FILTERING WISHLIST OWNED BY USERID
-      const result = [];
+      const result = []
       this.wishlists.forEach((element) => {
         if (element.UserId == localStorage.getItem('UserId')) {
-          result.push(element);
+          result.push(element)
         }
-      });
+      })
 
-      return result;
-    },
+      return result
+    }
   },
-  created() {
-    this.$store.dispatch("fetchWishlists");
+  created () {
+    this.$store.dispatch('fetchWishlists')
   }
 }
 </script>

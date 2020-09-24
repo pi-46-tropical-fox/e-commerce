@@ -41,38 +41,38 @@
 
 <script>
 export default {
-  name: "CardCart",
-  props: ["cart"],
-  data() {
+  name: 'CardCart',
+  props: ['cart'],
+  data () {
     return {
       updatedQty: null
     }
   },
   computed: {
-    total() {
-      return this.cart.Product.price * this.cart.quantity;
-    },
+    total () {
+      return this.cart.Product.price * this.cart.quantity
+    }
   },
   methods: {
-    deleteCart() {
-      this.$store.dispatch("deleteCart", this.cart.Id).then(() => {
-        this.$store.dispatch("fetchCarts");
+    deleteCart () {
+      this.$store.dispatch('deleteCart', this.cart.Id).then(() => {
+        this.$store.dispatch('fetchCarts')
         // return this.$router.push('/cart')
-      });
+      })
     },
-    updateQty() {
-      let payload = {
+    updateQty () {
+      const payload = {
         id: this.cart.Id,
         updatedQty: this.updatedQty
       }
-      this.$store.dispatch("updateCartQty", payload).then(() => {
+      this.$store.dispatch('updateCartQty', payload).then(() => {
         this.updatedQty = null
-        this.$store.dispatch("fetchCarts");
+        this.$store.dispatch('fetchCarts')
         // return this.$router.push('/cart')
-      });
+      })
     }
-  },
-};
+  }
+}
 </script>
 
 <style>

@@ -38,60 +38,60 @@
 </template>
 
 <script>
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import CardProduct from "../components/CardProduct";
-import Banner from "../components/Banner";
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import CardProduct from '../components/CardProduct'
+import Banner from '../components/Banner'
 export default {
-  name: "Home",
+  name: 'Home',
   components: {
     Header,
     Footer,
     CardProduct,
-    Banner,
+    Banner
   },
-  data() {
+  data () {
     return {
-      source: "",
+      source: '',
       i: 100
-    };
+    }
   },
   computed: {
-    products() {
-      return this.$store.state.products;
+    products () {
+      return this.$store.state.products
     },
-    filteredProducts() {
+    filteredProducts () {
       // FILTERING STOCK > 0
-      const result = [];
+      const result = []
       this.products.forEach((element) => {
         if (element.stock > 0) {
-          result.push(element);
+          result.push(element)
         }
-      });
+      })
 
-      return result;
+      return result
     },
-    banners() {
-      return this.$store.state.banners;
+    banners () {
+      return this.$store.state.banners
     },
-    filteredBanners() {
+    filteredBanners () {
       // FILTERING ACTIVE BANNERS
-      const result = [];
+      const result = []
       this.banners.forEach((element) => {
-        if (element.status == "active") {
-          result.push(element);
+        if (element.status === 'active') {
+          result.push(element)
         }
-      });
+      })
 
-      return result;
-    },
+      return result
+    }
   },
-  created() {
-    this.$store.dispatch("fetchProducts").then(() => {
-      this.$store.dispatch("fetchBanners");
-    });
-  },
-};
+  created () {
+    this.$store.dispatch('fetchProducts').then(() => {
+      this.$store.dispatch('fetchBanners')
+    })
+  }
+}
 </script>
 
 <style>

@@ -30,14 +30,14 @@
 <script>
 export default {
   name: 'CardWishlist',
-  props: [ 'wishlist' ],
-  data() {
+  props: ['wishlist'],
+  data () {
     return {
       image: ''
     }
   },
   methods: {
-    deleteWishlist() {
+    deleteWishlist () {
       this.$store.dispatch('deleteWishlist', this.wishlist.Id)
         .then(() => {
           this.$store.dispatch('fetchWishlists')
@@ -48,9 +48,9 @@ export default {
         .then(() => {
           return this.$router.push('/cart')
         })
-    },
+    }
   },
-  created() {
+  created () {
     return this.image = `background-image: url(${this.wishlist.Product.image_url})`
   }
 }

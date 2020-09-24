@@ -62,7 +62,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data.role, '<di vuex ni')
-          localStorage.setItem('access_token', data.access_token),
+          localStorage.setItem('access_token', data.access_token)
           localStorage.setItem('UserId', data.id)
           context.commit('SET_LOGIN', true)
         })
@@ -217,7 +217,7 @@ export default new Vuex.Store({
     },
 
     addWishlist (context, productId) {
-      axios({
+      return axios({
         method: 'POST',
         url: baseurl + `/wishlists/${productId}`,
         // url: `http://localhost:3001/wishlists/${productId}`,
@@ -237,7 +237,7 @@ export default new Vuex.Store({
     updateCartQty (context, payload) {
       return axios({
         method: 'PUT',
-        url: baseurl + `/carts/${id}`,
+        url: baseurl + `/carts/${payload.id}`,
         // url: `http://localhost:3001/carts/${payload.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
@@ -253,7 +253,7 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
-    },
+    }
 
   }
 })
