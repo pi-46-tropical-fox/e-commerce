@@ -5,7 +5,7 @@ const { compare } = require("../helpers/bcrypt")
 
 class UserController {
 
-    static async register(req, res, next) {
+    static register(req, res, next) {
         const params = {
             email: req.body.email,
             password: req.body.password,
@@ -21,7 +21,6 @@ class UserController {
     })
     .catch(err => {
         res.send(err)
-
     })
     }
 
