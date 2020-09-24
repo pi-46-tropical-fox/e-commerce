@@ -2,6 +2,7 @@
 An e-commerce app that digitize trading process between customer and seller in a digitized market. This app has:
 * CRUD Product
 * CRUD Cart
+* CRUT Wishlist
 * Register and Login
 * JSON formatted response
 
