@@ -174,6 +174,23 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err, 'ini error addtocart')
         })
+    },
+
+    checkout (context, payload) {
+      console.log(payload, 'ini payload di vuex untuk checkout')
+      axios({
+        method: 'PUT',
+        url: '/customers/checkout',
+        data: payload,
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+        .then(({ data }) => {
+          console.log(data, 'sukses checkout')
+          context.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err, 'error checkout di vuex')
+        })
     }
   },
   getters: {

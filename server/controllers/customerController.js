@@ -204,7 +204,26 @@ class CustomerController {
     }
 
     static checkout (req, res, next) {
-        console.log(req.body)
+        console.log('start req.body',req.body, 'end req.body')
+        let data = req.body.carts
+        data.forEach(datum => {
+            let quantity = datum.Product.stock - datum.quantity
+            let params = {stock: quantity, status: req.body.status}
+            Product.update(params, {where: {id:datum.ProductId}})
+            .then(data => {
+                Cart.update(params, {where: {id:datum.id}})
+                .then(data => {
+                    res.status(200).json({message: 'Checkout Successful'})
+                })
+                .catch(err => {
+                    next(err)
+                })
+            })
+            .catch(err => {
+                console.log(err)
+                next(err)
+            })
+        })
     }
 }
 

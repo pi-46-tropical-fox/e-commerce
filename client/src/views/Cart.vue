@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      {{ carts }}
       <h3>Shopping Cart</h3>
     </div>
     <CartCard
@@ -10,7 +9,7 @@
       :cartsData="cart">
     </CartCard>
     <div class="card border-success mb-3 mt-3 mw-100" style="max-width: 18rem;">
-      <div class="card-header" role="button">Checkout</div>
+      <div class="card-header" @click="checkout()" role="button">Checkout</div>
       <div class="card-body text-success">
         <div class="row" v-for="cart in carts" :key="cart.id">
           <div class="col text-left">
@@ -41,6 +40,13 @@ export default {
   methods: {
     fetchCart () {
       this.$store.dispatch('fetchCart')
+    },
+    checkout () {
+      const payload = {
+        carts: this.carts,
+        status: 'paid'
+      }
+      this.$store.dispatch('checkout', payload)
     }
   },
   computed: {
