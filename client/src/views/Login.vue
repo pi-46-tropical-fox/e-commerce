@@ -10,6 +10,7 @@
             <input type="password" v-model="password" class="form-control" placeholder="Password">
             <button type="button" class="btn btn-primary btn-block mt-4 mb-2" @click.prevent="login">Sign In</button>
             </form>
+            <button v-google-signin-button="clientId" class="google-signin-button btn btn-success btn-block"> Continue with Google</button>
         </div>
         <div class="card-body">
           <h5 class="card-title">Don't have an account? <a href="#" @click.prevent="$router.push({ path: '/register' })">Register</a></h5>
@@ -24,7 +25,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      clientId: '953795490728-4on335kjhdrvpupfckj0879d0f04rl4l.apps.googleusercontent.com'
     }
   },
   methods: {
@@ -37,6 +39,14 @@ export default {
       this.$store.dispatch('login', payload)
       this.email = ''
       this.password = ''
+    },
+    OnGoogleAuthSuccess (idToken) {
+      // console.log(idToken)
+      this.$store.dispatch('googleLogin', idToken)
+      // Receive the idToken and make your magic with the backend
+    },
+    OnGoogleAuthFail (error) {
+      console.log(error)
     }
   }
 }

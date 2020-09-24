@@ -311,6 +311,32 @@ export default new Vuex.Store({
         .catch(({ response }) => {
           console.log('update stok gagal')
         })
+    },
+    googleLogin ({ commit }, payload) {
+      const googleAccessToken = payload
+      axios({
+        method: 'POST',
+        url: '/googleLogin',
+        headers: {
+          googleAccessToken
+        }
+      })
+        .then(({ data }) => {
+        // console.log(data)
+          localStorage.setItem('access_token', data.access_token)
+          commit('SET_IS_LOGIN', true)
+          router.push({ path: '/product' })
+          Swal.fire({
+            icon: 'success',
+            title: 'WELCOME',
+            text: 'Happy shopping!'
+          })
+        })
+        .catch(({ response }) => {
+          const error = response.data.message
+          console.log(error)
+          Swal.fire(error)
+        })
     }
   },
   modules: {
