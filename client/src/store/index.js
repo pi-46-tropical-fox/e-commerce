@@ -417,6 +417,24 @@ export default new Vuex.Store({
             })
         }
       })
+    },
+    googleLogin ({ commit }, payload) {
+      axios({
+        method: 'POST',
+        url: '/googleLogin',
+        headers: {
+          google_access_token: payload
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem('access_token', data.access_token)
+          localStorage.setItem('user_email', data.email)
+          console.log(data)
+          router.push({ name: 'Electronics' })
+        })
+        .catch((err) => {
+          console.log(err, '<<<< error google login')
+        })
     }
   },
   modules: {

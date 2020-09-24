@@ -29,6 +29,13 @@ const routes = [
     name: 'Products',
     component: Products,
     meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      if (to.name === 'Products') {
+        next({ name: 'Electronics' })
+      } else {
+        next()
+      }
+    },
     children: [
       {
         path: 'electronics',
@@ -75,13 +82,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/about',
+    path: '*',
     name: 'About',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    meta: { requiresAuth: true }
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 

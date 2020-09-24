@@ -15,6 +15,8 @@
             </div>
             <button type="submit" class="btn btn-dark">Login</button>
           </form>
+          <!-- <button v-google-signin-button="clientId" class="btn btn-dark">Google</button> -->
+          <a href="#" class="text-dark"><i id="google-icon" v-google-signin-button="clientId" class="fab fa-google mt-3"></i></a>Login
         </div>
       </div>
     </div>
@@ -34,7 +36,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      clientId: '143146421319-p59q2kqecs5nk799gh4lsen519t5fphp.apps.googleusercontent.com'
     }
   },
   methods: {
@@ -46,11 +49,21 @@ export default {
       this.$store.dispatch('login', payload)
       this.email = ''
       this.password = ''
+    },
+    OnGoogleAuthSuccess (googleAccessToken) {
+      console.log(googleAccessToken, 'google_access_token')
+      // Receive the google_access_token and make your magic with the backend
+      this.$store.dispatch('googleLogin', googleAccessToken)
+    },
+    OnGoogleAuthFail (error) {
+      console.log(error, 'google sign in error')
     }
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+#google-icon {
+  font-size: 1.75rem;
+}
 </style>

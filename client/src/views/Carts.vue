@@ -5,6 +5,7 @@
       <div class="row">
         <div class="col-10 ">
           <div class="row">
+            <h4 class="mt-5" v-if="activeCarts.length === 0">There is no product in your cart.</h4>
             <div class="col-4 mt-5" v-for="cart in activeCarts" :key="cart.id">
               <div class="card" style="width: 18rem;">
                 <img :src="cart.Product.image_url" class="card-img-top" alt="product">

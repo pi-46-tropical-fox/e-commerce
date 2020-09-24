@@ -3,6 +3,7 @@
     <Navbar></Navbar>
     <div class="container pt-5 mb-5">
       <div class="row">
+        <h4 class="mt-5" v-if="wishlists.length === 0">There is no product in your wishlist.</h4>
         <div class="col-4 mt-5" v-for="wishlist in wishlists" :key="wishlist.id">
           <div class="card" style="width: 18rem;">
             <img :src="wishlist.Product.image_url" class="card-img-top" alt="product">

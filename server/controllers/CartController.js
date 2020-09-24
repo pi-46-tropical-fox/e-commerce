@@ -16,7 +16,6 @@ class CartController {
       });
       if (cart) {
         if (cart.quantity >= cart.Product.stock) {
-          // return res.status(400).json({ message: "Quantity exceeds stock!" });
           throw { message: "Quantity exceeds stock!", statusCode: 400 };
         }
         const updateCart = await Cart.update({
@@ -74,11 +73,7 @@ class CartController {
       const checkQuantity = await Cart.findByPk(+req.params.id, {
         include: [ Product ]
       });
-      // const { quantity, status } = req.body;
-      if (checkQuantity.quantity > checkQuantity.Product.stock) {
-        // return res.status(400).json({ message: "Quantity exceeds stock!" });
-        throw { message: "Quantity exceeds stock!", statusCode: 400 };
-      } else if (checkQuantity.quantity <= 1) {
+      if (checkQuantity.quantity <= 1) {
         await Cart.destroy({
           where: {
             id: +req.params.id

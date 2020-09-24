@@ -2,7 +2,8 @@
   <div>
     <Navbar></Navbar>
     <div class="container pt-5">
-      <table class="table table-striped mt-5">
+      <h4 class="mt-5" v-if="histories.length === 0">There is no shopping history yet.</h4>
+      <table class="table table-striped mt-5" v-else>
         <thead class="thead-dark">
           <tr>
             <th scope="col">No.</th>
