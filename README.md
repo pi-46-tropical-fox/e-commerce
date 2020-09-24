@@ -1,4 +1,4 @@
-# E-Commerce Gudang Kaos
+# E-Commerce Bakul Kaos
 
 `environment variables:`
 >> file .env values:
