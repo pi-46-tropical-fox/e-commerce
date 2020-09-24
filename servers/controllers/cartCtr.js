@@ -14,15 +14,15 @@ class Controller{
                 }
             )
             
-
             const prod = await Product.findOne({where: {id: req.params.id}})
-                
-            if(isCartExist.length>0){
-                if(prod.stock < isCartExist[0].quantity){
-                    return next({message: "Sorry. Movie is out of Stock.", statusCode: 400})
-                }
-            } 
-            if(isCartExist.length > 0){
+            if(prod.stock < 1){
+                throw {message: "Sorry. Movie is out of Stock.", statusCode: 400}
+            }
+            
+        if(isCartExist.length > 0){
+            if(prod.stock <= isCartExist[0].quantity){
+                return next({message: "Sorry. Movie is out of Stock.", statusCode: 400})
+            }
             const updateCartData = {
                 quantity: +isCartExist[0].quantity + +req.body.stock,
                 totalPrice: countTotalPrice(+isCartExist[0].totalPrice, +req.body.price, +req.body.stock)
@@ -35,8 +35,8 @@ class Controller{
             } else {
                 throw {message: "Bad request", statusCode: 400}
             }
-        } 
-        
+        }
+
         const inputCart = {
             quantity: req.body.stock,
             totalPrice: +req.body.price * +req.body.stock,
