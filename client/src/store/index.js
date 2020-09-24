@@ -34,7 +34,7 @@ export default new Vuex.Store({
     fetchProducts ({ commit }) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3333/products',
+        url: 'https://agile-meadow-39887.herokuapp.com/products',
         headers: {
           access_token: localStorage.access_token
         }
@@ -54,7 +54,7 @@ export default new Vuex.Store({
     loginSubmit ({ commit }, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3333/login',
+        url: 'https://agile-meadow-39887.herokuapp.com/login',
         data: {
           email: payload.email,
           password: payload.password
@@ -74,7 +74,7 @@ export default new Vuex.Store({
       // console.log(payload, '<<<<< payload id')
       axios({
         method: 'POST',
-        url: `http://localhost:3333/carts/${payload}`,
+        url: `https://agile-meadow-39887.herokuapp.com/carts/${payload}`,
         headers: {
           access_token: localStorage.access_token
         }
@@ -90,7 +90,7 @@ export default new Vuex.Store({
     fetchCart ({ commit }) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3333/carts',
+        url: 'https://agile-meadow-39887.herokuapp.com/carts',
         headers: {
           access_token: localStorage.access_token
         }
@@ -107,7 +107,7 @@ export default new Vuex.Store({
       // console.log(payload, '<<<<< id deleteCart')
       axios({
         method: 'DELETE',
-        url: `http://localhost:3333/carts/${payload}`,
+        url: `https://agile-meadow-39887.herokuapp.com/carts/${payload}`,
         headers: {
           access_token: localStorage.access_token
         }
@@ -123,7 +123,7 @@ export default new Vuex.Store({
     fetchHistory ({ commit }) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3333/purchase',
+        url: 'https://agile-meadow-39887.herokuapp.com/purchase',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -139,7 +139,7 @@ export default new Vuex.Store({
       // console.log(payload.id, '<<<< payload buy');
       axios({
         method: 'POST',
-        url: `http://localhost:3333/purchase/${payload.id}`,
+        url: `https://agile-meadow-39887.herokuapp.com/purchase/${payload.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -157,7 +157,7 @@ export default new Vuex.Store({
       axios({
 
         method: 'PUT',
-        url: `http://localhost:3333/carts/${payload}`,
+        url: `https://agile-meadow-39887.herokuapp.com/carts/${payload}`,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -173,7 +173,7 @@ export default new Vuex.Store({
       // console.log(payload, '<<<<');
       axios({
         method: 'POST',
-        url: 'http://localhost:3333/register',
+        url: 'https://agile-meadow-39887.herokuapp.com/register',
         data: {
           name: payload.name,
           email: payload.email,

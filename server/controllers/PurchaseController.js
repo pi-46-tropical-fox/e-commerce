@@ -15,13 +15,14 @@ class PurchaseController {
         let amount = 0
         Cart.findOne({where:{ProductId:+req.params.ProductId},include:Product})
         .then(data=>{
+            console.log(data, '<<<<<<');
             let params = {
                 UserId:req.userData.id,
                 ProductId:req.params.ProductId,
                 amount:data.amount
             }
             amount = data.amount
-            console.log(amount)
+            console.log(data)
             return Purchase.create(params)
         })
         .then(data=>{
@@ -45,6 +46,7 @@ class PurchaseController {
             res.status(200).json(data)
         })
         .catch(err=>{
+            console.log(err, '<<<<');
             next(err)
         })
     }
