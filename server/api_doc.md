@@ -11,6 +11,7 @@ An e-commerce app that digitize trading process between customer and seller in a
 ```
 - POST /register
 - POST /login
+- post /googleLogin
 - POST /products
 - GET /products
 - GET /products/:id
@@ -27,6 +28,8 @@ An e-commerce app that digitize trading process between customer and seller in a
 - GET /carts/:id
 - PUT /carts/:id
 - DELETE /carts/:id
+- POST /carts/checkoutall
+- POST /carts/checkout/:id
 - POST /wishlists/:productId
 - GET /wishlists
 - GET /carts/:id
@@ -122,6 +125,53 @@ _Response (500 - Internal Server Error)_
   ]
 }
 ```
+---
+### POST /googleLogin
+
+> Logging in a user and/or registering a new user into database
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "username": "<username to get insert into>",
+  "email": "<email to get insert into>",
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  "access_token": "<your access token>",
+  "avatar": "<your gogle profile picture>",
+  "email": "<your google email>"
+}
+```
+
+_Response (403 - Forbidden)_
+```
+{
+  "errors": [
+    "The verifyIdToken method requires an ID Token"
+  ]
+}
+```
+
+_Response(500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ]  
+}
+```
+#### _for more information about google oAuth please visit https://developers.google.com/gdata/docs/auth/overview_
 ---
 ### POST /products
 
@@ -908,7 +958,7 @@ _Response (400 - Bad request)_
 ```
 {
   "errors": [
-    "<Quantity exceeds stock!"
+    "Quantity exceeds stock!"
   ]
 }
 
@@ -1151,7 +1201,7 @@ _Response (400 - Bad request)_
 ```
 {
   "errors": [
-    "<Quantity exceeds stock!>"
+    "Quantity exceeds stock!>"
   ]
 }
 
@@ -1220,6 +1270,161 @@ _Response (200 - OK)_
 ```
 {
   "message": "A product has been removed from cart"
+}
+```
+
+_Response (401 - Unauthenticated)_
+```
+{
+  "errors": [
+    "User is not authenticated"
+  ]
+}
+```
+
+_Response (403 - Unauthorized)_
+```
+{
+  "errors": [
+    "Unauthorized Access"
+  ]
+}
+```
+
+_Response (404 - Not found)_
+```
+{
+  "errors": [
+    "Not Found"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ]
+}
+```
+### POST /carts/checkoutall
+
+> Checkout all the products in the carts
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "activeCarts": <all product in cart that have false status> <array><required><sent by client>
+  "totalPrice": <total price that should be paid by the users> <number><required><sent by client>
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  message: 'Checkout Success'
+}
+```
+
+_Response (400 - Bad request)_
+```
+{
+  "message": [
+    "Message about the remaining stock of a product"
+  ]
+}
+
+OR
+
+{
+  "errors": [
+    "<error messages regarding constraints and validations>"
+  ]
+}
+```
+
+_Response (401 - Unauthenticated)_
+```
+{
+  "errors": [
+    "User is not authenticated"
+  ]
+}
+```
+
+_Response (403 - Unauthorized)_
+```
+{
+  "errors": [
+    "Unauthorized Access"
+  ]
+}
+```
+
+_Response (404 - Not found)_
+```
+{
+  "errors": [
+    "Not Found"
+  ]
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "errors": [
+    "<some messages regarding server error>"
+  ]
+}
+```
+### POST /checkout/:id
+
+> Insert a new cart into database
+
+_Request Header_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+{
+  "totalPrice": <total price that should be paid by the users> <number><required><sent by client>
+}
+```
+
+_Response (200 - OK)_
+```
+{
+  message: 'Checkout Success'
+}
+```
+
+_Response (400 - Bad request)_
+```
+{
+  "message": [
+    "Message about the remaining stock of a product"
+  ]
+}
+
+OR
+
+{
+  "errors": [
+    "<error messages regarding constraints and validations>"
+  ]
 }
 ```
 
@@ -1434,80 +1639,6 @@ _Request Header_
 _Request Body_
 ```
 not needed
-```
-
-_Response (200 - OK)_
-```
-{
-  "id": "<a unique id given by postgres for a user's cart>" <number>,
-  "ProductId": "<a unique id given by postgres for a product>" <number>,
-  "UserId": "<a unique id given by postgres for a user>" <number>,
-  "createdAt": "2020-08-31T06:30:49.914Z" <date>,
-  "updatedAt": "2020-08-31T06:30:49.914Z" <date>
-}
-```
-
-_Response (400 - Bad request)_
-```
-{
-  "errors": [
-    "<error messages regarding constraints and validations>"
-  ]
-}
-```
-
-_Response (401 - Unauthenticated)_
-```
-{
-  "errors": [
-    "User is not authenticated"
-  ]
-}
-```
-
-_Response (403 - Unauthorized)_
-```
-{
-  "errors": [
-    "Unauthorized Access"
-  ]
-}
-```
-
-_Response (404 - Not found)_
-```
-{
-  "errors": [
-    "Not Found"
-  ]
-}
-```
-
-_Response (500 - Internal Server Error)_
-```
-{
-  "errors": [
-    "<some messages regarding server error>"
-  ]
-}
-```
----
-### PUT /wishlists/:id
-
-> Update wishlists based on id
-
-_Request Header_
-```
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Request Body_
-```
-{
-  "quantity": <number of product inserted into user's cart> <number><required>
-}
 ```
 
 _Response (200 - OK)_

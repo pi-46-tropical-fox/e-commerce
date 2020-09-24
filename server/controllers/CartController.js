@@ -172,16 +172,13 @@ class CartController {
   }
 
   static async checkoutAll (req, res, next) {
-    // console.log(req.body, "<<<< ini req.body")
     try {
       const { activeCarts, totalPrice } = req.body;
       const cartIds = [];
       const errMessages = [];
-      // const productIds = [];
       activeCarts.forEach((datum) => {
         if (datum.quantity <= datum.Product.stock) {
           cartIds.push(datum.id)
-          // productIds.push(datum.Product.id);
         } else {
           errMessages.push(`Only ${datum.Product.stock} of ${datum.Product.name} left!`);
         }
