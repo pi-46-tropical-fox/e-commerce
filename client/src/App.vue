@@ -4,8 +4,8 @@
       <router-link to="/" class="col-3" v-show="!this.$store.state.isLogged">Home</router-link>
       <router-link to="/register" class="col-3" v-show="!this.$store.state.isLogged">Register</router-link>
       <router-link to="/login" class="col-3" v-show="!this.$store.state.isLogged">Login</router-link>
-      <router-link to="/cart" class="col-3" v-show="this.$store.state.isLogged">Cart</router-link>
-      <router-link to="/products" class="col-3">Products</router-link>
+      <router-link to="/cart/unpaid" class="col-3" v-show="this.$store.state.isLogged">Cart</router-link>
+      <router-link to="/products/1" class="col-3">Products</router-link>
       <a class="col-3" href="" @click.prevent="logout" v-show="this.$store.state.isLogged">Logout</a>
     </div>
     <router-view/>
