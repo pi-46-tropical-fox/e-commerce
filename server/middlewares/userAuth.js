@@ -1,5 +1,5 @@
 const {generateUserToken, verifyToken} = require("../helpers/userToken");
-const { User } = require("../models")
+const { User, Cart } = require("../models")
 async function authentication(req, res, next){
     try{
         // console.log(req.headers);
@@ -39,4 +39,23 @@ async function adminAuthorization(req,res,next){
     }
 }
 
-module.exports= {authentication, adminAuthorization}
+async function userAuthorization(req,res,next){
+    let cartId = req.params.id
+    let userData = req.userData
+    try{
+        let cartData = Cart.findOne({where: {id: cartId}})
+        if(cartData.UserId === userData.id){
+            next()
+        }else{
+            let err= {
+                statusCode: 403,
+                message: 'forbidden access'
+            }
+            next(err)
+        }
+    }catch(err){
+        next(err)
+    }
+
+}
+module.exports= {authentication, adminAuthorization, userAuthorization}

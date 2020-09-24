@@ -46,7 +46,7 @@ export default {
         const category = this.categoriesData.filter(element => {
           // console.log(element);
 
-          return element.id == categoryId
+          return +element.id === +categoryId
         })
 
         return category[0].Products

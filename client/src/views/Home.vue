@@ -1,5 +1,13 @@
 <template>
   <div class="home">
+    <div class="home-banner">
+      <img id="slide-1" src="../assets/ps5_inner_bannner_1.webp" alt="">
+      <img id="slide-2" src="../assets/Xbox-One-banner.png" alt="">
+    </div>
+    <div class="banner-shortcut">
+      <a href="#slide-1">1</a> |
+      <a href="#slide-2">2</a>
+    </div>
     <div>
       <h1>Our's Recommend</h1>
       <div class="showcase-container">

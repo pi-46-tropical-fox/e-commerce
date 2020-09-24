@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "jest --detectOpenHandles --forceExit --runInBand --verbose",
-    "dev": "nodemon ./bin/www",
+    "dev": "set NODE_ENV=dev&&nodemon ./bin/www",
     "start": "node ./bin/www"
   },
   "author": "",

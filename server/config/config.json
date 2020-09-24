@@ -1,5 +1,5 @@
 {
-  "development": {
+  "dev": {
     "username": "postgres",
     "password": "postgres",
     "database": "e-commerce-cms-test",

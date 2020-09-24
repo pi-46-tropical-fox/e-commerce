@@ -1,4 +1,4 @@
-const {Cart, Product} = require('../models')
+const {Cart, Product, sequelize} = require('../models')
 
 class CartController{
   static async createCart(req, res, next){
@@ -62,6 +62,8 @@ class CartController{
 
   static async deleteCart(req,res,next){
     try{
+      console.log('test');
+
       let {id} = req.params
 
       await Cart.destroy({where:{id}})
@@ -69,6 +71,28 @@ class CartController{
       return res.status(200).json({message: 'Success updating cart'})
 
     }catch(err){
+      next(err)
+    }
+  }
+
+  static async checkout (req, res, next){
+    console.log('test');
+
+    const t = await sequelize.transaction();
+    try{
+      const {id} = req.userData
+      let promises = []
+      let cartsData = await Cart.findAll({where: {UserId: id, status: 'pending'}, }, { transaction: t })
+      for await (let cart of cartsData){
+        let promise = await Product.update({field: sequelize.literal('stock' + 1)}, {where: {id: cart.ProductId}}, { transaction: t })
+        promises.push(promise)
+      }
+      Promise.all(promises)
+      await t.commit()
+      return res.status(200).json({message: 'Checkout complete'})
+
+    }catch(err){
+      await t.rollback()
       next(err)
     }
   }
