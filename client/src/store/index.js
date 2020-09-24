@@ -13,7 +13,8 @@ export default new Vuex.Store({
     products: [],
     selectedProduct: {},
     carts: [],
-    banners: []
+    banners: [],
+    total: 0
   },
   mutations: {
     setLoadingStatus (state, payload) {
@@ -33,11 +34,15 @@ export default new Vuex.Store({
     },
     setBanners (state, payload) {
       state.banners = payload
+    },
+    setTotal (state,payload) {
+      state.total += payload
     }
 
   },
   actions: {
     login ({ commit }, payload) {
+      commit('setLoadingStatus', true)
       axios({
         url: '/login',
         method: 'POST',
@@ -48,8 +53,13 @@ export default new Vuex.Store({
           localStorage.setItem('email', data.email)
           router.push('/')
         })
+        .finally(() => {
+          commit('setLoadingStatus', false)
+        })
     },
     register ({ commit }, payload) {
+      payload.role = 'Customer'
+      commit('setLoadingStatus', true)
       axios({
         url: '/register',
         method: 'POST',
@@ -64,6 +74,9 @@ export default new Vuex.Store({
           localStorage.setItem('access_token', data.access_token)
           localStorage.setItem('email', data.email)
           router.push('/')
+        })
+        .finally(() => {
+          commit('setLoadingStatus', false)
         })
     },
     fetchProducts ({ commit }) {

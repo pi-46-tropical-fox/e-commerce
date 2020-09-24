@@ -21,7 +21,7 @@
         </table>
       </div>
   </div>
-    <Checkout> </Checkout>
+    <Checkout :cart="data"> </Checkout>
 </section>
 </template>
 
@@ -46,12 +46,8 @@ export default {
       this.$store.dispatch('fetchCarts')
     },
     removeItem (id) {
-      console.log(this.data)
       this.data = this.data.filter(e => e.id !== id)
     }
-    // filterCategories () {
-    //   this.data.products = this.data.products.filter(item => item.category === this.category)
-    // },
   },
   created () {
     this.fetchCarts()

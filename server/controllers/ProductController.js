@@ -18,6 +18,7 @@ class ProductController {
     static getProduct(req,res,next) {
         Product.findOne({where: {id : req.params.id}})
             .then(products => {
+                products.price =`Rp ${new Intl.NumberFormat('ID').format(products.price)}`
                 res.status(200).json(products)
             })
             .catch(err => {

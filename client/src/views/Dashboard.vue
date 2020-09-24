@@ -4,7 +4,22 @@
         <Loading v-if="$store.state.loadingStatus"/>
 
         <BannerCard> </BannerCard>
-
+        <br>
+        <div class="d-flex flex-row justify-content-center mb-3">
+      <form @submit.prevent ="filterCategories" class="form-inline " style="justify-content: center!important;">
+        <select id="inputCategory" class="form-control form-group mx-sm-3 mb-2" v-model="category" style="width:200px;">
+          <option value="Kaos">Kaos</option>
+          <option value="Kemeja">Kemeja</option>
+          <option value="Dress">Dress</option>
+          <option value="Celana">Celana</option>
+          <option value="Rok">Rok</option>
+          <option value="Sepatu">Sepatu</option>
+          <option value="Jam Tangan">Jam Tangan</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
+    </div>
+    
         <div class="container">
           <div  v-for="(product,index) in products" :key="index">
           <ProductCardLeft v-if="index%2 == 0"
@@ -29,6 +44,11 @@ export default {
     Loading,
     BannerCard
   },
+  data () {
+    return {
+      category: ''
+    }
+  },
   computed: {
     products () {
       return this.$store.state.products
@@ -37,10 +57,10 @@ export default {
   methods: {
     fetchProducts () {
       this.$store.dispatch('fetchProducts')
-    }
-    // filterCategories () {
-    //   this.data.products = this.data.products.filter(item => item.category === this.category)
-    // },
+    },
+    filterCategories () {
+      this.products = this.products.filter(item => item.category === this.category)
+    },
   },
   created () {
     this.fetchProducts()

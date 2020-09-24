@@ -4,7 +4,10 @@ class CartController {
 
     static async getCarts(req,res,next) {
        try {
-            const carts = await Cart.findAll({where: {UserId: req.userData.id}})
+            const carts = await Cart.findAll({where: {
+                UserId: req.userData.id,
+                status: 'waiting payment'}})
+            console.log(carts);
             for (let i = 0 ; i < carts.length ; i++) {
                 const product = await Product.findByPk(carts[i].ProductId)
                 carts[i].dataValues['Product'] = product
@@ -41,7 +44,7 @@ class CartController {
                 foundProduct.stock--
                 const _ = await Product.update({stock: foundProduct.stock}, { where: {id: req.params.id}})
                 const result = await Cart.update({quantity: foundCart.quantity}, { where: {id: foundCart.id}})
-                return res.status(200).json(result)
+                return res.status(200).json({message: "Success"})
             } else {
                 const cart = {
                     ProductId : +req.params.id,
@@ -71,7 +74,7 @@ class CartController {
             foundProduct.stock--
             const product = await Product.update({stock: foundProduct.stock}, { where: {id: foundCart.ProductId}})
             const result = await Cart.update({quantity: foundCart.quantity}, { where: {id: foundCart.id}})
-            return res.status(200).json(result)
+            return res.status(200).json({message: "Success"})
         }
         catch(err) {
             return next(err)
@@ -89,7 +92,7 @@ class CartController {
             foundProduct.stock++
             const product = await Product.update({stock: foundProduct.stock}, { where: {id: foundCart.ProductId}})
             const result = await Cart.update({quantity: foundCart.quantity}, { where: {id: foundCart.id}})
-            return res.status(200).json(result)
+            return res.status(200).json({message: "Success"})
         }
         catch(err) {
             return next(err)
@@ -97,11 +100,16 @@ class CartController {
     }
 
     static async deleteCart(req,res,next) {
-        try { 
+        try {
+            const foundCart = await Cart.findByPk(req.params.id)
+            const foundProduct = await Product.findByPk(foundCart.ProductId)
+            console.log(foundProduct.stock,'sebelum');
+            foundProduct.stock += foundCart.quantity
+            console.log(foundProduct.stock,'sesudah');
             const result = await Cart.destroy({
                 where: {id : req.params.id},
             })
-            return res.status(200).json(result)
+            return res.status(200).json({message: "Success"})
         } catch(err) {
             return next(err)
         }

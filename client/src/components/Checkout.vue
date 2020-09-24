@@ -1,30 +1,5 @@
 <template>
   <div class="container">
-
-      <!-- <div class="col-lg-4">
-        <div class="delivery">
-            <div class="section_title">Shipping method</div>
-            <div class="section_subtitle">Select the one you want</div>
-            <div class="delivery_options">
-                <label class="delivery_option clearfix">Next day delivery
-                    <input type="radio" name="radio">
-                    <span class="checkmark"></span>
-                    <span class="delivery_price">$4.99</span>
-                </label>
-                <label class="delivery_option clearfix">Standard delivery
-                    <input type="radio" name="radio">
-                    <span class="checkmark"></span>
-                    <span class="delivery_price">$1.99</span>
-                </label>
-                <label class="delivery_option clearfix">Personal pickup
-                    <input type="radio" checked="checked" name="radio">
-                    <span class="checkmark"></span>
-                    <span class="delivery_price">Free</span>
-                </label>
-            </div>
-        </div>
-        </div> -->
-
         <div class="col-lg-5 ml-auto mt-5">
             <div class="cart_total shadow">
                 <div class="section_title card-header" style="background-color:#343a40; color:white;">Cart total</div>
@@ -32,7 +7,7 @@
                     <ul>
                         <li class="d-flex flex-row align-items-center justify-content-start">
                             <div class="cart_total_title">Subtotal</div>
-                            <div class="cart_total_value ml-auto">$790.90</div>
+                            <div class="cart_total_value ml-auto">Rp {{total}}</div>
                         </li>
                         <li class="d-flex flex-row align-items-center justify-content-start">
                             <div class="cart_total_title">Shipping</div>
@@ -40,11 +15,11 @@
                         </li>
                         <li class="d-flex flex-row align-items-center justify-content-start">
                             <div class="cart_total_title">Total</div>
-                            <div class="cart_total_value ml-auto">$790.90</div>
+                            <div class="cart_total_value ml-auto">Rp {{total}}</div>
                         </li>
                     </ul>
                 </div>
-                <div class="button checkout_button"><a href="#">Proceed to checkout</a></div>
+                <div class="button checkout_button" @click.prevent="checkout"><a href="#">Proceed to checkout</a></div>
             </div>
         </div>
 
@@ -53,7 +28,24 @@
 
 <script>
 export default {
-  name: 'Checkout'
+  name: 'Checkout',
+  props: ['cart'],
+  computed: {
+    total () {
+      return this.$store.state.total
+    }
+  },
+  methods: {
+    totalCarts() {
+      let tempTotal = 0 
+    },
+    checkout() {
+      console.log('masuk');
+    }
+  },
+  created () {
+    this.totalCarts()
+  }
 
 }
 </script>

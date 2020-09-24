@@ -17,18 +17,18 @@
           </div>
         </div>
         </td>
-      <td class="align-middle">{{cart.Product.price}}</td>
+      <td class="align-middle">Rp. {{cart.Product.price}}</td>
       <td class="align-middle">
         <div class="align-middle row row-cols-3">
-          <button type="button" @click="removeMore(cart.id)" class="btn btn-primary">-</button>
+          <button type="button" @click="removeMore(cart.id)" class="btn btn-primary" style=" padding: 0 !important;">-</button>
 
           <div class="card my-auto" >{{cart.quantity}}</div>
-          <button type="button" @click="addMore(cart.id)" class="btn btn-primary">+</button>
+          <button type="button" @click="addMore(cart.id)" class="btn btn-primary" style=" padding: 0 !important;">+</button>
         </div>
         </td>
-      <td class="align-middle">Totalnya</td>
+      <td class="align-middle">Rp. {{total}}</td>
       <td class="align-middle">
-        <a href="#" class="btn btn-product btn-primary" @click="deleteItem(cart.id)">Delete</a>
+        <a href="#" class="btn btn-product btn-primary" style=" padding: 1em !important;" @click="deleteItem(cart.id)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18px" height="18px"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"/></svg> <br><small>Delete</small></a>
       </td>
     </tr>
 </template>
@@ -38,11 +38,22 @@ import Swal from 'sweetalert2'
 export default {
   name: 'CartCard',
   props: ['cart', 'number'],
+  data () {
+    return {
+      total: 0
+    }
+  },
   methods: {
     addMore (id) {
+      this.cart.quantity++
+      this.total += this.cart.Product.price
+      this.$store.commit('setTotal', this.total)
       this.$store.dispatch('addOne', id)
     },
     removeMore (id) {
+      this.cart.quantity--
+      this.total -= this.cart.Product.price
+      this.$store.commit('setTotal', this.total)
       this.$store.dispatch('removeOne', id)
     },
     deleteItem (id) {
@@ -69,6 +80,9 @@ export default {
       this.$store.dispatch('deleteCart', id)
       this.$emit('removeData', id)
     }
+  },
+  created () {
+    this.total = this.cart.Product.price * this.cart.quantity
   }
 }
 </script>

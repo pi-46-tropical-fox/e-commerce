@@ -1,14 +1,13 @@
 const router = require('express').Router()
 const CartController = require('../controllers/CartController.js')
 
-// const {authorizationCart} = require('../middlewares/auth.js')
-
+const {authorizationCart, authenticationCustomer} = require('../middlewares/auth.js')
+router.use(authenticationCustomer)
 router.get('/', CartController.getCarts)
 
-router.post('/:id', CartController.postCart)
-router.get('/:id', CartController.getCart)
-router.put('/:id/add', CartController.addCart)
-router.put('/:id/sub', CartController.minCart)
-router.delete('/:id', CartController.deleteCart)
+router.get('/:id', authorizationCart, CartController.getCart)
+router.put('/:id/add', authorizationCart, CartController.addCart)
+router.put('/:id/sub', authorizationCart, CartController.minCart)
+router.delete('/:id', authorizationCart,CartController.deleteCart)
 
 module.exports = router
