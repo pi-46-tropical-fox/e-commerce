@@ -72,7 +72,19 @@ none
 
 ### Response Body (200)
 ```json
-
+[
+    {
+        "ProductId" : 2,
+        "UserId" : 2,
+        "product" : {
+            "name" : "Kuaci",
+            "image_url" : "https://goocl.c/a.jpg",
+            "stock" : 2,
+            "price" : 21390
+        },
+        "quantity" : 3
+    }
+]
 ```
 
 ## POST /cart
@@ -82,7 +94,7 @@ none
     "access_token" : "<jwt>"
 }
 ```
-### Request Bdoy
+### Request Body
 ```json
 {
     "productId" : 2,
@@ -93,7 +105,15 @@ none
 ### Response Body
 ```json
 {
-    
+    "ProductId" : 2,
+    "UserId" : 2,
+    "product" : {
+        "name" : "Kuaci",
+        "image_url" : "https://goocl.c/a.jpg",
+        "stock" : 2,
+        "price" : 21390
+    },
+    "quantity" : 3
 }
 ```
 
@@ -111,6 +131,8 @@ none
     "quantity" : 5
 }
 ```
+
+### Response (200)
 
 ## DELETE /cart/:id
 ### Request Headers

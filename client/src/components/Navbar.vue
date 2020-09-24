@@ -10,6 +10,9 @@
         <li class="nav-item active">
             <router-link to="/logout" class="nav-link">Logout</router-link>
         </li>
+        <li class="nav-item active">
+            <router-link to="/login" class="nav-link">Login</router-link>
+        </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <router-link to="/cart">

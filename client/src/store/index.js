@@ -37,6 +37,10 @@ export default new Vuex.Store({
       console.log('data', data)
 
       state.cart[index].quantity = data.quantity
+    },
+    "LOGOUT"(state, data){
+      localStorage.clear()
+      state.access_token = ''
     }
   },
   actions: {
@@ -44,6 +48,9 @@ export default new Vuex.Store({
       return axios.post('/user/login', data).then(res => {
        commit('UPDATE_ACCESS_TOKEN', res.data.access_token)  
       })
+    },
+    logout({commit}){
+      commit('LOGOUT')
     },
     register({commit}, data){
       return axios.post('/user/register', data)
