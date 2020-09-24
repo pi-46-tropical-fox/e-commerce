@@ -14,7 +14,7 @@
     <div class="cart-product-item-right">
       <div>
         <p>Quantity:</p>
-        <input type="number" v-model="quantity" :max="gameStock">
+        <input type="number" v-model="quantity" :max="gameStock" :min='0'>
       </div>
       <p>Rp. {{cart.Product.price }}</p>
     </div>

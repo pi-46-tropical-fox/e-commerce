@@ -78,21 +78,41 @@ class CartController{
   static async checkout (req, res, next){
     console.log('test');
 
-    const t = await sequelize.transaction();
+    // const t = await sequelize.transaction();
     try{
-      const {id} = req.userData
-      let promises = []
-      let cartsData = await Cart.findAll({where: {UserId: id, status: 'pending'}, }, { transaction: t })
-      for await (let cart of cartsData){
-        let promise = await Product.update({field: sequelize.literal('stock' + 1)}, {where: {id: cart.ProductId}}, { transaction: t })
-        promises.push(promise)
-      }
-      Promise.all(promises)
-      await t.commit()
+      await sequelize.transaction(async (t) => {
+        const {id} = req.userData
+        let idArr = []
+        let promises = []
+        let cartsData = await Cart.findAll({where: {UserId: id, status: 'pending'}, }, { transaction: t })
+        
+        for await (let cart of cartsData){
+          promises.push(
+            await Product.findOne({where: {id: cart.ProductId}})
+              .then((data)=> {
+                let stock = +data.stock - +cart.quantity
+                console.log(stock);
+                if(stock < 0){
+                  let err = {
+                    statusCode : 400,
+                    message: 'Not enough stock'
+                  }
+                  next(err)
+                }else{
+                  Product.update({stock}, {where: {id: data.id}})
+                }
+              })
+          )
+
+        }
+        await Cart.update({status: 'complete'},{where: {UserId: id, status: 'pending'}, }, { transaction: t })
+  
+      });
+
+
       return res.status(200).json({message: 'Checkout complete'})
 
     }catch(err){
-      await t.rollback()
       next(err)
     }
   }
