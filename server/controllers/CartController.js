@@ -37,7 +37,10 @@ class CartController {
           // Stock not sufficient
           // console.log('HIT');
           return res.status(400).json({ 
-            message : `Sorry our stock is only ${checkStockProduct.stock}`})
+            errors : [
+              `Sorry our stock is only ${checkStockProduct.stock}`
+            ]
+          })
         }
 
     // There is existing cart
@@ -69,10 +72,12 @@ class CartController {
 
         else {
           return res.status(400).json({ 
-            message : `Sorry our stock is only ${checkStockProduct.stock}`})
+            errors : [`Sorry our stock is only ${checkStockProduct.stock}`
+          ]})
         }
       }
     } catch (err) {
+      console.log(err);
       next (err)
     }
   }

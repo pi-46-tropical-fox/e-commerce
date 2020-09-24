@@ -18,7 +18,28 @@ module.exports = (sequelize, DataTypes) => {
   Cart.init({
     ProductId: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER,
+    quantity: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isNumeric: {
+          args : true,
+          msg : 'Invalid quantity request'
+        },
+        min: {
+          args: 1,
+          msg:  'Invalid quantity request'
+        },
+        notNull: {
+          args : true,
+          msg : 'Invalid quantity request'
+        },
+        notEmpty: {
+          args : true,
+          msg : 'Invalid quantity request'
+        }
+      },
+      allowNull : false
+    },
     total: DataTypes.INTEGER,
     status: DataTypes.STRING
   }, {

@@ -2,8 +2,8 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 
 const instance = axios.create({
-  // baseURL: 'http://localhost:3000'
-  baseURL: 'https://bookiepedia-sam.herokuapp.com/'
+  baseURL: 'http://localhost:3000'
+  // baseURL: 'https://bookiepedia-sam.herokuapp.com/'
 })
 
 // Add a response interceptor
@@ -14,7 +14,8 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
-  console.log(error.response, 'IN SWAL')
+  // console.log(error.response, 'IN SWAL')
+  console.log(error.response.data.errors, 'IN SWAL')
   Swal.fire({
     icon: 'error',
     title: 'Oops...',
