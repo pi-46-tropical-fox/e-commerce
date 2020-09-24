@@ -9,7 +9,7 @@
       <a class="navbar-brand" @click="movePage('cart')" role="button">
         <img src="../assets/shoppingcart.png" width="30" height="30" class="mr-2 " alt="" loading="lazy">
       </a>
-      <a class="navbar-brand" role="button">
+      <a class="navbar-brand" @click="movePage('wishlist')" role="button">
         <img src="../assets/hearticon.png" width="30" height="30" class="mr-2 " alt="" loading="lazy">
       </a>
       <a class="dropleft">

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Cart from '../views/Cart.vue'
+import Wishlist from '../views/Wishlist.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,18 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/')
+      }
+    }
+  },
+  {
+    path: '/wishlist',
+    name: 'Wishlist',
+    component: Wishlist,
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('access_token')) {
         next()

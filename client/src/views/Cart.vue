@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
+      {{ carts }}
       <h3>Shopping Cart</h3>
     </div>
     <CartCard

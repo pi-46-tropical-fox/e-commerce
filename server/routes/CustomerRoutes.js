@@ -10,6 +10,7 @@ route.post('/addwl/:productId', authentication, CustomerController.addToWishlist
 route.post('/addcart/:productId', authentication, CustomerController.addToCart)
 route.get('/cart/:cartId', authentication, CustomerController.getOneCart)
 route.get('/cart', authentication, CustomerController.getCart)
+route.get('/wishlist', authentication, CustomerController.getWishlist)
 route.put('/updatecart/', authentication, CustomerController.updateCart)
 route.delete('/deletewl/:wlId', authentication, CustomerController.deleteWishlist)
 route.delete('/deletecart/:cartId', authentication, CustomerController.deleteCart)

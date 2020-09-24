@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    carts: []
+    carts: [],
+    wishlists: []
   },
   mutations: {
     SET_PRODUCTS (state, payload) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     SET_CARTS (state, payload) {
       state.carts = payload
+    },
+    SET_WISHLISTS (state, payload) {
+      state.wishlists = payload
     }
   },
   actions: {
@@ -44,6 +48,21 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+
+    fetchWishlist (context) {
+      axios({
+        method: 'GET',
+        url: '/customers/wishlist',
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+        .then(({ data }) => {
+          console.log(data, 'ini response fetchwishlist dari server di vuex')
+          context.commit('SET_WISHLISTS', data)
+        })
+        .catch(err => {
+          console.log(err, 'ini error fetchwishlist di vuex')
         })
     },
 
@@ -92,6 +111,26 @@ export default new Vuex.Store({
         })
     },
 
+    addToWishlist (context, payload) {
+      axios({
+        method: 'POST',
+        url: `/customers/addwl/${payload.id}`,
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+        .then(({ data }) => {
+          if (data.message === 'Successfully added to wishlist') {
+            console.log(data, 'sukses menambah wishlist')
+            context.dispatch('fetchWishlist')
+          } else {
+            console.log(data, 'sukses menghapus wishlist')
+            context.dispatch('fetchWishlist')
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
     removeCart (context, id) {
       axios({
         method: 'DELETE',
@@ -103,6 +142,20 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+
+    removeFromWishlist (context, id) {
+      axios({
+        method: 'DELETE',
+        url: `customers/deletewl/${id}`,
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+        .then(({ data }) => {
+          context.dispatch('fetchWishlist')
+        })
+        .catch(err => {
+          console.log(err, 'ini error delete wl di vuex')
         })
     },
 

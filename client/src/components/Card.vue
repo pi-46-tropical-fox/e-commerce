@@ -29,7 +29,12 @@
                   </div>
                 </div>
                 <div class="row">
-                <button class="btn btn-sm btn-dark text-white mr-2" type="submit">Add To Favorites</button>
+                  <button v-if="isWishlist" class="btn btn-sm btn-dark text-white mr-2" type="submit" @click="addToWishlist(productsData)">
+                  <img src="../assets/wishlisted.png" width="30" height="30">
+                </button>
+                <button v-else class="btn btn-sm btn-dark text-white mr-2" type="submit" @click="addToWishlist(productsData)">
+                  <img src="../assets/notwishlisted.png" width="30" height="30">
+                </button>
                 <button class="btn btn-sm btn-dark text-white" type="submit"  @click="addToCart(productsData.id)">Add To Cart</button>
                 </div>
             </div>
@@ -66,12 +71,35 @@ export default {
       }
       console.log(payload, 'ini payload addtocart yang dilempar dari card ke vuex')
       this.$store.dispatch('addToCart', payload)
+    },
+
+    addToWishlist (payload) {
+      this.$store.dispatch('addToWishlist', payload)
+    },
+
+    fetchWishlist () {
+      this.$store.dispatch('fetchWishlist')
     }
   },
   computed: {
     priceLocale () {
       return this.productsData.price.toLocaleString('id-ID')
+    },
+    wishlists () {
+      return this.$store.state.wishlists
+    },
+    isWishlist () {
+      let status = false
+      this.wishlists.forEach(wishlist => {
+        if (wishlist.ProductId === this.productsData.id) {
+          status = true
+        }
+      })
+      return status
     }
+  },
+  created () {
+    this.fetchWishlist()
   }
 }
 </script>

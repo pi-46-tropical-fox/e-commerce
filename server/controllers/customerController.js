@@ -61,12 +61,28 @@ class CustomerController {
 
     static addToWishlist (req, res, next) {
         let params = {
-            UserId: req.headers.UserId,
+            UserId: req.userData.id,
             ProductId: req.params.productId
         }
-        Wishlist.create(params)
+        Wishlist.findAll({where: {UserId:params.UserId, ProductId: params.ProductId}})
         .then(data => {
-            res.status(201).json(data)
+            if (data.length >= 1) {
+                Wishlist.destroy({where: {UserId:params.UserId, ProductId: params.ProductId}})
+                .then(deleted => {
+                    res.status(200).json({message: 'Removed from wishlist'})
+                })
+                .catch(err => {
+                    next(err)
+                })
+            } else {
+                Wishlist.create(params)
+                .then(created => {
+                    res.status(200).json({message: 'Successfully added to wishlist'})
+                })
+                .catch(err => {
+                    next(err)
+                })
+            }
         })
         .catch(err => {
             next(err)
@@ -133,6 +149,19 @@ class CustomerController {
         })
     }
 
+    static getWishlist (req, res, next) {
+        Wishlist.findAll({
+            where: {UserId : req.userData.id},
+            attributes: ['id', 'UserId', 'ProductId'],
+            include: {model: Product}})
+        .then(data => {
+            res.status(200).json(data)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
     static getOneCart (req, res, next) {
         Cart.findOne({where: {id: req.params.cartId}})
         .then(data => {
@@ -175,6 +204,7 @@ class CustomerController {
     }
 
     static checkout (req, res, next) {
+        console.log(req.body)
     }
 }
 
