@@ -8,5 +8,4 @@ bannerRoutes.get('/banners/:id', authentication, authorizationRole, BannerContro
 bannerRoutes.put('/banners/:id', authentication, authorizationRole, BannerController.updateBanner)
 bannerRoutes.delete('/banners/:id', authentication, authorizationRole, BannerController.deleteBanner)
 
-
 module.exports = bannerRoutes
