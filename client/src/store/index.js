@@ -155,11 +155,13 @@ export default new Vuex.Store({
     updateAmount ({ commit }, payload) {
       // console.log(payload, '<<< payload id updateamount')
       axios({
-
         method: 'PUT',
-        url: `https://agile-meadow-39887.herokuapp.com/carts/${payload}`,
+        url: `https://agile-meadow-39887.herokuapp.com/carts/${payload.id}`,
         headers: {
           access_token: localStorage.getItem('access_token')
+        },
+        data: {
+          amount: payload.amount
         }
       })
         .then(({ data }) => {
