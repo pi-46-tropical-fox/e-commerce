@@ -1,11 +1,12 @@
 <template>
     <div class="col-4 mt-5 shadow">
+      {{history}}
       <img class="card-img-top" :src="cart.Product.image_url" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">Title: {{cart.Product.name}}</h5>
         <p class="card-text">TotalPrice: {{cart.totalPrice}}</p>
         <label for="quantity">Quantity: </label><br>
-        <input type="number" class="card-text" min="1" :max="cart.Product.stock" v-model="quantity"><br>
+        <input type="number" class="card-text" min="1" v-model="quantity"><br>
         <p class="card-text">Status: {{cart.status}}</p>
       </div>
       <div class="card-footer">
@@ -22,7 +23,7 @@ export default {
       quantity: this.cart.quantity
     }
   },
-  props: ["cart"],
+  props: ["history"],
   methods: {
     remove(id){
       this.$store.dispatch("removeCart", id)

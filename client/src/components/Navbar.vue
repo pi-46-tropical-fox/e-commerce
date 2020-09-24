@@ -7,7 +7,7 @@
       <div>
         <div class="d-flex justify-content-around align-items-center mr-3">
           <router-link class="btn shadow d-flex justify-content-center align-items-center mr-2" :to="{ name: 'Carts'}">Cart</router-link>
-          <a class="btn shadow d-flex justify-content-center align-items-center mr-5">History</a>
+          <router-link class="btn shadow d-flex justify-content-center align-items-center mr-5" :to="{ name: 'History'}">History</router-link>
           <a @click.prevent="logout" class="btn shadow d-flex justify-content-center align-items-center mr-2">Logout</a>
         </div>
       </div>
@@ -21,6 +21,9 @@ export default {
   methods: {
     logout(){
       this.$store.dispatch("logout")
+    },
+    showHistory(){
+      this.$store.dispatch("showHistory")
     }
   }
 }

@@ -11,7 +11,8 @@ export default new Vuex.Store({
     moviesList: [],
     cartList: [],
     currentStatus: '',
-    banners: []
+    banners: [],
+    histories: []
   },
   mutations: {
     SET_MOVIES_LIST(state, payload){
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     SET_BANNER(state, payload){
       state.banners = payload
+    },
+    SET_HISTORY(state, payload){
+      state.histories = payload
     }
   },
   actions: {
@@ -103,6 +107,7 @@ export default new Vuex.Store({
           commit("SET_CART_LIST", data.data)
         })
         .catch(err => {
+          console.log(`THIS IS AFRIKA FROM CATCH`)
           console.log(err)
         })
     },
@@ -156,6 +161,11 @@ export default new Vuex.Store({
         }
       })
       .then(({data}) => {
+        Swal.fire(
+          'SUCCESS!',
+          'Successfully checkout Cart',
+          'success'
+        )
         this.dispatch("showCart")
       })
       .catch(err => {
@@ -173,6 +183,22 @@ export default new Vuex.Store({
       })
       .then(({data}) => {
         commit("SET_BANNER", data.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    showHistory({commit}){
+      axios({
+        url: '/histories',
+        method: 'get',
+        headers: {
+          access_token: localStorage.getItem("access_token")
+        }
+      })
+      .then(({data}) => {
+        commit("SET_HISTORY", data.data)
       })
       .catch(err => {
         console.log(err)

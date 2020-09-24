@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Auth from '../views/Auth.vue'
 import Carts from '../components/Carts.vue'
+import History from '../components/History.vue'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/carts',
     name: 'Carts',
     component: Carts
+  },
+  {
+    path: '/history',
+    name: 'History',
+    component: History
   },
   {
     path: '/auth',

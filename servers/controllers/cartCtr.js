@@ -4,6 +4,11 @@ const countTotalPrice = require('../helpers/totalPrice')
 class Controller{
     static async add(req, res, next){
         try{
+            const prod = await Product.findOne({where: {id: req.params.id}})
+            if(prod.stock < req.body.stock){
+                throw {message: "Sorry. Movie is out of Stock."}
+            }
+
             const isCartExist = await Cart.findAll(
                 {
                     where: {
@@ -58,14 +63,10 @@ class Controller{
                     include: Product
                 }
             )
-            
-            if(isCartExist.length > 0){
-                return res.status(200).json({
-                    data: isCartExist
-                })
-            }else{
-                throw {message: "Cart not found", statusCode: 404}
-            }
+
+            return res.status(200).json({
+                data: isCartExist
+            })
         }catch(err){
             return next(err)
         }
@@ -89,6 +90,10 @@ class Controller{
 
     static async updateCart(req, res, next){
         try{
+            const cartCheck = await Cart.findOne({where: {id: req.params.id}, include: Product})
+            if(cartCheck.Product.stock < req.body.quantity){
+                throw {message: "Sorry. Products out of stock"}
+            }
             const cart = await Cart.update({quantity: req.body.quantity},
                 {
                     where: {
@@ -125,32 +130,6 @@ class Controller{
     }
 
     static async checkout(req, res, next){
-        // try {
-        //     const result = await sequelize.transaction(async (t) => {
-          
-        //       const user = await User.create({
-        //         firstName: 'Abraham',
-        //         lastName: 'Lincoln'
-        //       }, { transaction: t });
-          
-        //       await user.setShooter({
-        //         firstName: 'John',
-        //         lastName: 'Boothe'
-        //       }, { transaction: t });
-          
-        //       return user;
-          
-        //     });
-          
-            // If the execution reaches this line, the transaction has been committed successfully
-            // `result` is whatever was returned from the transaction callback (the `user`, in this case)
-          
-        //   } catch (error) {
-          
-            // If the execution reaches this line, an error occurred.
-            // The transaction has already been rolled back automatically by Sequelize!
-          
-        //   }
 
         try{
             const allPaidCart = await Cart.findAll(
@@ -169,7 +148,6 @@ class Controller{
 
             allPaidCart.forEach(async cart => {
                 await Product.decrement({stock: cart.quantity}, {where: {id: cart.Product.id}})
-                console.log(cart.Product)
             });
 
             const data = {
