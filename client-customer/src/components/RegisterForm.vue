@@ -13,20 +13,20 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
-    
+
 </template>
 <script>
 import axios from '../config/axios.js'
 export default {
   name: 'RegsiterForm',
   data () {
-      return {
-          email: '',
-          password: ''
-      }
+    return {
+      email: '',
+      password: ''
+    }
   },
   methods: {
-      register () {
+    register () {
       const payload = {
         email: this.email,
         password: this.password

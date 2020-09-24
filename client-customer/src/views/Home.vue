@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import Cart from '../components/Cart'
 import Card from '../components/Card'
 import Navbar from '../components/Navbar'
 export default {
@@ -42,7 +41,7 @@ export default {
 <style>
 .home-grid {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     'navbar'
     'product-list';
   grid-template-rows: 100px min-content;

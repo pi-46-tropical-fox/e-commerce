@@ -33,10 +33,10 @@ const routes = [
     }
   },
   {
-    path:'/home',
+    path: '/home',
     name: 'Home',
     component: Home,
-     beforeEnter: (to, from, next) => {
+    beforeEnter: (to, from, next) => {
       if (localStorage.getItem('access_token')) {
         next()
       } else {
@@ -45,10 +45,10 @@ const routes = [
     }
   },
   {
-    path:'/checkout',
+    path: '/checkout',
     name: 'Checkout',
     component: Checkout,
-     beforeEnter: (to, from, next) => {
+    beforeEnter: (to, from, next) => {
       if (localStorage.getItem('access_token')) {
         next()
       } else {

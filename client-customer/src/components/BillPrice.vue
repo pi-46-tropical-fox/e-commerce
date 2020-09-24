@@ -10,13 +10,13 @@
 
 <script>
 export default {
-    name: 'BillPrice',
-    props: ['item'],
-    computed: {
-        total () {
-            return this.item.quantity * this.item.Product.price
-        }
+  name: 'BillPrice',
+  props: ['item'],
+  computed: {
+    total () {
+      return this.item.quantity * this.item.Product.price
     }
+  }
 
 }
 </script>

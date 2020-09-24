@@ -13,7 +13,7 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
-    
+
 </template>
 <script>
 import axios from '../config/axios.js'
@@ -21,23 +21,23 @@ export default {
   name: 'LoginForm',
   props: ['status'],
   data () {
-      return {
-          email: '',
-          password: ''
-      }
+    return {
+      email: '',
+      password: ''
+    }
   },
   methods: {
-      goSubmit () {
-         const payload = {
-          email: this.email,
-          password: this.password
-        }
-        if(this.status){
-          console.log(payload, '<<< ini fari component LoginForm')
-          this.$store.dispatch('loginClient', payload)
-        } else {
-          this.$store.dispatch('registerClient', payload)
-        }
+    goSubmit () {
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
+      if (this.status) {
+        console.log(payload, '<<< ini fari component LoginForm')
+        this.$store.dispatch('loginClient', payload)
+      } else {
+        this.$store.dispatch('registerClient', payload)
+      }
     }
   }
 }

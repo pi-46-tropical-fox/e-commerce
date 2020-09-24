@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-Vue.use(Vuex)
 import axios from '../config/axios.js'
 import router from '../router'
+
+Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
@@ -44,33 +44,33 @@ export default new Vuex.Store({
   actions: {
     registerClient (context, payload) {
       axios({
-        url:'/register',
+        url: '/register',
         method: 'POST',
         data: payload
       })
-      .then(response => {
-        alertify.dialog('alert').set({ transition: 'flipx', message: 'Register Succeeded' }).show()
-        router.push({ path: '/login' })
-      })
-      .catch (err => {
-        console.log(err, '<<error axios')
-        alertify.dialog('alert').set({ transition: 'flipx', message: 'This email has been registered.' }).show()
-      })
+        .then(response => {
+          alertify.dialog('alert').set({ transition: 'flipx', message: 'Register Succeeded' }).show()
+          router.push({ path: '/login' })
+        })
+        .catch(err => {
+          console.log(err, '<<error axios')
+          alertify.dialog('alert').set({ transition: 'flipx', message: 'This email has been registered.' }).show()
+        })
     },
-    loginClient(context, payload) {
+    loginClient (context, payload) {
       axios({
-        url:'/login',
+        url: '/login',
         method: 'POST',
         data: payload
       })
-      .then(response => {
-        localStorage.setItem('access_token', response.data.access_token)
-        router.push({ path: '/home' })
-      })
-      .catch (err => {
-        console.log(err, '<<error axios')
-        alertify.dialog('alert').set({ transition: 'flipx', message: 'Email or Password is invalid' }).show()
-      })
+        .then(response => {
+          localStorage.setItem('access_token', response.data.access_token)
+          router.push({ path: '/home' })
+        })
+        .catch(err => {
+          console.log(err, '<<error axios')
+          alertify.dialog('alert').set({ transition: 'flipx', message: 'Email or Password is invalid' }).show()
+        })
     },
     fetchProducts (context) {
       axios({
@@ -90,33 +90,33 @@ export default new Vuex.Store({
     },
     addToCart (context, payload) {
       axios({
-        url:`/item/${payload}`,
+        url: `/item/${payload}`,
         method: 'POST',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
-      .then(response => {
-        context.commit('addToTotalQuantity')
-      })
-      .catch (err => {
-        console.log(err)
-      })
+        .then(response => {
+          context.commit('addToTotalQuantity')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    removeOne(context, payload) {
+    removeOne (context, payload) {
       axios({
-        url:`/item/${payload}`,
+        url: `/item/${payload}`,
         method: 'PATCH',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
       })
-      .then(response => {
-        context.commit('removeFromCart', payload)
-      })
-      .catch (err => {
-        alertify.dialog('alert').set({ transition: 'flipx', message: 'Email or Password is invalid' }).show()
-      })
+        .then(response => {
+          context.commit('removeFromCart', payload)
+        })
+        .catch(err => {
+          alertify.dialog('alert').set({ transition: 'flipx', message: 'Email or Password is invalid' }).show()
+        })
     },
     fetchItems (context) {
       axios({
@@ -144,7 +144,6 @@ export default new Vuex.Store({
         .then(({ data }) => {
           context.commit('filterCartItems', payload)
           context.commit('setTotalCartQuantity', payload)
-
         })
         .catch(err => {
           console.log(err)
@@ -152,23 +151,23 @@ export default new Vuex.Store({
     },
     checkout (context, payload) {
       axios({
-        url:`/item`,
+        url: '/item',
         method: 'PUT',
         headers: {
           access_token: localStorage.getItem('access_token')
         },
         data: payload
       })
-      .then(response => {
-        console.log(payload, '<< ini checkout')
-        context.commit('clearCart')
-        context.dispatch('fetchProducts')
-      })
-      .catch (err => {
-        console.log(err, '<< ini checkout err')
-      })
+        .then(response => {
+          console.log(payload, '<< ini checkout')
+          context.commit('clearCart')
+          context.dispatch('fetchProducts')
+        })
+        .catch(err => {
+          console.log(err, '<< ini checkout err')
+        })
     }
-    
+
   },
   modules: {
   }

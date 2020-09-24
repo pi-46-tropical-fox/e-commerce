@@ -7,7 +7,7 @@
         <lottie-player class=" my-auto" src="https://assets8.lottiefiles.com/packages/lf20_0ny14efc.json" mode="bounce" background="transparent"  speed="1"  style="width: 800px; height: 800px;"  loop  autoplay></lottie-player>
       </div>
       <div class="login mx-aut0">
-          
+
           <h1 class="mx-auto d-inline login-register" :class="{'is-active': status }" @click="toggle">LOGIN</h1><h1 class="login-register mx-auto d-inline"  :class="{'is-active': !status }" @click="toggle"> REGISTER</h1>
           <LoginForm
           :status="status"
@@ -29,23 +29,23 @@ export default {
   components: {
     LoginForm
   },
-  data() {
-      return {
-          status: true
-      }
+  data () {
+    return {
+      status: true
+    }
   },
   methods: {
-      toggle (event) {
-        event.target.classList.toggle('is-active')
-        this.status = !this.status
-      }
+    toggle (event) {
+      event.target.classList.toggle('is-active')
+      this.status = !this.status
+    }
   }
 
 }
 </script>
 
 <style>
-    
+
 .login-container {
     box-sizing: border-box;
     display: grid;

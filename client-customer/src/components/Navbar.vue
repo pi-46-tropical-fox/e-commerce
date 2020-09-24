@@ -55,7 +55,7 @@ export default {
     goCheckout () {
       this.$router.push('/checkout')
     }
-     }
+  }
 
 }
 </script>

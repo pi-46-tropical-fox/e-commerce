@@ -1,5 +1,5 @@
 const { User, Cart } = require('../models')
-const CartController = require("../controller/CartController")
+
 const { generateToken } = require("../helpers/jwt");
 const { compare } = require("../helpers/bcrypt")
 
@@ -11,15 +11,7 @@ class UserController {
             password: req.body.password,
             role: req.body.role
         }
-      
-        let cartData;
-        Cart.create()
-        .then(data => {
-            cartData = data
-            console.log(cartData)
-            params.CartId = data.id
-            return User.create(params)
-    })
+    User.create(params)
     .then(user => {
         res.status(201).json({
             message: 'Register succeeded',
@@ -28,7 +20,7 @@ class UserController {
         })
     })
     .catch(err => {
-        return next(err)
+        res.send(err)
 
     })
     }

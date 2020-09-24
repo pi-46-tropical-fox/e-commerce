@@ -21,7 +21,7 @@ export default {
   name: 'Card',
   props: ['product'],
   data: function () {
-    return  {
+    return {
       id: this.product.id,
       item: this.product,
       stock: this.product.stock || 'Currently unavailable'
@@ -31,16 +31,15 @@ export default {
   },
   methods: {
     addToCart (id) {
-      if(this.stock == 'Currently unavailable') {
-      alertify.error('Cant add item to cart')
+      if (this.stock == 'Currently unavailable') {
+        alertify.error('Cant add item to cart')
       } else {
-      this.$store.dispatch('addToCart', id)
-       alertify.success('Item has been added to cart')
-      console.log(this.stock)
+        this.$store.dispatch('addToCart', id)
+        alertify.success('Item has been added to cart')
+        console.log(this.stock)
       }
-
     },
-    goToDetail(id) {
+    goToDetail (id) {
       this.$router.push(`/product/${id}`)
     }
   },
