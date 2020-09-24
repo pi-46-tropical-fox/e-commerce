@@ -12,6 +12,7 @@ For your convenient, please use full screen resolution browser on your desktop (
 ##
 Firebase:
 Admin : https://bookiepedia-sam.web.app
+Customer : https://bookiepedia-client-sam.web.app
 
 If you're want to login as an admin, please use samuel@mail.com as a login email
 If you're want to login as an security (not admin), please use aming@mail.com as a login email
