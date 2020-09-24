@@ -2,7 +2,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const instance = axios.create({
-  baseURL: 'https://ecommercehacktiv81996.herokuapp.com/'
+  baseURL: 'https://ecommercehacktiv8-imam.herokuapp.com/'
 })
 
 instance.interceptors.response.use(function (response) {
