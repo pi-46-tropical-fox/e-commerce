@@ -62,7 +62,7 @@ class CheckoutController {
                             UserId: req.user.id
                         }
                         const transaction = await Transaction.create(obj)
-                        return res.status(200).json({transaction, grandTotal, message: 'Payment success'})
+                        return res.status(201).json({transaction, grandTotal, message: 'Payment success'})
                     }
                 }
             }
