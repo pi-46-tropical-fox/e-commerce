@@ -2,14 +2,14 @@
   "development": {
     "username": "postgres",
     "password": "fandiario",
-    "database": "p2-w3-e-commerce-cms-app-development",
+    "database": "p2-w3-e-commerce-app-development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "fandiario",
-    "database": "p2-w3-e-commerce-cms-app-test",
+    "database": "p2-w3-e-commerce-app-test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
