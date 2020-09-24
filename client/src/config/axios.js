@@ -2,7 +2,8 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001'
+  // baseURL: 'https://foxshop-cms.herokuapp.com'
+  baseURL:'http://localhost:3001'
 })
 
 // Add a response interceptor

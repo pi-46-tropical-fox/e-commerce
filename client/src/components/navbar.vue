@@ -7,7 +7,8 @@
         <li>-</li>
         <li><h1 id="logo" @click.prevent="back">foxshop</h1></li>
         <li>-</li>
-        <li><a href="" @click.prevent="signIn">Sign In</a></li>
+        <li v-show="!isLogin"><a href="" @click.prevent="signIn">Sign In</a></li>
+		<li v-show="isLogin">-</li>
         <li><a href="#" @click.prevent="logout">Logout<i class="fas fa-sign-out-alt"></i></a></li>
 
       </ul>
@@ -29,12 +30,18 @@ export default {
       this.$router.push('/login')
     },
     logout () {
-      localStorage.removeItem('access_token')
+	  localStorage.removeItem('access_token')
+	  this.$store.commit('SET_LOGIN',false)
       this.$router.push('/login')
     },
     purchased () {
       this.$router.push('/purchased')
     }
+  },
+  computed:{
+	  isLogin(){
+		  return this.$store.state.login
+	  }
   }
 }
 </script>

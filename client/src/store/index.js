@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     products: [],
     carts: [],
-    history: []
+    history: [],
+    login:false
   },
   mutations: {
     SET_PRODUCT (state, data) {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     SET_HISTORY (state, data) {
       state.history = data
+    },
+    SET_LOGIN(state,data){
+      state.login = data
     }
   },
   actions: {
@@ -44,6 +48,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
+          commit('SET_LOGIN',true)
           router.push({ name: 'Product' })
         })
         .catch(err => {
