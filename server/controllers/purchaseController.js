@@ -14,6 +14,7 @@ class Controller {
         let qty = 0
         Cart.findOne({where:{ProductId:req.params.productId},include:Product})
         .then(data=>{
+            console.log(data,'<<ini data')
             let params = {
                 UserId:req.user.id,
                 ProductId:req.params.productId,
