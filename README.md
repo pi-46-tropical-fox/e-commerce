@@ -1,8 +1,10 @@
 # e-commerce-cms
-Membuat Content Management System untuk e-commerce
-E-Commerce CMS on We Wear Black. This app has:
+E-Commerce on We Wear Black. This app has:
+https://wewearblack-hacktiv8.web.app/
 
 &nbsp;
+
+
 
 ## Endpoints
 ````
