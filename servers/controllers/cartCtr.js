@@ -4,11 +4,6 @@ const countTotalPrice = require('../helpers/totalPrice')
 class Controller{
     static async add(req, res, next){
         try{
-            const prod = await Product.findOne({where: {id: req.params.id}})
-            if(prod.stock < req.body.stock){
-                throw {message: "Sorry. Movie is out of Stock."}
-            }
-
             const isCartExist = await Cart.findAll(
                 {
                     where: {
@@ -19,35 +14,43 @@ class Controller{
                 }
             )
             
-            if(isCartExist.length > 0){
-                const updateCartData = {
-                    quantity: +isCartExist[0].quantity + +req.body.stock,
-                    totalPrice: countTotalPrice(+isCartExist[0].totalPrice, +req.body.price, +req.body.stock)
-                }
-                const updatedCart = await Cart.update(updateCartData, {where: {id: isCartExist[0].id}})
-                if(updatedCart){
-                    return res.status(200).json({
-                        data: updatedCart
-                    })
-                } else {
-                    throw {message: "Bad request", statusCode: 400}
+
+            const prod = await Product.findOne({where: {id: req.params.id}})
+                
+            if(isCartExist.length>0){
+                if(prod.stock < isCartExist[0].quantity){
+                    return next({message: "Sorry. Movie is out of Stock.", statusCode: 400})
                 }
             } 
-
-            const inputCart = {
-                quantity: req.body.stock,
-                totalPrice: +req.body.price * +req.body.stock,
-                UserId: req.userData.id,
-                ProductId: req.params.id
+            if(isCartExist.length > 0){
+            const updateCartData = {
+                quantity: +isCartExist[0].quantity + +req.body.stock,
+                totalPrice: countTotalPrice(+isCartExist[0].totalPrice, +req.body.price, +req.body.stock)
             }
-            const newCart = await Cart.create(inputCart)
-            if(newCart){
-                return res.status(201).json({
-                    data: newCart
+            const updatedCart = await Cart.update(updateCartData, {where: {id: isCartExist[0].id}})
+            if(updatedCart){
+                return res.status(200).json({
+                    data: updatedCart
                 })
             } else {
                 throw {message: "Bad request", statusCode: 400}
-            }            
+            }
+        } 
+        
+        const inputCart = {
+            quantity: req.body.stock,
+            totalPrice: +req.body.price * +req.body.stock,
+            UserId: req.userData.id,
+            ProductId: req.params.id
+        }
+        const newCart = await Cart.create(inputCart)
+        if(newCart){
+            return res.status(201).json({
+                data: newCart
+            })
+        } else {
+            throw {message: "Bad request", statusCode: 400}
+        }            
         }catch(err){
             return next(err)
         }
@@ -62,7 +65,7 @@ class Controller{
                     },
                     include: Product
                 }
-            )
+                )
 
             return res.status(200).json({
                 data: isCartExist
