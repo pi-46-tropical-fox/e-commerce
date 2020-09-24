@@ -42,10 +42,10 @@ async function adminAuthorization(req,res,next){
 async function userAuthorization(req,res,next){
     let cartId = req.params.id
     let userData = req.userData
-    console.log(cartId, userData);
+    // console.log(cartId, userData);
     try{
         let cartData = await Cart.findOne({where: {id: cartId}})
-        console.log(cartData, userData.id)
+        // console.log(cartData, userData.id)
         if(cartData.UserId === userData.id){
             next()
         }else{

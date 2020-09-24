@@ -8,7 +8,7 @@
           :key="index"
           :cart='cart'
           :index='index'/>
-        <li class="list-group-item"><h1>Your cart is empty.</h1></li>
+        <li class="list-group-item" v-if='cartsData.length === 0'><h1>Your cart is empty.</h1></li>
         <!-- <li class="list-group-item">Dapibus ac facilisis in</li>
         <li class="list-group-item">Morbi leo risus</li>
         <li class="list-group-item">Porta ac consectetur ac</li>
