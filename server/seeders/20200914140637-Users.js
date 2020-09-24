@@ -18,7 +18,7 @@ module.exports = {
      role:'admin',
      createdAt: new Date(),
      updatedAt: new Date()
-   }])
+   }], {})
   },
 
   down: async (queryInterface, Sequelize) => {

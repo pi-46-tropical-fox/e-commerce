@@ -22,7 +22,9 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     quantity: DataTypes.INTEGER,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.BOOLEAN,
+    UserId: DataTypes.INTEGER,
+    ProductId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Cart',
