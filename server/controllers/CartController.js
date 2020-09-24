@@ -1,4 +1,4 @@
-const {Cart, Product} = require('../models')
+const {Cart, Product, Wishlist} = require('../models')
 
 class CartController {
     static async showMyCart(req, res, next){
@@ -45,8 +45,22 @@ class CartController {
                     UserId: req.user.id
                 }
             })
+            const wishlist = await Wishlist.findOne({
+                where: {
+                    ProductId: +req.params.productId,
+                    UserId: req.user.id
+                }
+            })
             if(cart){
                 if(cart.qty < cart.Product.stock){
+                    if(wishlist){
+                        const deleteWishlist = await Wishlist.destroy({
+                            where: {
+                                ProductId: req.params.productId,
+                                UserId: req.user.id
+                            }
+                        })
+                    }
                     const increment = await cart.increment('qty', {by: 1})
                     return res.status(200).json({cart, message: 'Product updated to your cart'})
                 }else{
@@ -55,6 +69,14 @@ class CartController {
             }else{
                 const product = await Product.findByPk(req.params.productId)
                 if(product.stock > 0){
+                    if(wishlist){
+                        const deleteWishlist = await Wishlist.destroy({
+                            where: {
+                                ProductId: req.params.productId,
+                                UserId: req.user.id
+                            }
+                        })
+                    }
                     const cart = await Cart.create(obj)
                     return res.status(201).json({cart, message: 'Product added to your cart'})
                 }else{

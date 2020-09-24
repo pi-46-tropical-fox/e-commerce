@@ -125,7 +125,7 @@ nav a {
 a {
     text-decoration: none;
 }
-.bill-modal {
+.my-modal {
     display: block;
     position: fixed;
     z-index: 1;
@@ -138,7 +138,7 @@ a {
     background-color: rgba(0, 0, 0, 0.561);
 }
   
-.bill-modal-content {
+.my-modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -147,15 +147,15 @@ a {
     border-radius: 10px;
  }
   
-.close-modal {
+.close-my-modal {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
   
-.close-modal:hover,
-.close-modal:focus {
+.close-my-modal:hover,
+.close-my-modal:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;

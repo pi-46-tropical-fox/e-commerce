@@ -23,7 +23,8 @@ class WishlistController {
             }
             const data = await Wishlist.findOne({
                 where: {
-                    ProductId: req.params.productId
+                    ProductId: req.params.productId,
+                    UserId: req.user.id
                 }
             })
             if(data){
@@ -40,10 +41,11 @@ class WishlistController {
         try {
             const wishlist = await Wishlist.destroy({
                 where: {
-                    id: req.params.id
+                    ProductId: req.params.productId,
+                    UserId: req.user.id
                 }
             })
-            return res.status(200).json({message: 'Wishlist deleted'})
+            return res.status(200).json({message: 'Product removed from your wishlist'})
         } catch (err) {
             return next(err)
         }

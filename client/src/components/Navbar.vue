@@ -27,9 +27,8 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item font-weight-bold disabled" >Hi, {{ $store.state.currentUser }}</a>
-          <a class="dropdown-item font-weight-bold" @click.prevent="wishlist">My wishlist</a>
-          <a class="dropdown-item font-weight-bold" @click.prevent="profil">My profile</a>
-          <a class="dropdown-item font-weight-bold" >My transaction</a>
+          <a class="dropdown-item font-weight-bold" @click.prevent="showMyWishlist">My wishlist</a>
+          <a class="dropdown-item font-weight-bold" @click="showMyTransaction">My transaction</a>
           <a class="dropdown-item font-weight-bold" @click.prevent="logout">Logout</a>
         </div>
       </li>
@@ -60,6 +59,12 @@ export default {
     },
     showMyCart () {
       this.$router.push({ name: 'Cart' })
+    },
+    showMyTransaction () {
+      this.$router.push({ name: 'Transaction' })
+    },
+    showMyWishlist () {
+      this.$router.push({ name: 'Wishlist' })
     }
   }
 }

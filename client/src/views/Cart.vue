@@ -98,7 +98,7 @@ export default {
       if (this.$store.state.currentProfile.address && this.$store.state.currentProfile.phone) {
         this.$router.push({ path: '/carts/checkout' })
       } else {
-        this.$router.push({ name: 'Home' })
+        this.$router.push({ path: '/carts/shipping' })
       }
     }
   },

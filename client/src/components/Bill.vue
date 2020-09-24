@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="bill-modal">
-      <div class="bill-modal-content">
-        <span class="close-modal" @click.prevent="closeBillModal">&times;</span>
+    <div class="my-modal">
+      <div class="my-modal-content">
+        <span class="close-my-modal" @click.prevent="closeMyModal">&times;</span>
         <div class="row no-gutters">
           <div class="col-sm-6 col-md-8">
             <h2>Invoice <font-awesome-icon icon="shopping-cart" /> </h2>
@@ -13,6 +13,7 @@
             <p style="margin: 0;">Indonesia</p>
           </div>
         </div>
+        <hr>
         <table class="table table-borderless">
           <thead>
             <tr>
@@ -56,7 +57,7 @@
 export default {
   name: 'Bill',
   methods: {
-    closeBillModal () {
+    closeMyModal () {
       this.$router.push({ name: 'Cart' })
     },
     payNow () {

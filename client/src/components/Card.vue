@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <a class="card-link" @click.prevent="addToCart(product.id)" style="cursor: pointer;">Add to cart</a>
-                <a class="card-link" style="cursor: pointer;">Add to wishlist</a>
+                <a class="card-link" @click.prevent="addToWishlist(product.id)" style="cursor: pointer;">Add to wishlist</a>
             </div>
         </div>
       </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'Card',
   props: ['products'],
@@ -34,6 +35,36 @@ export default {
         this.$store.dispatch('addToCart', productId)
       } else {
         this.$router.push({ name: 'Login' })
+      }
+    },
+    addToWishlist (productId) {
+      if (this.$store.state.isLogin) {
+        Swal.fire({
+          title: 'Add this product to your wishlist?',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Add to to wishlist'
+        })
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.$store.dispatch('addToWishlist', productId)
+            }
+          })
+      } else {
+        Swal.fire({
+          title: 'Create your wishlist',
+          text: "Don't miss out on the products you love. Login / Register now to continue.",
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Login/Register'
+        })
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.$router.push({ name: 'Login' })
+            }
+          })
       }
     }
   }

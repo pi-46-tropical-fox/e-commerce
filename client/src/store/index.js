@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     categories: [],
     products: [],
+    transactions: [],
     isLogin: false,
     currentUser: '',
     currentProfile: {
@@ -24,7 +25,8 @@ export default new Vuex.Store({
         qty: 0,
         price: 0
       }
-    }
+    },
+    myWishlist: []
   },
   mutations: {
     setLoginStatus (state, data) {
@@ -42,6 +44,7 @@ export default new Vuex.Store({
     setLogoutStatus (state, data) {
       state.categories = []
       state.products = []
+      state.transactions = []
       state.isLogin = false
       state.currentUser = ''
       state.currentProfile = {}
@@ -58,6 +61,7 @@ export default new Vuex.Store({
         address: '',
         phone: ''
       }
+      state.myWishlist = []
       router.push({ name: 'Home' })
     },
     setCategories (state, data) {
@@ -110,6 +114,20 @@ export default new Vuex.Store({
         }
       }
       router.push({ name: 'Products' })
+    },
+    updateCurrentProfile (state, data) {
+      state.currentProfile.address = data.profile.address
+      state.currentProfile.phone = data.profile.phone
+      router.push({ path: '/carts/checkout' })
+    },
+    setTransaction (state, data) {
+      state.transactions = data
+    },
+    setMyWishlist (state, data) {
+      state.myWishlist = data
+    },
+    updateMyWishlist (state, productId) {
+      state.myWishlist = state.myWishlist.filter(wishlist => wishlist.ProductId !== productId)
     }
   },
   actions: {
@@ -264,6 +282,7 @@ export default new Vuex.Store({
             'success'
           )
           commit('updateCartQty', { productId, increment: true })
+          commit('updateMyWishlist', productId)
         })
         .catch(err => {
           Swal.fire({
@@ -339,6 +358,119 @@ export default new Vuex.Store({
             'success'
           )
           commit('clearMyCart')
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
+        })
+    },
+    updateProfile ({ commit }, data) {
+      axios({
+        method: 'POST',
+        url: '/profile',
+        data,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          Swal.fire(
+            `${data.message}`,
+            '',
+            'success'
+          )
+          commit('updateCurrentProfile', data)
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
+        })
+    },
+    fetchTransaction ({ commit }, data) {
+      axios({
+        method: 'GET',
+        url: '/transactions',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          commit('setTransaction', data)
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
+        })
+    },
+    fetchWishlist ({ commit }, data) {
+      axios({
+        method: 'GET',
+        url: '/wishlists',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          commit('setMyWishlist', data)
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
+        })
+    },
+    addToWishlist ({ commit }, productId) {
+      axios({
+        method: 'POST',
+        url: `/wishlists/${productId}`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          Swal.fire(
+            `${data.message}`,
+            '',
+            'success'
+          )
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${err.response.data.errors.join(', ')}`
+          })
+        })
+    },
+    removeWishlist ({ commit }, productId) {
+      axios({
+        method: 'DELETE',
+        url: `/wishlists/${productId}`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          Swal.fire(
+            `${data.message}`,
+            '',
+            'success'
+          )
+          commit('updateMyWishlist', productId)
         })
         .catch(err => {
           Swal.fire({

@@ -15,8 +15,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Profile.init({
-    address: DataTypes.STRING,
-    phone: DataTypes.STRING,
+    address: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Address cannot be empty`
+        }
+      }
+    },
+    phone: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Phone number cannot be empty`
+        }
+      }
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,
