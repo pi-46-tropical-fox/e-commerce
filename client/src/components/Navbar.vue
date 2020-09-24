@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app dark>
+  <v-toolbar dark>
     <v-app-bar-nav-icon @click.stop="toggleSidebar"></v-app-bar-nav-icon>
     <v-toolbar-title><span class="logo">mariope<span class="logo-lastchild">toko</span></span></v-toolbar-title>
     <v-spacer></v-spacer>

@@ -14,15 +14,8 @@
       </thead>
       <tbody>
         <!-- {{carts}} -->
-        <tr :key="i" v-for="(cart,i) in carts">
-          <td>{{i+1}}</td>
-          <td><img :src="cart.image_url" height="180" alt="image"></td>
-          <td>{{cart.name}}</td>
-          <td>IDR {{new Number (cart.price).toLocaleString("id-ID")}}</td>
-          <td><input id="input-qty" type="number" :value="cart.Cart.quantity" min="1"></td>
-          <td>IDR {{new Number(cart.price * cart.Cart.quantity).toLocaleString("id-ID")}}</td>
-          <td><button @click.prevent="deleteFromCart(cart.Cart.ProductId)"><v-icon class="accent--text">{{links[0].icon}}</v-icon>delete</button></td>
-        </tr>
+        <tr>
+          <CartItem :key="cart.id" v-for="(cart, i) in carts" :cart="cart" :index="i"></CartItem>
         <tr>
           <td></td>
           <td></td>
@@ -38,15 +31,11 @@
 </template>
 
 <script>
-
+import CartItem from '@/components/CartItem'
 export default {
   name: 'Cart',
-  data () {
-    return {
-      links: [
-        { icon: 'delete', text: 'Delete' }
-      ]
-    }
+  components: {
+    CartItem
   },
   computed: {
     carts () {
@@ -60,23 +49,11 @@ export default {
       return carts
     }
   },
-  methods: {
-    deleteFromCart (id) {
-      console.log(id, 'ini delete cart')
-      this.$store.dispatch('deleteFromCart', id)
-    }
-  },
   created () {
     this.$store.dispatch('fetchCarts')
   }
 }
 </script>
 <style>
-#input-qty {
-  border: rgba(0, 0, 0, .75);
-  background-color: rgba(0, 0, 0, .15);
-  border-radius: 5px;
-  max-width: 3em;
-  min-height: 1.5em;
-}
+
 </style>

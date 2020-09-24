@@ -4,7 +4,7 @@
       <v-list-item-avatar color="grey"></v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title id="headline">{{dataProduct.name}}</v-list-item-title>
-        <!-- <v-list-item-subtitle>by Kurt Wagner</v-list-item-subtitle> -->
+        <v-list-item-subtitle>stock:{{dataProduct.stock}}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
     <v-img :src="dataProduct.image_url"></v-img>

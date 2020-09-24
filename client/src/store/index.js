@@ -11,7 +11,8 @@ export default new Vuex.Store({
     isLogin: false,
     products: [],
     carts: [],
-    cart: {}
+    cart: {},
+    product: {}
   },
   mutations: {
     TOGGLE_SIDEBAR (state) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     SET_DELETE_CART (state, payload) {
       state.cart = payload
+    },
+    SET_EDIT_CART (state, payload) {
+      state.product = payload
     }
   },
   actions: {
@@ -178,6 +182,25 @@ export default new Vuex.Store({
             console.log(err)
           })
       })
+    },
+    updateCart ({ dispatch }, payload) {
+      axios ({
+        method: 'PUT',
+        url: `/carts/${payload.id}`,
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: {
+          quantity: payload.quantity
+        }
+      })
+        .then(({ data }) => {
+          dispatch('fetchCarts')
+          return data
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   modules: {
