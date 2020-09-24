@@ -23,7 +23,7 @@
     <section class="shopping-cart spad">
       <div class="container">
         <div class="row">
-          <div class="col-lg-10">
+          <div class="col-lg-12">
             <div class="shopping__cart__table">
               <table>
                 <thead>
@@ -33,6 +33,7 @@
                     <th>Quantity</th>
                     <th>Total</th>
                     <th></th>
+                    <th>Update Quantity</th>
                   </tr>
                 </thead>
                 <tbody>

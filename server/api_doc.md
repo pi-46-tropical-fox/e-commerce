@@ -905,6 +905,47 @@ _Response (500 - Internal server error)_
 }
 ```
 
+### PUT /carts/:id
+
+> Update cart quantity feature
+  - user harus login untuk mengakses laman ini
+  - merupakan action ketika customer ingin mengupdate quantity product yang akan dibeli
+  - quantity yang diupdate tidak bisa lebih dari stock product yang tersedia
+  - data quantity cart akan terupdate
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+cart id
+```
+
+_Response (200 - Ok)_
+```json
+{
+  "message": "Quantity updated successfully!"
+}
+```
+
+_Response (401 - Not Athenticated)_
+```json
+{
+  "message": "User not authenticated"
+}
+```
+
+_Response (500 - Internal server error)_
+```json
+{
+  "message": "Internal server error"
+}
+```
+
 
 ### Delete /carts/:id
 

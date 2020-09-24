@@ -122,12 +122,34 @@ class CartController {
       .catch(err => {
         return next(err)
       })
-
-    
-
-
-
   }
+
+  static updateQuantity (req, res, next) {
+    Cart.findOne({
+      where: {
+        Id: req.params.id
+      },
+      include: [ Product ]
+    })
+      .then(data => {
+        if(data.Product.stock >= req.body.updatedQty) {
+          return Cart.update({quantity: req.body.updatedQty}, {where: {
+            Id: req.params.id
+          }})
+        }else {
+          return res.status(400).json({message: 'Limited Stock!'})
+        }
+      })
+      .then(data => {
+        return res.status(201).json({message: 'Quantity updated successfully!'})
+      })
+      .catch(err => {
+        console.log(err)
+        return next(err);
+      })
+  }
+
+
 }
 
 module.exports = CartController;
