@@ -42,6 +42,7 @@ Meanwhile, security (not admin) only have access for read all books and banner.
   - GET carts/:user_id
   - PUT carts/:user_id/:product_id
   - DELETE carts/:user_id/:product_id
+  - PUT carts/:user_id
 ```
 
 ### POST /login
@@ -839,3 +840,36 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 
+### PUT carts/:user_id
+> checkout carts, then updating db stock product
+
+_Request Header_
+```
+{
+  "access_token": "<your admin access token>"
+}
+```
+
+_Request Body_
+```
+  "quantity": <quantity of product>
+```
+
+_Response (200 - OK)_
+```
+"Successfully checkout product"
+```
+
+_Response (404 - Not found)_
+```
+{
+  "message": cart is not exist
+}
+```
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": "Internal Server Error"
+}
+```
+---

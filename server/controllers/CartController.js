@@ -113,7 +113,8 @@ class CartController {
     const showCart = await Cart.findAll({
       include: [User, Product],
       where : {
-        UserId : +req.params.user_id
+        UserId : +req.params.user_id,
+        status: 'beforeCheckout'
       }
     })
         
@@ -149,29 +150,66 @@ class CartController {
       next (err)
     }
   }
-  // static async removeItemCart (req, res, next) {
-  //   // console.log('HIT');
-  //   const removedItemCart = {
-  //     ProductId : +req.params.product_id,
-  //     UserId : +req.params.user_id,
-  //     quantity : 0,
-  //     status : 'afterCheckout'
-  //   }
-  //   // console.log(removedItemCart);
-  //   try {
-  //     console.log('HIT');
-  //     const remove = await Cart.update(removedItemCart, {
-  //       where : {
-  //         ProductId : removedItemCart.ProductId,
-  //         UserId : removedItemCart.UserId
-  //       }
-  //     })
-  //     return res.status(200).json({ message : `Item has been removed from the cart` })
-  //   } catch (err) {
-  //     // console.log('HIT');
-  //     next (err)
-  //   }
-  // }
+
+  static async checkOut (req, res, next) {
+
+    try {
+      const findCheckOut = await Cart.update({ 
+        status : 'afterCheckout' },
+        { where : {
+            UserId : +req.params.user_id
+          } 
+        })
+
+      const findCart = await Cart.findAll({
+        where : {
+          UserId : +req.params.user_id
+        }
+      })
+
+      // console.log(findCheckOut, 'FINDCHECKOUT');
+      // console.log(findCart, 'FINDCART');
+
+      const arrayProductId = []
+      const arrayQty = []
+      findCart.forEach(e => {
+        arrayProductId.push(e.ProductId)  
+        arrayQty.push(e.quantity)
+      });
+
+      // console.log(arrayQty);
+      // console.log(arrayProductId);
+      
+      
+      for (let i = 0; i < arrayProductId.length; i++) {
+        // find stock
+        let findStockProduct = await Product.findOne({
+          where : {
+            id : arrayProductId[i]
+          }
+        })
+        // console.log(findStockProduct);
+        // console.log(findStockProduct.stock);
+        // console.log(arrayQty[i]);
+        
+        let stockUpToDate = findStockProduct.stock - arrayQty[i]
+        console.log(stockUpToDate);
+        // console.log(stockUpToDate);
+
+        // decrease stock
+        let decreaseStock = await Product.update(
+          { stock : Number(stockUpToDate) },
+          { where : { id : +arrayProductId[i] } }
+        )
+        // console.log(arrayQty[i]);
+      }
+
+      return res.status(200).json(`Successfully check out`)
+    } catch (err) {
+      next (err)
+    }
+  }
+
 
 }
 

@@ -15,6 +15,16 @@ export default {
   components: {
     Navbar,
     CartTable
+  },
+  methods: {
+    redirectToLogin () {
+      if (!localStorage.access_token) {
+        this.$router.push('/login')
+      }
+    }
+  },
+  mounted () {
+    this.redirectToLogin()
   }
 
 }

@@ -34,6 +34,9 @@
           </td>
         </tr>
       </tbody>
+      <button class="btn btn-success" style="width: 6em;"
+        @click.prevent="checkOut()">Checkout
+      </button>
   </table>
 
   </div>
@@ -65,6 +68,14 @@ export default {
         ProductId: +productId
       }
       this.$store.dispatch('deleteCart', data)
+      this.$store.dispatch('getCart')
+    },
+
+    checkOut () {
+      const data = {
+        UserId: +localStorage.id,
+      }
+      this.$store.dispatch('checkOut', data)
     }
   },
   computed: {
@@ -76,14 +87,13 @@ export default {
     }
   },
   mounted () {
-    this.getCart() 
+    this.getCart()
   }
 }
 </script>
 
 <style scoped>
 .container {
-  margin: 50px;
   font-family: 'Roboto Slab', serif;
 }
 </style>

@@ -16,7 +16,7 @@
           id="nav-login" href="#"><b>Shop</b></router-link>
       </li>
 
-      <li v-if="name" class="navlink"> 
+      <li v-if="token" class="navlink"> 
         <a href="#" class="nav-link" @click.prevent="doLogout">
         Logout </a>
       </li>
@@ -26,7 +26,7 @@
     <div class="nav-wrap-right">
       <div class="icon-wrapper">
         <div class="icons">
-          <span v-if="!name" href="#" @click.prevent="redirectToLogin" class="flaticon-avatar"></span> 
+          <span v-if="!token" href="#" @click.prevent="redirectToLogin" class="flaticon-avatar"></span> 
         </div>
         <div class="icons">
           <span href="#" @click.prevent="redirectToCart" class="flaticon-shopping-cart"></span>
@@ -52,12 +52,17 @@ export default {
       localStorage.clear()
       this.$store.commit('SET_ID', '')
       this.$store.commit('SET_NAME', '')
+      this.$router.push('/books')
     }
   },
   computed: {
     name () {
       return this.$store.state.name
+    },
+    token () {
+      return localStorage.access_token
     }
+    
   }
 
 }

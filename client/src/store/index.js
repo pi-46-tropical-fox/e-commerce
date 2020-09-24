@@ -166,9 +166,33 @@ export default new Vuex.Store({
           }
         })
         .then(({ data }) => {
+          // this.getCart()
           Toast.fire({
             icon: 'success',
             title: `Successfully removed your product`
+          })
+        })
+    },
+    checkOut (context, input) {
+      // console.log(inputData);
+      const data = {
+          UserId: input.UserId,
+        }
+      console.log(data);
+      axios
+        .put(`carts/${data.UserId}`, data, {
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+        .then(({ data }) => {
+          console.log(data, 'store');
+          // context.commit('SET_ONE_PRODUCT', data.name)
+          // console.log(this.state.product);
+
+          Toast.fire({
+            icon: 'success',
+            title: `Successfully updated your product`
           })
         })
     }

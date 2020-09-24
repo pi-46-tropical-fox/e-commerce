@@ -19,10 +19,10 @@ function errorHandler (err, req, res, next) {
     statusCode = 401
   }
   else {
-      // if (!errors[0]) {
+      if (!errors[0]) {
         errors.push(err.message)
         statusCode = err.statusCode || 500
-      // }
+      }
     
   }
   // console.log(err);
