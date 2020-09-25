@@ -22,42 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        notEmpty: {
-          msg: "You have to fill out the product name."
-        }
-      }
     },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isNotEmpty(value) {
-          if (value === null || value === '') return new Error(`You have to specify the product price, and it's not negative.`)
-        },
-        isNotNegative(value) {
-          if(value < 0) return new Error(`Oh no, don't put negative numbers inside product price!`)
-        },
-        isNumeric: {
-          msg: "Product stock: Numbers, please."
-        }
-      }
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isNotEmpty(value) {
-          console.log(value);
-          if (value === null || value === '') return new Error(`You should specify the product stock, and it's not negative.`)
-        },
-        isNumeric: {
-          msg: "Product stock: Numbers, please."
-        },
-        isNotNegative(value) {
-          if(value < 0) return new Error(`Oh no, don't put negative numbers inside product stock!`)
-        }
-      }
     },
     CategoryId: {
       type: DataTypes.INTEGER,
@@ -74,6 +46,27 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
+      validate: {
+        productName() {
+          if (this.name === null || this.name === '') {
+            return new Error(`You have to fill out the product name`)
+          }
+        },
+        productPriceMustBeAPositiveNumber() {
+          if (this.price === null || this.price === '') {
+            return new Error(`You should specify the product price.`)
+          } else {
+            if (isNaN(this.price) || this.price < 0) return new Error(`The product price must be a positive number.`)
+          }
+        },
+        productStockMustBeAPositiveNumber() {
+          if (this.stock === null || this.stock === '') {
+            return new Error(`You should specify the product stock.`)
+          } else {
+            if (isNaN(this.stock) || this.stock < 0) return new Error(`The product stock must be a positive number.`)
+          }
+        },
+      },
     hooks: {
       beforeValidate(instance){
         instance.stock = !!instance.stock ? Number(instance.stock) : instance.stock
