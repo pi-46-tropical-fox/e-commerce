@@ -23,6 +23,7 @@ class ProductController{
     
     static async create(req, res, next){
         try {
+            console.log(req.body);
             let { name, price, stock, CategoryId } = req.body
 
             let input = { name, price, stock, CategoryId }
