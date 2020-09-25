@@ -35,7 +35,7 @@ export default {
             this.$store.dispatch('login', {
                 email : this.email,
                 password : this.password
-            }).then(res => {
+            }).then(() => {
                 this.$router.push('/')
             }).catch(e => {
                 this.$swal.fire({ icon : 'error', title: 'Oops...', text : e.response.data.errors.join('\n') })

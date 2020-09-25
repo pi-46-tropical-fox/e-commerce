@@ -1,5 +1,5 @@
 const { verifyToken, decryptJwt } = require('../helpers/jwt')
-const { User } = require('../models')
+const { User, Cart } = require('../models')
 
 const authentication = async (req, res, next) => {
     try{
@@ -42,5 +42,22 @@ const authorization = (req, res, next) => {
     }
 }
 
+const cartAuthorization = (req, res, next) => {
+    const { id } = req.params
+    const UserId = req.userData.id
 
-module.exports = { authentication, authorization }
+    try{
+        Cart.findOne({ where : { id }}).then(cart => {
+            if(cart.UserId === UserId){
+                next()
+            } else {
+                throw { message : 'Forbidden', statusCode : 403 }
+            }
+        })
+    } catch (e){
+        next(e)
+    }
+}
+
+
+module.exports = { authentication, authorization, cartAuthorization }

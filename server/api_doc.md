@@ -87,6 +87,15 @@ none
 ]
 ```
 
+### Response Body (401)
+```json
+{
+    "errors" : [
+        "User not Authenticated"
+    ]
+}
+```
+
 ## POST /cart
 ### Request Headers
 ```json
@@ -102,7 +111,7 @@ none
 }
 ```
 
-### Response Body
+### Response Body (201)
 ```json
 {
     "ProductId" : 2,
@@ -114,6 +123,15 @@ none
         "price" : 21390
     },
     "quantity" : 3
+}
+```
+
+### Response Body (401)
+```json
+{
+    "errors" : [
+        "User not Authenticated"
+    ]
 }
 ```
 
@@ -143,6 +161,18 @@ none
 ```
 
 ### Response (200)
+```
+empty
+```
+
+### Response (403) Forbidden
+```json
+{
+    "errors" : [
+        "Forbidden"
+    ]
+}
+```
 
 ## GET /products
 ### Request Headers
@@ -251,6 +281,16 @@ none
 ]
 ```
 
+
+### Response (403) Forbidden
+```json
+{
+    "errors" : [
+        "Forbidden"
+    ]
+}
+```
+
 ## DELETE /products/:id
 ```json
 {
@@ -273,3 +313,14 @@ none
     }
 ]
 ```
+
+
+### Response (403) Forbidden
+```json
+{
+    "errors" : [
+        "Forbidden"
+    ]
+}
+```
+
