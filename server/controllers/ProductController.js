@@ -25,14 +25,7 @@ class ProductController{
         try {
             let { name, price, stock, CategoryId } = req.body
 
-            let input = {
-                name,
-                price: price === '' ? null : price,
-                stock: stock === '' ? null : stock,
-                CategoryId
-            }
-
-            console.log(input);
+            let input = { name, price, stock, CategoryId }
 
             await Product.create(input)
 
