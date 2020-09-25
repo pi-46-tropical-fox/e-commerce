@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: "You have to specify the product price, and it's not negative."
+        isNotEmpty(value) {
+          if (value === null || value === '') return new Error(`You have to specify the product price, and it's not negative.`)
         },
         isNotNegative(value) {
           if(value < 0) return new Error(`Oh no, don't put negative numbers inside product price!`)
@@ -47,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        notEmpty: {
-          msg: "You should specify the product stock, and it's not negative."
+        isNotEmpty(value) {
+          if (value === null || value === '') return new Error(`You should specify the product stock, and it's not negative.`)
         },
         isNumeric: {
           msg: "Product stock: Numbers, please."
