@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       })
+      Product.hasMany(models.CartProduct, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      })
     }
   };
   Product.init({
