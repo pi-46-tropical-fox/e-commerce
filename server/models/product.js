@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         isNotEmpty(value) {
+          console.log(value);
           if (value === null || value === '') return new Error(`You should specify the product stock, and it's not negative.`)
         },
         isNumeric: {
