@@ -14,4 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
+app.listen(port, () => {
+	console.log(`E-Commerce CMS listening at http://localhost:${port}`);
+});
+
 module.exports = app;
