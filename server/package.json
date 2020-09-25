@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon ./bin/www",
     "test": "jest --detectOpenHandles --forceExit --runInBand --verbose --watchAll"
   },
