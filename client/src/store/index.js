@@ -132,26 +132,27 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          // console.log(data.data.cartProducts.length);
-
           let payload = []
 
-          data.data.CartProducts.forEach(cartProduct => {
-            let payloadData = {
-              id: cartProduct.id,
-              name: cartProduct.Product.name,
-              image_url: cartProduct.Product.ProductImages.length === 0 ? 'No image available' : cartProduct.Product.ProductImages[0].image_url,
-              price: cartProduct.price,
-              qty: cartProduct.qty,
-            }
+          if (data.data) {
+            data.data.CartProducts.forEach(cartProduct => {
+              let payloadData = {
+                id: cartProduct.id,
+                name: cartProduct.Product.name,
+                image_url: cartProduct.Product.ProductImages.length === 0 ? 'No image available' : cartProduct.Product.ProductImages[0].image_url,
+                price: cartProduct.price,
+                qty: cartProduct.qty,
+              }
 
-            payload.push(payloadData)
-          })
+              payload.push(payloadData)
+            })
+          }
 
           commit('SET_CART_DATA', payload)
         })
-        .catch(({ response }) => {
-          swal.showSwalError(response.data.join('<br>'))
+        .catch((err) => {
+          console.log(err);
+          // swal.showSwalError(response.data.join('<br>'))
         })
     },
 
