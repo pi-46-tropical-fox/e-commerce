@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <ProductModal :showModal="showModal" @addToCart="addToCart" @addToWishlist="addToWishlist" />
+    <ProductModal :showModal="showModal" @toggleModal="toggleModal" @addToCart="addToCart" @addToWishlist="addToWishlist" />
   </div>
 </template>
 
