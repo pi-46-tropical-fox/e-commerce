@@ -1,8 +1,10 @@
 <template>
   <div class="home container">
-    <h1 class="text-left m-3">E-Commerce</h1><hr />
-    <p class="text-left">Welcome, <mark>{{ username }}</mark>!</p>
-    <h3 class="m-2 text-left">Available Products :</h3>
+    <p class="text-left">Welcome, you're currently using <mark>{{ username }}</mark> account.</p>
+    <h3 class="m-3 text-left">Product List :</h3>
+    <div class="text-left">
+      <router-link to="/add-product" class="btn btn-primary ml-3 mb-3">Add Product</router-link>
+    </div>
     <div class="row">
       <ProductCard v-for="product in products" :key="product.id" :product="product"></ProductCard>
     </div>
@@ -17,11 +19,11 @@ export default {
     ProductCard
   },
   computed: {
-    username () {
-      return localStorage.getItem('username')
-    },
     products () {
       return this.$store.state.products
+    },
+    username () {
+      return localStorage.getItem('username')
     }
   },
   created () {
@@ -30,13 +32,6 @@ export default {
     }
     this.$store.commit('CHANGE_LOGIN_STATUS', true)
     this.$store.dispatch('fetchProducts')
-    this.$store.dispatch('fetchCart')
-      .then(({ data }) => {
-        this.$store.commit('UPDATE_CART', data)
-      })
-      .catch(err => {
-        console.log(err)
-      })
   },
   beforeRouteEnter (to, from, next) {
     if (!localStorage.getItem('access_token')) {

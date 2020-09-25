@@ -358,9 +358,7 @@ _Request Body_
 {
   "quantity": "<product quantity>",
   "status": "<product status>",
-  "UserId": "<user id>",
-  "ProductId": "<product id >",
-  "category": "<product category>"
+  "ProductId": "<product id>"
 }
 ```
 
@@ -476,9 +474,7 @@ _Request Body_
 {
   "quantity": "<product quantity>",
   "status": "<product status>",
-  "UserId": "<user id>",
-  "ProductId": "<product id >",
-  "category": "<product category>"
+  "ProductId": "<product id >"
 }
 ```
 

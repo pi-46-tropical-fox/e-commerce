@@ -7,9 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loginStatus: false,
-    products: null,
-    selectedProduct: null,
-    cart: null
+    products: [],
+    selectedProduct: null
   },
   mutations: {
     CHANGE_LOGIN_STATUS (state, payload) {
@@ -20,24 +19,17 @@ export default new Vuex.Store({
     },
     UPDATE_SELECTED_PRODUCT (state, payload) {
       state.selectedProduct = payload
-    },
-    UPDATE_CART (state, payload) {
-      state.cart = payload
     }
   },
   actions: {
-    register (context, payload) {
-      return axios({
-        method: 'post',
-        url: 'http://localhost:3000/users/register',
-        data: payload
-      })
-    },
     login (context, payload) {
       return axios({
         method: 'post',
         url: 'http://localhost:3000/users/login',
-        data: payload
+        data: {
+          email: payload.email,
+          password: payload.password
+        }
       })
     },
     fetchProducts (context, payload) {
@@ -53,44 +45,32 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
-    updateProducts (context, payload) {
+    addProduct (context, payload) {
+      return axios({
+        method: 'post',
+        url: 'http://localhost:3000/products',
+        data: payload,
+        headers: { access_token: localStorage.getItem('access_token') }
+      })
+    },
+    editProduct (context, payload) {
       return axios({
         method: 'put',
         url: `http://localhost:3000/products/${payload.id}`,
         headers: { access_token: localStorage.getItem('access_token') },
-        data: payload
-      })
-    },
-    addToCart (context, payload) {
-      return axios({
-        method: 'post',
-        url: 'http://localhost:3000/carts',
-        headers: { access_token: localStorage.getItem('access_token') },
-        data: payload
-      })
-    },
-    fetchCart (context, payload) {
-      return axios({
-        method: 'get',
-        url: 'http://localhost:3000/carts',
-        headers: { access_token: localStorage.getItem('access_token') }
-      })
-    },
-    updateCart (context, payload) {
-      return axios({
-        method: 'put',
-        url: `http://localhost:3000/carts/${payload.id}`,
-        headers: { access_token: localStorage.getItem('access_token') },
         data: {
-          quantity: payload.quantity,
-          status: payload.status
+          name: payload.name,
+          image_url: payload.image_url,
+          price: payload.price,
+          stock: payload.stock,
+          category: payload.category
         }
       })
     },
-    deleteCart (context, payload) {
+    deleteProduct (context, payload) {
       return axios({
         method: 'delete',
-        url: `http://localhost:3000/carts/${payload.id}`,
+        url: `http://localhost:3000/products/${payload.id}`,
         headers: { access_token: localStorage.getItem('access_token') }
       })
     }

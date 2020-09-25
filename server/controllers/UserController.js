@@ -5,7 +5,7 @@ const { generate_jwt_token } = require("../helpers/jwt");
 class UserController {
 	static async register (req, res) {
 		const { username, email, password } = req.body;
-		tyr {
+		try {
 			const new_user = await User.create({ username, email, password });
 			return res.status(201).json({
 				id: new_user.id,
@@ -16,7 +16,7 @@ class UserController {
 			return res.status(500).json({ message: err.message });
 		}
 	}
-	
+
 	static async login (req, res) {
 		const { email, password } = req.body;
 		try {

@@ -16,7 +16,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Cart.init({
-    quantity: DataTypes.INTEGER,
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Quantity field must not be empty."
+        }
+      }
+    },
     status: DataTypes.STRING,
     UserId: DataTypes.INTEGER,
     ProductId: DataTypes.INTEGER

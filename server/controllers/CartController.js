@@ -1,8 +1,9 @@
-const { Cart } = require("../models");
+const { Cart, Product } = require("../models");
 
 class CartController {
 	static async create(req, res) {
-		const { quantity, status, UserId, ProductId } = req.body;
+		const UserId = req.user.id;
+		const { quantity, status, ProductId } = req.body;
 		try {
 			const new_cart = await Cart.create({ quantity, status, UserId, ProductId });
 			return res.status(201).json(new_cart);
@@ -13,16 +14,19 @@ class CartController {
 
 	static async read(req, res) {
 		try {
-			const all_carts = await Cart.findAll();
+			const all_carts = await Cart.findAll({
+				include: ['Product']
+			});
 			return res.status(200).json(all_carts);
 		} catch(err) {
 			return res.status(500).json({ message: err.message });
 		}
 	}
 
-	static async upadte(req, res) {
+	static async update(req, res) {
+		const UserId = req.user.id;
 		const CartId = +req.params.CartId;
-		const { quantity, status, UserId, ProductId } = req.body;
+		const { quantity, status, ProductId } = req.body;
 		try {
 			const updated_cart = await Cart.update({ quantity, status, UserId, ProductId }, {
 				where: {
