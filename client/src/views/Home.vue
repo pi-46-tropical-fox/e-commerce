@@ -75,7 +75,7 @@ export default {
         .then(({ data }) => {
           swal.showToastSuccess(data.message)
 
-          this.toggleModal()
+          if(this.showModal) this.toggleModal()
         })
         .catch(({response}) => {
           console.log();
@@ -121,3 +121,92 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.card {
+  @apply shadow-lg;
+  /* @apply w-auto; */
+  @apply rounded-lg;
+
+  min-width: min-content;
+}
+
+.modal {
+  @apply fixed;
+  @apply w-full h-full;
+  @apply top-0 left-0;
+  @apply flex;
+  @apply items-center justify-center;
+  @apply overflow-y-auto;
+
+  @apply transition-opacity duration-200;
+}
+
+.modal-overlay {
+  @apply fixed;
+  @apply w-full h-full;
+  @apply bg-gray-900;
+  @apply opacity-25;
+}
+
+.modal-container {
+  @apply bg-white;
+  @apply w-11/12;
+  @apply mx-auto;
+  @apply card;
+  @apply shadow-lg;
+  @apply z-50;
+}
+
+.modal-close {
+  top: 3.5em;
+  @apply fixed;
+  @apply right-0;
+  @apply cursor-pointer;
+  @apply flex flex-col;
+  @apply items-center;
+  @apply mt-4 mr-4;
+  @apply text-white text-sm;
+  @apply z-50;
+}
+
+.modal-content {
+  @apply py-4 px-6;
+  @apply text-left;
+}
+
+.modal-title {
+  @apply flex;
+  @apply justify-between items-center;
+  @apply pb-3;
+}
+
+.modal-title > .title {
+  @apply text-2xl;
+  @apply font-bold;
+}
+
+.modal-footer {
+  @apply flex;
+  @apply justify-end;
+  @apply pt-2;
+}
+
+button {
+  @apply py-2 px-4;
+  @apply rounded;
+  @apply mx-1;
+  @apply text-white;
+}
+
+button.cart {
+  @apply bg-green-500;
+}
+button.details {
+  @apply bg-blue-500;
+}
+button.wishlist {
+  @apply bg-red-500;
+}
+</style>
