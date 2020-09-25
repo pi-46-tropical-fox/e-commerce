@@ -43,25 +43,42 @@ class CartController{
         const ProductId = req.body.productId
         const quantity = req.body.quantity || 1
 
-        Cart.findOne({ where : { UserId, ProductId }}).then(findCart => {
+        Cart.findOne({ where : { UserId, ProductId, status : 'unpaid' }}).then(findCart => {
             if(findCart){
-                res.status(400).json({ message : 'Cart item already existed!' })
+                throw { message : 'Cart item already existed!', statusCode : 400 }
             } else {
-                Cart.create({ UserId, ProductId, quantity , status : 'unpaid' }).then(data => {
-                    Cart.findOne({ where : { id : data.id }, include : Product }).then(dataCreated => {
-                        res.status(201).json(dataCreated)
+                return Product.findOne({ where : { id : ProductId }}).then(product => {
+                    if(quantity > product.stock){
+                        throw { message : 'Quantity is more than stock!', statusCode : 400 }
+                    }
+
+                    return Cart.create({ UserId, ProductId, quantity , status : 'unpaid' }).then(data => {
+                        Cart.findOne({ where : { id : data.id }, include : Product }).then(dataCreated => {
+                            res.status(201).json(dataCreated)
+                        })
                     })
-                }).catch(err => next(err))
+                })
             }
-        }).catch(err => console.log(err))
+        }).catch(err => next(err))
     }
 
     static updateQuantity(req, res, next){
         const { id } = req.params
         const { quantity } = req.body
 
-        Cart.update({ quantity }, { where : { id }}).then(updated => {
-            res.status(200).json({ message : 'updated' })
+        Cart.findOne({ where : { id }, include : Product }).then(cartItem => {
+            if(cartItem){
+                if(quantity > cartItem.Product.stock){
+                    throw { message : 'Quantity is more than stock!', statusCode : 400 }
+                }
+
+                return Cart.update({ quantity }, { where : { id }}).then(updated => {
+                    res.status(200).json({ message : 'updated' })
+                })
+
+            } else {
+                throw { message : 'Cart item not found ', statusCode : 404}
+            }
         }).catch(e => next(e))
     }
 

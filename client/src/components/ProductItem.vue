@@ -52,7 +52,16 @@ export default {
     },
     methods : {
         addToCart(){
-            this.$store.dispatch('addToCart', { ...this.data, quantity : Number(this.quantity) })
+            this.$store.dispatch('addToCart', { ...this.data, quantity : Number(this.quantity) }).then(() => {
+                this.$swal.fire({
+                    icon: 'success',
+                    title: 'Item added to your cart!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }).catch(e => {
+                this.$swal.fire({ icon : 'error', title: 'Oops...', text : e.response.data.errors.join('\n') })
+            })
         },
         toggleQuantity(){
             this.showQuantitySelector = !this.showQuantitySelector

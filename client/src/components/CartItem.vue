@@ -33,9 +33,6 @@
 <script>
 export default {
     props : ['data'],
-    components : {
-
-    },
     data(){
         return {
             quantity : this.data.quantity
@@ -43,10 +40,26 @@ export default {
     },
     methods : {
         deleteCart(){
-            this.$store.dispatch('deleteFromCart', this.data.id)
+            this.$store.dispatch('deleteFromCart', this.data.id).then(() => {
+                this.$swal.fire({
+                    icon: 'success',
+                    title: 'Item successfully deleted from your cart!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
         },
         updateQuantity(){
-            this.$store.dispatch('updateQuantity', { id : this.data.id, quantity : this.quantity })
+            this.$store.dispatch('updateQuantity', { id : this.data.id, quantity : this.quantity }).then(() => {
+                this.$swal.fire({
+                    icon: 'success',
+                    title: 'Quantity successfully updated!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }).catch(e => {
+                this.$swal.fire({ icon : 'error', title: 'Oops...', text : e.response.data.errors.join('\n') })
+            })
         }
     },
     created(){

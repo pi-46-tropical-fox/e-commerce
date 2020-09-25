@@ -7,14 +7,14 @@
         <li class="nav-item active">
             <router-link to="/" class="nav-link">Home</router-link>
         </li>
-        <li class="nav-item active">
+        <li v-if="isLoggedIn" class="nav-item active">
             <router-link to="/logout" class="nav-link">Logout</router-link>
         </li>
-        <li class="nav-item active">
+        <li v-else class="nav-item active">
             <router-link to="/login" class="nav-link">Login</router-link>
         </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <form v-if="isLoggedIn" class="form-inline my-2 my-lg-0">
             <router-link to="/cart">
               <button class="btn btn-light btn-sm"><img src="https://img.icons8.com/fluent/48/000000/shopping-cart.png"/></button>
             </router-link>

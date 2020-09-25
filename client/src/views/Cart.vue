@@ -1,15 +1,19 @@
 <template>
     <div class="container">
-        <div class="container my-3">
-            <CartItem v-for="cartItem in cart" :key="cartItem.id" :data="cartItem" />
-            <!-- <ProductItem/> -->
-            <!-- <div class=""></div> -->
+        <div v-if="cart.length !== 0">
+            <div class="container my-3">
+                <div >
+                    <CartItem v-for="cartItem in cart" :key="cartItem.id" :data="cartItem" />
+                </div>
+            </div>
+            <div class="container my-3">
+                <h1>Total Rp {{total}}</h1>
+                <button class="btn btn-primary" @click.prevent="checkout">Checkout</button>
+            </div>
         </div>
-        <div class="container my-3">
-            <h1>Total Rp {{total}}</h1>
-            <button class="btn btn-primary" @click.prevent="checkout">Checkout</button>
+        <div v-else>
+            <p>Cart Empty</p>
         </div>
-        
     </div>
 </template>
 
@@ -23,6 +27,7 @@ export default {
     computed:{
         total(){
             let total = 0;
+
             this.cart.forEach(e => {
                 total += e.quantity * e.Product.price
             })
@@ -35,7 +40,9 @@ export default {
     },
     methods:{
         checkout(){
-            this.$store.dispatch('checkout')
+            this.$store.dispatch('checkout').then(() => {
+                this.$swal.fire({ icon : 'success', title: 'Checkout Berhasil! Thank you for shopping 😊' })
+            })
         }
     },
     created(){

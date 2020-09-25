@@ -33,14 +33,14 @@ export default new Vuex.Store({
     },
     "UPDATE_CART_QUANTITY_BY_ID"(state, data){
       let index = state.cart.findIndex(e => e.id === data.id)
-      console.log('index', state.cart[index])
-      console.log('data', data)
 
       state.cart[index].quantity = data.quantity
     },
     "LOGOUT"(state, data){
       localStorage.clear()
       state.access_token = ''
+      state.products = []
+      state.cart = []
     }
   },
   actions: {

@@ -12,8 +12,6 @@ Vue.use(VueSwal2)
 
 Vue.config.productionTip = false
 
-
-
 new Vue({
   router,
   store,
