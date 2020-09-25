@@ -23,10 +23,14 @@ class ProductController{
     
     static async create(req, res, next){
         try {
-            console.log(req.body);
             let { name, price, stock, CategoryId } = req.body
 
-            let input = { name, price, stock, CategoryId }
+            let input = {
+                name,
+                price: price === '' ? null : price,
+                stock: stock === '' ? null : stock,
+                CategoryId
+            }
 
             await Product.create(input)
 
