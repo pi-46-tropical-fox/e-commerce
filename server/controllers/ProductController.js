@@ -32,6 +32,8 @@ class ProductController{
                 CategoryId
             }
 
+            console.log(input);
+
             await Product.create(input)
 
             res.status(201).json({ message: "A product has been successfully created." })
