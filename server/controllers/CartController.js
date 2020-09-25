@@ -1,15 +1,19 @@
-const { Cart, CartProduct, Product } = require('../models')
-const cartproduct = require('../models/cartproduct')
+const { Cart, CartProduct, Product, ProductImage } = require('../models')
 
 class CartController {
     static async read(req, res, next) {
         try {
             let data = await Cart.findOne({
                 where: {
-                    checkedOut: false
+                    checkedOut: false,
+                    UserId: req.user.id
                 },
                 include: {
-                    model: CartProduct
+                    model: CartProduct,
+                    include: {
+                        model: Product,
+                        include: ProductImage
+                    }
                 }
             })
 
@@ -21,6 +25,10 @@ class CartController {
 
     static async create(req, res, next) {
         try {
+            let message = `Yeay! You've added the product into your cart.`
+            let code = 201
+            let totalAmount = 0
+
             let cart = await Cart.findOrCreate({
                 where: {
                     UserId: req.user.id,
@@ -28,9 +36,11 @@ class CartController {
                 }
             })
 
+            cart = cart[0]
+
             let input = {
                 CartId: cart.id,
-                ProductId: req.params.id
+                ProductId: req.body.id,
             }
 
             let cartProduct = await CartProduct.findOne({
@@ -40,14 +50,81 @@ class CartController {
             if (cartProduct) {
                 await CartProduct.update({ qty: ++cartProduct.qty }, { where: input })
 
-                res.status(200).json({ message: "A product has been already in your cart, so we updated it." })
+                message = `A product has been already in your cart, so we updated it.`
+                code = 200
             } else {
+                let product = await Product.findByPk(req.body.id)
+
+                input.price = product.price
                 input.qty = 1
 
                 await CartProduct.create(input)
-
-                res.status(201).json({ message: "Yeay! You've added the product into your cart." })
             }
+
+            cart = await Cart.findOne({
+                where: {
+                    UserId: req.user.id,
+                    checkedOut: false
+                },
+                include: CartProduct
+            })
+
+            console.log(cart);
+
+            cart.CartProducts.forEach(product => {
+                totalAmount += product.qty * product.price
+            })
+
+            res.status(code).json({ message })
+        } catch (e) {
+            return next(e)
+        }
+    }
+
+    static async updatePrice(req, res, next) {
+        try {
+            let cart = await Cart.findOne({
+                where: {
+                    checkedOut: false,
+                    UserId: req.user.id
+                },
+                include: {
+                    model: CartProduct,
+                    include: {
+                        model: Product
+                    }
+                }
+            })
+
+            let totalAmount = 0
+
+            cart.CartProducts.forEach(product => {
+                let value = product.price * product.qty
+                totalAmount += value
+            })
+
+            console.log(totalAmount);
+
+            // let input = {
+            //     CartId: cart[0].id,
+            //     ProductId: req.body.id
+            // }
+
+            // let cartProduct = await CartProduct.findOne({
+            //     where: input
+            // })
+
+            // if (cartProduct) {
+            //     await CartProduct.update({ qty: ++cartProduct.qty }, { where: input })
+
+            //     res.status(200).json({ message: "A product has been already in your cart, so we updated it." })
+            // } else {
+            //     input.qty = 1
+
+            //     await CartProduct.create(input)
+
+            //     res.status(201).json({ message: "Yeay! You've added the product into your cart." })
+            // }
         } catch (e) {
             return next(e)
         }
@@ -109,11 +186,11 @@ class CartController {
         }
     }
 
-    static async delete(req, res, next) {
+    static async clearCart(req, res, next) {
         try {
             let data = await Cart.destroy({
                 where: {
-                    id: req.params.id,
+                    UserId: req.user.id,
                     checkedOut: false,
                 }
             })
