@@ -40,10 +40,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "You must specify the product price!"
-        },
-        min: {
-          args: 0,
-          msg: "The product price must be a positive number!"
         }
       }
     },
@@ -56,10 +52,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: "You must specify the product price!"
-        },
-        min: {
-          args: 0,
-          msg: "The product stock must be a positive number!"
         }
       }
     },
@@ -77,9 +69,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
-      sequelize,
+    sequelize,
+      validate: {
+        priceMustBePositive() {
+          if (this.price < 0) throw new Error(`The product price must be a positive number!`)
+        },
+        stockMustBePositive() {
+          if (this.stock < 0) throw new Error(`The product stock must be a positive number!`)
+        },
+      },
     hooks: {
-      beforeValidate(instance){
+      beforeValidate(instance) {
         instance.stock = !!instance.stock ? Number(instance.stock) : instance.stock
         instance.price = !!instance.price ? instance.price * 100 : instance.price
       }
