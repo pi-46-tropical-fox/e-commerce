@@ -29,21 +29,21 @@ export default new Vuex.Store({
     register (context, payload) {
       return axios({
         method: 'post',
-        url: 'http://localhost:3000/users/register',
+        url: 'https://e-commerce-alftirta.herokuapp.com/users/register',
         data: payload
       })
     },
     login (context, payload) {
       return axios({
         method: 'post',
-        url: 'http://localhost:3000/users/login',
+        url: 'https://e-commerce-alftirta.herokuapp.com/users/login',
         data: payload
       })
     },
     fetchProducts (context, payload) {
       return axios({
         method: 'get',
-        url: 'http://localhost:3000/products',
+        url: 'https://e-commerce-alftirta.herokuapp.com/products',
         headers: { access_token: localStorage.getItem('access_token') }
       })
         .then(({ data }) => {
@@ -56,7 +56,7 @@ export default new Vuex.Store({
     updateProducts (context, payload) {
       return axios({
         method: 'put',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `https://e-commerce-alftirta.herokuapp.com/products/${payload.id}`,
         headers: { access_token: localStorage.getItem('access_token') },
         data: payload
       })
@@ -64,7 +64,7 @@ export default new Vuex.Store({
     addToCart (context, payload) {
       return axios({
         method: 'post',
-        url: 'http://localhost:3000/carts',
+        url: 'https://e-commerce-alftirta.herokuapp.com/carts',
         headers: { access_token: localStorage.getItem('access_token') },
         data: payload
       })
@@ -72,14 +72,14 @@ export default new Vuex.Store({
     fetchCart (context, payload) {
       return axios({
         method: 'get',
-        url: 'http://localhost:3000/carts',
+        url: 'https://e-commerce-alftirta.herokuapp.com/carts',
         headers: { access_token: localStorage.getItem('access_token') }
       })
     },
     updateCart (context, payload) {
       return axios({
         method: 'put',
-        url: `http://localhost:3000/carts/${payload.id}`,
+        url: `https://e-commerce-alftirta.herokuapp.com/carts/${payload.id}`,
         headers: { access_token: localStorage.getItem('access_token') },
         data: {
           quantity: payload.quantity,
@@ -90,7 +90,7 @@ export default new Vuex.Store({
     deleteCart (context, payload) {
       return axios({
         method: 'delete',
-        url: `http://localhost:3000/carts/${payload.id}`,
+        url: `https://e-commerce-alftirta.herokuapp.com/carts/${payload.id}`,
         headers: { access_token: localStorage.getItem('access_token') }
       })
     }

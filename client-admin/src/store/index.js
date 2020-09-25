@@ -25,7 +25,7 @@ export default new Vuex.Store({
     login (context, payload) {
       return axios({
         method: 'post',
-        url: 'http://localhost:3000/users/login',
+        url: 'https://e-commerce-alftirta.herokuapp.com/users/login',
         data: {
           email: payload.email,
           password: payload.password
@@ -35,7 +35,7 @@ export default new Vuex.Store({
     fetchProducts (context, payload) {
       return axios({
         method: 'get',
-        url: 'http://localhost:3000/products',
+        url: 'https://e-commerce-alftirta.herokuapp.com/products',
         headers: { access_token: localStorage.getItem('access_token') }
       })
         .then(({ data }) => {
@@ -48,7 +48,7 @@ export default new Vuex.Store({
     addProduct (context, payload) {
       return axios({
         method: 'post',
-        url: 'http://localhost:3000/products',
+        url: 'https://e-commerce-alftirta.herokuapp.com/products',
         data: payload,
         headers: { access_token: localStorage.getItem('access_token') }
       })
@@ -56,7 +56,7 @@ export default new Vuex.Store({
     editProduct (context, payload) {
       return axios({
         method: 'put',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `https://e-commerce-alftirta.herokuapp.com/products/${payload.id}`,
         headers: { access_token: localStorage.getItem('access_token') },
         data: {
           name: payload.name,
@@ -70,7 +70,7 @@ export default new Vuex.Store({
     deleteProduct (context, payload) {
       return axios({
         method: 'delete',
-        url: `http://localhost:3000/products/${payload.id}`,
+        url: `https://e-commerce-alftirta.herokuapp.com/products/${payload.id}`,
         headers: { access_token: localStorage.getItem('access_token') }
       })
     }
