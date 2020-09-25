@@ -76,8 +76,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     hooks: {
       beforeValidate(instance){
-        instance.stock = Number(instance.stock)
-        instance.price = instance.price * 100
+        instance.stock = !!instance.stock ? Number(instance.stock) : instance.stock
+        instance.price = !!instance.price ? instance.price * 100 : instance.price
       }
     },
     modelName: 'Product',
