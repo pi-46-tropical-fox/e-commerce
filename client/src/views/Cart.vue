@@ -37,6 +37,7 @@ export default {
         })
         .then(({data}) => {
           swal.showToastSuccess(data.message)
+          this.$store.dispatch('getCart')
           this.$router.push({ name: 'Home' })
         })
         .catch(({response}) => {
