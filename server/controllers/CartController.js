@@ -111,6 +111,8 @@ class CartController {
   
   static async show (req, res, next) {
     // console.log(req.userData.id);
+    let containerCart = {}
+    
     const showCart = await Cart.findAll({
       include: [User, Product],
       where : {
@@ -129,6 +131,13 @@ class CartController {
     let endTotal = arrTotal.reduce(function(a, b) {
       return a+b
     })
+
+    // push
+    containerCart.finalTotal = endTotal
+
+    // showCart.push({
+    //   finalTotal: endTotal
+    // })
 
     const arrProdId = []
     showCart.forEach(e => {
@@ -149,13 +158,14 @@ class CartController {
       where : { UserId : req.userData.id }
     })
     
-    console.log(showFinalCart);
+    containerCart.products = showCart
+    // console.log(showFinalCart);
     // console.log(showCart);
     // console.log(showCart[showCart.length-1]);
 
     try {
       if (showCart[0]) {
-      return res.status(200).json(showCart)
+      return res.status(200).json(containerCart)
       } else {
         return res.status(404).json({ message : `Sorry, your shopping cart is not exist` })
       }

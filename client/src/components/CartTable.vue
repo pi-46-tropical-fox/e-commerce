@@ -1,12 +1,9 @@
 <template>
   <div class="container">
- <!-- <div class="row" style="margin-left: 150px;" id="">
-    <CardBook v-for="product in allProduct" :key="product.id"
-    :product="product"></CardBook>
-    </div> -->
+    <div class="page-wrapper">
     <h5>Shopping bag's owner : {{ name }}</h5>
     <table class="table">
-      <thead class="thead-dark">
+      <thead class="thead-dark text-center">
         <tr>
           <!-- <th scope="col">#</th> -->
           <th scope="col">Product</th>
@@ -21,30 +18,28 @@
           
           <td style="width: 35em;">{{ cart.Product.name }}</td>
           <input type="number" 
-          class="form-control" v-model="cart.quantity" style="width: 4em">
-          <td style="width: 8em">{{ cart.Product.price }}</td>
-          <td style="width: 8em">{{ cart.total }}</td>
-          <!-- <td style="width: 8em" v-for="onePrice in price" :key='onePrice' :onePrice="onePrice"></td> -->
-
+          class="form-control text-center" v-model="cart.quantity" style="width: 4em">
+          <td class="text-center" style="width: 8em">{{ cart.Product.price }}</td>
+          <td class="text-center" style="width: 8em">{{ cart.total }}</td>
           <td>
-            <button class="btn btn-info" style="width: 5em;"
-              @click.prevent="updateCart(cart.id, cart.UserId, cart.ProductId, cart.quantity)">Update
-            </button> 
-          
-            <button class="btn btn-danger" style="width: 5.5em;"
-               @click.prevent="deleteCart(cart.id, cart.UserId, cart.ProductId)">Remove
-            </button>
+            <!-- <div class="btn-table-wrapper"> -->
+              <button class="btn btn-info" id="btn-upd" style="width: 5em;"
+                @click.prevent="updateCart(cart.id, cart.UserId, cart.ProductId, cart.quantity)">Update
+              </button> 
+            
+              <button class="btn btn-danger" id="btn-del" style="width: 5.5em;"
+                @click.prevent="deleteCart(cart.id, cart.UserId, cart.ProductId)">Remove
+              </button>
           </td>
         </tr>
-        <!-- <h4>Total {{ cart.grandTotal }} </h4> -->
+
       </tbody> 
-      <!-- <h4>Total   </h4> -->
-      <button class="btn btn-success" style="width: 6em;"
-        @click.prevent="checkOut()">Checkout
-      </button>
-
   </table>
-
+  <h5>Total : {{price}} </h5>
+  <button class="btn btn-success" style="width: 6em;"
+    @click.prevent="checkOut()">Checkout
+  </button>
+    </div>
   </div>
 </template>
 
@@ -90,8 +85,10 @@ export default {
     },
     name () {
       return localStorage.user
+    },
+    price () {
+      return this.$store.state.price
     }
-
   },
   mounted () {
     this.getCart()
@@ -102,5 +99,17 @@ export default {
 <style scoped>
 .container {
   font-family: 'Roboto Slab', serif;
+}
+
+#btn-upd {
+  margin: 0px 5px 0px 0px;
+}
+
+.page-wrapper {
+  margin: 50px 0px;
+}
+
+.table {
+  margin: 25px 0;
 }
 </style>

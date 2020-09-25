@@ -13,7 +13,7 @@ export default new Vuex.Store({
     allProduct: [],
     product: [],
     carts: [],
-    price: []
+    price: 0
     // oneProduct: []
   },
   mutations: {
@@ -125,9 +125,9 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           
-          console.log(data);
-          context.commit('SET_PRICE', data)
-          context.commit('SET_CART', data)
+          // console.log(data);
+          context.commit('SET_PRICE', data.finalTotal)
+          context.commit('SET_CART', data.products)
           // const arr = []
           // for (let i = 0; i < data.length; i++) {
           //   arr.push(data.data[i]);
