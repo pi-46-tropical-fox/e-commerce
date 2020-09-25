@@ -8,6 +8,7 @@
 </template>
 
 <script>
+
 export default {
     mounted() {
         this.renderButton()
@@ -15,10 +16,10 @@ export default {
 
     methods: {
         gSignInOnSuccess(googleUser){
-            this.$store.dispatch('googleLogin', googleUser)
+            this.$emit('gLogin', googleUser)
         },
         gSignInOnFail(error){
-            console.log(error);
+            this.$emit('gLoginError', error)
         },
         renderButton(){
             gapi.signin2.render('g-signin', {

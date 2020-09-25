@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Auth from '../views/Auth.vue'
-import Product from '../views/Product.vue'
 
 Vue.use(VueRouter)
 
@@ -20,19 +19,6 @@ const routes = [
     path: '/auth',
     name: 'Auth',
     component: Auth
-  },
-  {
-    path: '/products',
-    name: 'Products',
-    component: Product,
-    // beforeEnter: checkAuth,
-    children: [
-      {
-        path: ':id',
-        name: 'ProductDetails',
-        component: () => import(/* webpackChunkName: "productdetails" */ '../components/product/Details.vue')
-      }
-    ]
   },
   {
     path: '/wishlist',

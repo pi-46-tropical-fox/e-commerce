@@ -9,25 +9,32 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    // lists
     products: [],
     wishlists: [],
     cart: [],
+
+    // specific data
+    productDetails: {},
     userData: {},
+
+    // states
     isLoggedIn: false,
     isLoaded: false,
-
-    // other states
     registrationIsSuccessful: false,
   },
   mutations: {
     SET_PRODUCT_DATA(state, payload) {
-      //
+      state.products = payload
+    },
+    SET_PRODUCT_DETAILS(state, payload) {
+      state.productDetails = payload
     },
     SET_WISHLIST_DATA(state, payload) {
-      //
+      state.wishlists = payload
     },
     SET_CART_DATA(state, payload) {
-      //
+      state.cart = payload
     },
     SET_USER_DATA(state, payload) {
       state.userData = payload
@@ -35,15 +42,20 @@ export default new Vuex.Store({
     SET_LOGIN_STATE(state, bool) {
       state.isLoggedIn = bool
     },
+    SET_LOADED_STATE(state, bool) {
+      state.isLoaded = bool
+    },
     SET_REGISTRATION_SUCCESS(state, bool) {
       state.registrationIsSuccessful = bool
     }
   },
   actions: {
+    // Product
     getProducts({ commit }) {
+      commit('SET_LOADED_STATE', false)
       axios({
-        url: '',
-        method: '',
+        url: '/products',
+        method: 'GET',
         // header
         // headers: {
         //   access_token: localStorage.access_token
@@ -53,66 +65,97 @@ export default new Vuex.Store({
           //
         }
       })
-        .then(({ data }) => { })
+        .then(({ data }) => {
+          commit('SET_PRODUCT_DATA', data.data)
+          commit('SET_LOADED_STATE', true)
+        })
         .catch()
     },
-    getWishlists({ commit }) {
+
+    getProductDetails({ commit }, payload) {
       axios({
-        headers: {
-          access_token: localStorage.access_token
+        url: `/products/${payload}`,
+        method: 'GET',
+        // header
+        // headers: {
+        //   access_token: localStorage.access_token
+        // },
+        // data
+        data: {
+          //
         }
-      })
-    },
-    addToWishlist({ commit }, id) {
-      axios({
-        headers: {
-          access_token: localStorage.access_token
-        }
-      })
-    },
-    deleteFromWishlist({ commit }) {
-      axios({
-        headers: {
-          access_token: localStorage.access_token
-        }
-      })
-    },
-    getCart({ commit }) {
-      axios({
-        headers: {
-          access_token: localStorage.access_token
-        }
-      })
-    },
-    changeQty({ commit }, payload) {
-      axios({
-        headers: {
-          access_token: localStorage.access_token
-        }
-      })
-    },
-    addToCart({ commit }, id) {
-      axios({
-        headers: {
-          access_token: localStorage.access_token
-        }
-      })
-    },
-    deleteFromCart({ commit }, id) {
-      axios({
-        url: `/cart/${id}`,
-        method: 'DELETE',
-        headers: {
-          access_token: localStorage.access_token
-        },
       })
         .then(({ data }) => {
-          swal.showToastSuccess(data.message)
+          let result = {
+            id: data.data.id,
+            name: data.data.name,
+            price: data.data.price,
+            stock: data.data.stock,
+            category: data.data.Category.name,
+            image: data.data.ProductImages.length > 0 ? data.data.ProductImages[0] : 'No Image available'
+          }
+
+          console.log(result);
+          commit('SET_PRODUCT_DETAILS', result)
         })
-    },
-    clearCart({ commit }) {
+        .catch(({ response }) => {
+          swal.showSwalError(response.data.join('<br>'))
+        })
 
     },
+
+    clearProductDetails({ commit }) {
+      commit('SET_PRODUCT_DETAILS', {})
+    },
+
+    // Wishlist
+    getWishlists({ commit }) {
+      commit('SET_LOADED_STATE', false)
+      axios({
+        url: '/wishlists',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_WISHLIST_DATA', data.data)
+          commit('SET_LOADED_STATE', true)
+        })
+    },
+
+    // Cart
+    getCart({ commit }) {
+      axios({
+        url: '/cart',
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          // console.log(data.data.cartProducts.length);
+
+          let payload = []
+
+          data.data.CartProducts.forEach(cartProduct => {
+            let payloadData = {
+              id: cartProduct.id,
+              name: cartProduct.Product.name,
+              image_url: cartProduct.Product.ProductImages.length === 0 ? 'No image available' : cartProduct.Product.ProductImages[0].image_url,
+              price: cartProduct.price,
+              qty: cartProduct.qty,
+            }
+
+            payload.push(payloadData)
+          })
+
+          commit('SET_CART_DATA', payload)
+        })
+        .catch(({ response }) => {
+          swal.showSwalError(response.data.join('<br>'))
+        })
+    },
+
+    // Auth
     getAuthState({ commit }) {
       if (localStorage.access_token) {
         let data = {
@@ -124,80 +167,31 @@ export default new Vuex.Store({
         commit('SET_LOGIN_STATE', true)
       }
     },
+
     login({ commit }, payload) {
-      axios({
-        url: '/auth/login',
-        method: 'POST',
-        data: payload
-      })
-        .then(({ data }) => {
-          console.log(data);
-          Object.keys(data).forEach(key => localStorage.setItem(key, data[key]))
-          // localStorage.setItem('access_token', data.access_token)
-          delete data.access_token
-          commit('SET_USER_DATA', data)
-          commit('SET_LOGIN_STATE', true)
-          router.push({ name: 'Home' })
-        })
+      Object.keys(payload).forEach((key) =>
+        localStorage.setItem(key, payload[key])
+      );
+
+      delete payload.access_token;
+
+      commit("SET_USER_DATA", payload);
+      commit("SET_LOGIN_STATE", true);
     },
-    googleLogin({ commit }, payload) {
-      if (!localStorage.access_token) {
-        const g_access_token = payload.getAuthResponse().id_token;
 
-        axios({
-          url: "/auth/login/g",
-          method: "POST",
-          headers: {
-            g_access_token,
-          },
-        })
-          .then((result) => {
-
-            console.log(result);
-
-            // let { data } = result;
-
-            // Object.keys(data).forEach((key) => {
-            //   localStorage.setItem(key, data[key]);
-            // });
-
-            commit('SET_LOGIN_STATE', true)
-            router.push({ name: 'Home' })
-
-            swal.showToastSuccess("Logged in successfully.");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    },
-    register({ commit }, payload) {
-      axios({
-        url: '/users/register',
-        method: 'POST',
-        data: payload
-      })
-        .then(({ data }) => {
-          swal.showToastSuccess(data.message)
-
-          commit('SET_REGISTRATION_SUCCESS', true)
-        })
-        .catch(({ response }) => {
-          swal.showSwalError(response.data.join('<br>'))
-
-          commit('SET_REGISTRATION_SUCCESS', false)
-        })
-    },
     async logout({ commit }) {
-      console.log(gapi.auth2);
-      let auth2 = gapi.auth2.getAuthInstance();
-      if (auth2) await auth2.signOut(auth2);
+      if (gapi.auth2) {
+        let auth2 = gapi.auth2.getAuthInstance();
+        if (auth2) await auth2.signOut(auth2);
+      }
 
       localStorage.clear()
       commit('SET_USER_DATA', {})
       commit('SET_LOGIN_STATE', false)
 
       router.push({ name: 'Home' })
+
+      swal.showToastSuccess(`You've successfully been logged out.`)
     },
   },
   modules: {

@@ -14,15 +14,6 @@
 
 		<div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block pt-6 lg:pt-0" id="nav-content">
 			<ul class="list-reset lg:flex justify-end flex-1 items-center">
-				<!-- <li class="mr-3">
-                    <router-link to="/">Home</router-link> |
-				</li>
-				<li class="mr-3">
-                    <router-link to="/products">Products</router-link>
-				</li>
-                <li class="mr-6">
-                    |
-                </li> -->
 				<li class="mr-3" v-if="!isLoggedIn">
                     <router-link to="/auth">Login</router-link>
 				</li>
@@ -33,7 +24,7 @@
                     <router-link to="/wishlist">Wishlist</router-link>
 				</li>
 				<li class="mr-3" v-if="isLoggedIn">
-                    <a href="/" @click.prevent="logout">Logout</a>
+                    <a href="#" @click.prevent="logout">Logout</a>
 				</li>
 			</ul>
 		</div>
@@ -50,7 +41,6 @@ export default {
 	},
 	methods: {
 		logout(){
-			console.log(`object`);
 			this.$store.dispatch('logout')
 		}
 	}

@@ -1,10 +1,10 @@
 import axios from 'axios'
 
+// const host = 'https://rgb-commerce.herokuapp.com'
 const host = 'http://localhost:3457'
-const port = null
 
 const instance = axios.create({
-    baseURL: `${host}${port ? `:${port}` : ''}`
+    baseURL: host
 })
 
 instance.interceptors.request.use(config => {

@@ -1,14 +1,17 @@
 <template>
-  <div class="card">
-    <div class="image">
-      <img src="" alt="" />
+  <div class="card overflow-hidden">
+    <div v-if="data.ProductImages.length > 0" class="image h-64">
+      <img :src="data.ProductImages[0].image_url" :alt="data.ProductImages[0].title">
+    </div>
+    <div v-else class="bg-gray-600 text-white flex justify-center items-center h-64">
+      <h4>No image available</h4>
     </div>
     <!--  -->
     <div class="content">
-      <div class="title">{{ data.name }}</div>
-      <div class="price">{{ (data.price / 100).toLocaleString('id-ID') }}</div>
+      <div class="title"><span class="text-2xl text-left">{{ data.name }}</span></div>
+      <div class="price"><span class="text-xl text-left">IDR {{ (data.price / 100).toLocaleString('id-ID') }}</span></div>
       <div class="action">
-        <button @click.prevent="getDetails(data.id)" class="details">Details</button>
+        <button @click.prevent="toggleModal(data.id)" class="details">Details</button>
         <button @click.prevent="addToCart(data.id)" class="cart" v-if="isLoggedIn">
           Add to Cart
         </button>
@@ -28,7 +31,7 @@
 export default {
   name: "Card",
   props: {
-    data: Array,
+    data: Object,
   },
 
   computed: {
@@ -38,14 +41,14 @@ export default {
   },
 
   methods: {
-    getDetails(id){
-      this.$router.push({ name: "ProductDetails", params: { id } })
+    toggleModal(id){
+      this.$emit('toggleModal', id)
     },
     addToCart(id){
-      this.$store.dispatch('addToCart', id)
+      this.$emit('addToCart', id)
     },
     addToWishlist(id){
-      this.$store.dispatch('addToWishlist', id)
+      this.$emit('addToWishlist', id)
     },
   }
 };
@@ -71,9 +74,13 @@ export default {
 }
 
 .content .title,
-.content .description,
+.content .price {
+  @apply px-4;
+  @apply py-2
+}
+
 .content .action {
-  @apply p-4;
+  @apply p-4
 }
 
 .content .title {

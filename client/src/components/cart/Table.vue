@@ -1,6 +1,6 @@
 <template>
-  <div class="table">
-    <div v-if="cartProduct.length > 0">
+  <div>
+    <div v-if="cartProducts.length > 0">
       <div
         class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8"
       >
@@ -15,38 +15,48 @@
                 >
                   ID
                 </th>
-                <th
-                  v-for="(cell, i) in $props.headers"
-                  :key="i"
-                  class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider"
-                >
-                  {{ cell }}
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
+                  Product Name
+                </th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
+                  Quantity
+                </th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
+                  Price
+                </th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
+                  Total
+                </th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider">
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody class="bg-white">
               <tr v-for="row in $props.cartProducts" :key="row.id">
-                <td
-                  v-for="(cell, i) in row"
-                  :key="i"
-                  class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
-                >
-                  <div class="flex items-center" v-if="i === 'id'">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        #{{ cell }}
-                      </div>
-                    </div>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500" >
+                  <div class="text-sm leading-5 text-blue-900">
+                    #{{row.id}}
                   </div>
-                  <div class="flex items-center" v-if="i === 'qty'">
-                    <div>
-                      <div class="text-sm leading-5 text-gray-800">
-                        #{{ cell }}
-                      </div>
-                    </div>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500" >
+                  <div class="text-sm leading-5 text-blue-900">
+                    {{row.name}}
                   </div>
-                  <div class="text-sm leading-5 text-blue-900" v-else>
-                    {{ cell }}
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500" >
+                  <div class="text-sm leading-5 text-blue-900">
+                    {{row.qty}}
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500" >
+                  <div class="text-sm leading-5 text-blue-900">
+                    {{row.price}}
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500" >
+                  <div class="text-sm leading-5 text-blue-900">
+                    {{(row.price * row.qty).toLocaleString('id-ID')}}
                   </div>
                 </td>
 
@@ -77,7 +87,36 @@
 <script>
 export default {
   props: {
-    cartProduct: Array,
+    cartProducts: Array,
+    headers: Array,
+  },
+
+  methods: {
+    changeQty(id, data) {
+      axios({
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      }).catch(({ response }) => {
+        swal.showSwalError(response.data.join("<br>"));
+      });
+    },
+    deleteFromCart({ commit }, id) {
+      axios({
+        url: `/cart/${id}`,
+        method: "DELETE",
+        headers: {
+          access_token: localStorage.access_token,
+        },
+      })
+        .then(({ data }) => {
+          swal.showToastSuccess(data.message);
+        })
+        .catch(({ response }) => {
+          swal.showSwalError(response.data.join("<br>"));
+        });
+    },
+    clearCart({ commit }) {},
   },
 };
 </script>
