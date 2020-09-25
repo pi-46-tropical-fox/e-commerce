@@ -22,21 +22,53 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "You must specify the product name!"
+        },
+        notEmpty: {
+          msg: "You must specify the product name!"
+        },
+      }
     },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "You must specify the product price!"
+        },
+        notEmpty: {
+          msg: "You must specify the product price!"
+        },
+        min: {
+          args: 0,
+          msg: "The product price must be a positive number!"
+        }
+      }
     },
     stock: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        notNull: {
+          msg: "You must specify the product price!"
+        },
+        notEmpty: {
+          msg: "You must specify the product price!"
+        },
+        min: {
+          args: 0,
+          msg: "The product stock must be a positive number!"
+        }
+      }
     },
     CategoryId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: "You should specify the category!"
+          msg: "You must specify the category!"
         }
       },
       references: {
@@ -45,33 +77,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
-    sequelize,
-      validate: {
-        productName() {
-          if (this.name === null || this.name === '') {
-            return new Error(`You have to fill out the product name`)
-          }
-        },
-        productPriceMustBeAPositiveNumber() {
-          if (this.price === null || this.price === '') {
-            return new Error(`You should specify the product price.`)
-          } else {
-            if (isNaN(this.price) || this.price < 0) return new Error(`The product price must be a positive number.`)
-          }
-        },
-        productStockMustBeAPositiveNumber() {
-          if (this.stock === null || this.stock === '') {
-            return new Error(`You should specify the product stock.`)
-          } else {
-            if (isNaN(this.stock) || this.stock < 0) return new Error(`The product stock must be a positive number.`)
-          }
-        },
-      },
+      sequelize,
     hooks: {
       beforeValidate(instance){
         instance.stock = !!instance.stock ? Number(instance.stock) : instance.stock
         instance.price = !!instance.price ? instance.price * 100 : instance.price
-        console.log(instance.name, instance.stock, instance.price, instance.CategoryId);
       }
     },
     modelName: 'Product',
