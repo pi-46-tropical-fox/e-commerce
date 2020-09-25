@@ -1,5 +1,5 @@
 <template>
-<nav class="flex items-center justify-between flex-wrap bg-gray-800 p-2 fixed w-full z-10 top-0">
+<nav class="flex items-center justify-between flex-wrap bg-gray-800 p-2 fixed w-full top-0">
 		<div class="flex items-center flex-shrink-0 text-white mr-6">
 			<router-link class="text-white no-underline hover:text-white hover:no-underline" to="/">
 				<span class="text-2xl pl-2"><img src="/assets/logo.png" width="48" class="inline"> RGB Commerce</span>
