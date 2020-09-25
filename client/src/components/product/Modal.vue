@@ -55,12 +55,13 @@
 
         <!-- Footer -->
         <div class="modal-footer">
-          <button @click.prevent="addToCart(data)" class="cart" type="submit">
+          <button v-if="isLoggedIn" @click.prevent="addToCart(data)" class="cart" type="submit">
             Add to cart
           </button>
-          <button @click.prevent="addToWishlist(data)" class="wishlist" type="submit">
+          <button v-if="isLoggedIn" @click.prevent="addToWishlist(data)" class="wishlist" type="submit">
             Add to wishlist
           </button>
+          <button @click.prevent="toggleModal()" class="details">Close</button>
         </div>
       </div>
     </div>
@@ -86,7 +87,11 @@ export default {
     imageAvailable() {
       let image = !!this.$store.state.productDetails.image
       return image
-    }
+    },
+
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
   },
 
   methods: {
