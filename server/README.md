@@ -38,11 +38,12 @@ Meanwhile, security (not admin) only have access for read all books and banner.
   - GET /banners/:banner_id
   - DELETE /banners/:banner_id
   - PUT /banners/:banner_id
-  - POST carts/:user_id/:product_id
-  - GET carts/:user_id
-  - PUT carts/:user_id/:product_id
-  - DELETE carts/:user_id/:product_id
-  - PUT carts/:user_id
+
+  - GET carts/
+  - PUT carts/
+  - POST carts/:product_id
+  - PUT carts/:product_id
+  - DELETE carts/:product_id
 ```
 
 ### POST /login
@@ -611,7 +612,7 @@ _Response (500 - Internal Server Error)_
 ---
 
 
-### POST /carts/:user_id/:product_id
+### POST /carts/:product_id
 
 > Create new cart and update existing cart
 
@@ -672,7 +673,7 @@ _Response (500 - Internal Server Error)_
 ---
 
 
-### GET /carts/:user_id
+### GET /carts
 
 > Show carts of user
 
@@ -771,7 +772,7 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 
-### DELETE /carts/:user_id/:product_id
+### DELETE /carts/:product_id
 
 > delete carts by its user id and product id
 
@@ -806,7 +807,7 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 
-### PUT carts/:user_id/:product_id
+### PUT carts/:product_id
 > delete carts by its user id and product id
 
 _Request Header_
@@ -840,7 +841,7 @@ _Response (500 - Internal Server Error)_
 ```
 ---
 
-### PUT carts/:user_id
+### PUT carts/
 > checkout carts, then updating db stock product
 
 _Request Header_

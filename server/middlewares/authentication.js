@@ -5,10 +5,10 @@ const { User } = require('../models')
 
 const authentication = async (req, res, next) => {
   const { access_token } = req.headers
-  console.log(req.headers);
+  // console.log(req.headers);
   // console.log('HALO');
   // console.log(req.headers);
-  console.log(access_token);
+  // console.log(access_token);
   try {
     
     const userData = await verifyToken(access_token)
@@ -16,10 +16,11 @@ const authentication = async (req, res, next) => {
     // console.log(user);
     if (user) {
       req.userData = userData
+      // console.log(req.userData);
       // console.log(req.params.id, 'INI PARAMS');
       // console.log(user, 'ini user');
       // console.log(req.headers);
-      console.log(req.params);
+      // console.log(req.params);
       // console.log('========= ini userData', userData);
       next()
     } else {

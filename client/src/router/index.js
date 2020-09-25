@@ -22,12 +22,26 @@ const routes = [
   {
     path: '/carts',
     name: 'CartPage',
-    component: CartPage
+    component: CartPage,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/login',
     name: 'LoginPage',
-    component: LoginPage
+    component: LoginPage,
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem('access_token')) {
+        next()
+      } else {
+        next('/')
+      }
+    }
   },
   {
     path: '/register',

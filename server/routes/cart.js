@@ -5,13 +5,13 @@ const CartController = require('../controllers/CartController')
 const { authentication } = require('../middlewares/authentication')
 
 router.use(authentication)
-router.get('/:user_id', CartController.show)
-router.put('/:user_id', CartController.checkOut)
+router.get('/', CartController.show)
+router.put('/', CartController.checkOut)
 
-router.post('/:user_id/:product_id', CartController.addCart)
+router.post('/:product_id', CartController.addCart)
 
-router.put('/:user_id/:product_id', CartController.updatingQtyCart)
+router.put('/:product_id', CartController.updatingQtyCart)
 
-router.delete('/:user_id/:product_id', CartController.removeItemCart)
+router.delete('/:product_id', CartController.removeItemCart)
 
 module.exports = router

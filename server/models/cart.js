@@ -41,7 +41,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false
     },
     total: DataTypes.INTEGER,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    grandTotal: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Cart',

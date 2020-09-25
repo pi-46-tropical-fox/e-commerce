@@ -11,17 +11,20 @@
           <!-- <th scope="col">#</th> -->
           <th scope="col">Product</th>
           <th scope="col">Quantity</th>
-          <th scope="col">Price / pcs</th>
+          <th scope="col">Price</th>
+          <th scope="col">Total Price</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody v-for="cart in carts" :key="cart.id" :cart="cart">
         <tr>
-          <!-- <th scope="row">{{ i }}</th> -->
+          
           <td style="width: 35em;">{{ cart.Product.name }}</td>
           <input type="number" 
           class="form-control" v-model="cart.quantity" style="width: 4em">
           <td style="width: 8em">{{ cart.Product.price }}</td>
+          <td style="width: 8em">{{ cart.total }}</td>
+          <!-- <td style="width: 8em" v-for="onePrice in price" :key='onePrice' :onePrice="onePrice"></td> -->
 
           <td>
             <button class="btn btn-info" style="width: 5em;"
@@ -33,10 +36,13 @@
             </button>
           </td>
         </tr>
-      </tbody>
+        <!-- <h4>Total {{ cart.grandTotal }} </h4> -->
+      </tbody> 
+      <!-- <h4>Total   </h4> -->
       <button class="btn btn-success" style="width: 6em;"
         @click.prevent="checkOut()">Checkout
       </button>
+
   </table>
 
   </div>
@@ -59,7 +65,7 @@ export default {
         ProductId: +productId,
         quantity: +quantity
       }
-      this.$store.dispatch('addToCart', data)
+      this.$store.dispatch('updateCart', data)
     },
     
     deleteCart(id, userId, productId) {
@@ -85,6 +91,7 @@ export default {
     name () {
       return localStorage.user
     }
+
   },
   mounted () {
     this.getCart()

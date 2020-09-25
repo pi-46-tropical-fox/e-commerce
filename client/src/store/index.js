@@ -12,7 +12,8 @@ export default new Vuex.Store({
     name: [],
     allProduct: [],
     product: [],
-    carts: []
+    carts: [],
+    price: []
     // oneProduct: []
   },
   mutations: {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
     },
     SET_CART (state, payload) {
       state.carts = payload
+    },
+    SET_PRICE (state, payload) {
+      state.price = payload
     }
   },
   actions: {
@@ -90,13 +94,12 @@ export default new Vuex.Store({
     },
     addToCart (context, input) {
       const data = {
-        UserId: localStorage.id,
         ProductId: input.ProductId,
         quantity: input.quantity
       }
       console.log(data);
       axios
-        .post(`carts/${data.UserId}/${data.ProductId}`, data, {
+        .post(`carts/${data.ProductId}`, data, {
           headers: {
             access_token: localStorage.access_token
           }
@@ -114,31 +117,43 @@ export default new Vuex.Store({
         })
     },
     getCart (context) {
-      const idUser = localStorage.id
       axios
-        .get(`/carts/${idUser}`, {
+        .get(`/carts`, {
           headers: {
             access_token: localStorage.access_token
           }
         })
         .then(({ data }) => {
+          
           console.log(data);
-
-          if (data) {
-            context.commit('SET_CART', data)
-          }
+          context.commit('SET_PRICE', data)
+          context.commit('SET_CART', data)
+          // const arr = []
+          // for (let i = 0; i < data.length; i++) {
+          //   arr.push(data.data[i]);
+          //   console.log(data.data[i]);
+          // }
+          // console.log(arr);
+          // console.log(data.data[2]);
+          // if (data) {
+            // for (let i = 0; i < data.length; i++) {
+              // if (i == data.length - 1) {
+                // context.commit('SET_TOTAL_PRICE', data[i])  
+              // } else {
+              // }
+            // }
+          // }
         })
     },
     updateCart(context, inputData) {
-      console.log(inputData);
+      // console.log(inputData);
       const data = {
-        UserId: inputData.UserId,
         ProductId: inputData.ProductId,
         quantity: inputData.quantity
       }
-      console.log(data);
+      // console.log(data);
       axios
-        .put(`carts/${data.UserId}/${data.ProductId}`, data, {
+        .put(`carts/${data.ProductId}`, data, {
           headers: {
             access_token: localStorage.access_token
           }
@@ -156,11 +171,10 @@ export default new Vuex.Store({
     },
     deleteCart (context, input) {
       const data = {
-        UserId: input.UserId,
         ProductId: input.ProductId
       }
       axios
-        .delete(`carts/${data.UserId}/${data.ProductId}`, {
+        .delete(`carts/${data.ProductId}`, {
           headers: {
             access_token: localStorage.access_token
           }
@@ -176,11 +190,10 @@ export default new Vuex.Store({
     checkOut (context, input) {
       // console.log(inputData);
       const data = {
-          UserId: input.UserId,
-        }
-      console.log(data);
+        data : 'data'
+      }
       axios
-        .put(`carts/${data.UserId}`, data, {
+        .put(`carts/`, data, {
           headers: {
             access_token: localStorage.access_token
           }
@@ -189,6 +202,7 @@ export default new Vuex.Store({
           console.log(data, 'store');
           // context.commit('SET_ONE_PRODUCT', data.name)
           // console.log(this.state.product);
+          router.push('/')
 
           Toast.fire({
             icon: 'success',

@@ -8,7 +8,7 @@ class CartController {
     // Input Cart
     const inputCart = {
       ProductId : +req.params.product_id,
-      UserId : +req.params.user_id,
+      UserId : +req.userData.id,
       quantity : req.body.quantity
     }
 
@@ -51,7 +51,7 @@ class CartController {
           // console.log('HIT');
           const updateCart = {
             ProductId : +req.params.product_id,
-            UserId : +req.params.user_id,
+            UserId : +req.userData.id,
             quantity : +req.body.quantity + checkCart.quantity
           }
 
@@ -85,7 +85,7 @@ class CartController {
   static async updatingQtyCart (req, res, next) {
     const updateCart = {
       ProductId : +req.params.product_id,
-      UserId : +req.params.user_id,
+      UserId : +req.userData.id,
       quantity : +req.body.quantity
     }
 
@@ -110,14 +110,49 @@ class CartController {
   }
   
   static async show (req, res, next) {
+    // console.log(req.userData.id);
     const showCart = await Cart.findAll({
       include: [User, Product],
       where : {
-        UserId : +req.params.user_id,
+        UserId : req.userData.id,
         status: 'beforeCheckout'
       }
     })
-        
+
+    const arrTotal = []
+    showCart.forEach(el => {
+      el.total = el.quantity * el.Product.price
+      arrTotal.push(el.total)
+    });
+
+    // console.log(arrTotal);
+    let endTotal = arrTotal.reduce(function(a, b) {
+      return a+b
+    })
+
+    const arrProdId = []
+    showCart.forEach(e => {
+      arrProdId.push(e.ProductId)
+    })
+
+    // for (let i = 0; i < arrProdId.length; i++) {
+      let updateGrandTotal = await Cart.update(
+        { grandTotal : Number(endTotal) },
+        { where : { UserId : req.userData.id } }
+      )
+    // }
+
+    console.log(updateGrandTotal, 'upd');
+    // showCart.grandTotal = endTotal
+
+    const showFinalCart = await Cart.findAll({
+      where : { UserId : req.userData.id }
+    })
+    
+    console.log(showFinalCart);
+    // console.log(showCart);
+    // console.log(showCart[showCart.length-1]);
+
     try {
       if (showCart[0]) {
       return res.status(200).json(showCart)
@@ -131,13 +166,14 @@ class CartController {
   }
 
   static async removeItemCart (req, res, next) {
-    console.log(req.params.product_id);
-    console.log(req.params.user_id);
+    // console.log(req.params.product_id);
+    // console.log(req.params.user_id);
     try {
       const removeCart = await Cart.destroy ({ 
         where : { 
           ProductId : +req.params.product_id,
-          UserId : +req.params.user_id
+          UserId : +req.userData.id,
+          status : 'beforeCheckout'
         } 
       })
       
@@ -152,18 +188,18 @@ class CartController {
   }
 
   static async checkOut (req, res, next) {
-
+    
     try {
       const findCheckOut = await Cart.update({ 
         status : 'afterCheckout' },
         { where : {
-            UserId : +req.params.user_id
+            UserId : req.userData.id
           } 
         })
 
       const findCart = await Cart.findAll({
         where : {
-          UserId : +req.params.user_id
+          UserId : req.userData.id
         }
       })
 
