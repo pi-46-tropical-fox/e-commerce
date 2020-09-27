@@ -2,7 +2,7 @@
 Make an e-commerce website which simplify the trading transaction between sellers and customers.
 
 ### Deployed Link
-- https://e-commerce-5a02b.web.app/
+- https://e-commerce-8359b.web.app/
 
 ### libraries and frameworks
 - Express for setting up the backend server.
