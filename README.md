@@ -1,13 +1,16 @@
-# e-commerce
-Firebase:
-Admin : https://e-commerce-hacktiv8-2020.web.app
-Customer : https://wewearblack-hacktiv8.web.app
+# e-commerce (Client)
+Firebase: https://wewearblack-hacktiv8.web.app
+An application to display e-commerce as a client interface. This project took 3 days to include learning the Technologies.
 
+Technologies include :
+- Server-side: Sequelize, Express, PostgreSQL, JWT, Jest
+- Client-side : Vue, Vue Router, Vuex, Axios , HTML, & CSS (Bootstrap)
+- Deployment: Heroku(server), Firebase (client)
+
+
+# API Documentation
 E-Commerce on We Wear Black. This app has:
-
 &nbsp;
-
-
 
 ## Endpoints
 ````
