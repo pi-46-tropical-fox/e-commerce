@@ -1,5 +1,8 @@
 # e-commerce (Client)
 Firebase: https://wewearblack-hacktiv8.web.app
+
+Login with: testuser@mail.com / pass: testuser
+
 An application to display e-commerce as a client interface. This project took 3 days to include learning the Technologies.
 
 Technologies include :
