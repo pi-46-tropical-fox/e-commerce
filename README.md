@@ -1,5 +1,5 @@
 # e-commerce
-An e-commerce website which simplify the trading transaction between sellers and customers.
+An e-commerce website that simplifies the trading transaction between sellers and customers.
 
 ### Deployed Link
 - https://e-commerce-8359b.web.app/
