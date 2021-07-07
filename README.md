@@ -1,14 +1,12 @@
 # e-commerce
-Membuat Website e-commerce
+An e-commerce website that simplifies the trading transaction between sellers and customers.
 
-# Register (email, password, role bisa via hooks beforeCreate role: customer)
-# Login
-# Add to cart (pastikan quantity tidak melebihi stock ). Jika add barang yang sama, tidak boleh dobel, tapi quantity nya yang nambah.
-# Show cart
-# Remove cart
-# Update cart
-# Deploy
-# Updated API DOC, endpoint baru tinggal ditambah di doc (server)
+### Deployed Link
+- https://e-commerce-8359b.web.app/
 
-### Deadline Kamis 13.00
-
+### libraries and frameworks
+- Express for setting up the backend server.
+- Vue to make SPA on the frontend side.
+- Sequelize and pg for querying data in postgresql database.
+- Bootstrap to seeting up a minimalist yet neat client user interface.
+- etc.
